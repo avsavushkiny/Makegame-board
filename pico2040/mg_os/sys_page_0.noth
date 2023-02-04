@@ -1,0 +1,77 @@
+/*
+    page 0 - start page
+*/
+
+#pragma once
+
+#include <Arduino.h>
+#include <U8g2lib.h>
+
+#include "sys.h"
+#include "sys_gfx.h"
+#include "sys_xbmp.h"
+
+int a{}, b{}, c{};
+
+/* p */
+void animation_mg_logo();
+void frame_1();
+void frame_2();
+void frame_3();
+void frame_4();
+void frame_5();
+
+/* func */
+void sys_page_0()
+{
+  animation_mg_logo();
+}
+
+void animation_mg_logo()
+{
+  gfx.render(frame_1, 1500);
+
+  for (a = 32; a >= 21; a--)
+  {
+    gfx.render(frame_2, 1);
+  }
+
+  gfx.render(frame_3, 1500);
+  gfx.render(frame_4, 2500); 
+}
+
+void frame_1()
+{
+  u8g2.drawXBMP(32, 28, logo_mg_w, logo_mg_h, logo_mg);
+}
+
+void frame_2()
+{
+  u8g2.drawXBMP(a, 28, logo_mg_w, logo_mg_h, logo_mg);
+}
+
+void frame_3()
+{
+  u8g2.drawXBMP(21, 28, logo_mg_w, logo_mg_h, logo_mg);
+  u8g2.drawXBMP(90, 24, logo_mg_cat_w, logo_mg_cat_h, logo_mg_cat);
+}
+
+void frame_4()
+{
+  //u8g2.setFont(u8g2_font_6x10_tr);
+  u8g2.setFont(u8g2_font_5x8_tr);
+
+  String title_1 = "Hey! I am Kitty!";
+  String title_2 = "How are you?";  
+  String title_3 = "Press any key!";
+
+  u8g2.setCursor(10, 22);
+  u8g2.print(title_1);
+
+  u8g2.setCursor(10, 32);
+  u8g2.print(title_2);
+
+  u8g2.setCursor(10, 42);
+  u8g2.print(title_3);
+}
+
