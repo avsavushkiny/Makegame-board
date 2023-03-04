@@ -246,4 +246,4 @@ void debug(String text, int  data_0, int data_1)
   Serial.println(outputData);
 }
 
-
+//add data exceptions by stick
