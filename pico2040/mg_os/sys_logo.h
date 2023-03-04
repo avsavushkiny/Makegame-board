@@ -8,15 +8,14 @@
 #include "sys_xbmp.h"
 
 /* prototype */
-void frame_1();
-void frame_2();
+void frame_1(); void frame_2();
 void buttonPressStart();
 
-/* start func */
+/* main func */
 void start_sys_logo()
 {
   gfx.render(frame_1, 1500); // func, delay 1,5 sec
-  //gfx.render(frame_2, 3500);
+  gfx.render(frame_2, 1500);
 }
 
 /* func */
@@ -55,5 +54,3 @@ void buttonPressStart()
   u8g2.print("PRESS START");
   u8g2.drawRFrame(34, 48, 53, 8, 2);
 }
-
-
