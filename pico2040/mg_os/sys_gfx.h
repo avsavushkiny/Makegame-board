@@ -62,6 +62,14 @@ class Gfx
         u8g2.sendBuffer();
       } while ( millis() < time );
     }
+
+    bool clear()
+    {
+      u8g2.clearBuffer();
+      u8g2.sendBuffer();
+
+      return 0;
+    }
 };
 
 Gfx gfx;

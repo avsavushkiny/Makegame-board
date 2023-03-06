@@ -5,12 +5,13 @@
 #include <Arduino.h>
 
 /* sys include */
-#include "sys.h"
-#include "sys_gfx.h"
-#include "sys_xbmp.h"
-#include "sys_page_0.h"
-#include "sys_logo.h"
-#include "sys_exc.h"
+#include "sys.h"          //sticks
+#include "sys_gfx.h"      //lcd
+#include "sys_xbmp.h"     //bitmap
+#include "sys_page_0.h"   //user start page
+#include "sys_logo.h"     //start page - logotype
+#include "sys_exc.h"      //exceptions
+#include "sys_trm.h"      //terminal
 
 /* user include */
 
@@ -23,18 +24,11 @@ void setup()
   analogReadResolution(12);
   start_sys_logo();
 
-  stateOs = OK;
+  stateOs = SYS_OK;
 }
 
 void loop()
 {
-  if (stateOs == OK)
-  {
-    delay(5000); stateOs = ERROR;
-  }
-  
-  else if(stateOs == ERROR)
-  {
-    gfx.render(messageOs, 0);
-  }
+  gfx.clear();
+  terminalInputData();
 }

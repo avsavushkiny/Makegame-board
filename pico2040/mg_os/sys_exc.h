@@ -7,8 +7,8 @@
 
 enum STATE_OS
 {
-  OK,
-  ERROR,
+  SYS_OK,
+  SYS_ERROR,
 } stateOs;
 
 class Exceptions
@@ -25,12 +25,12 @@ void messageOs()
 
   String title_1 = "Error. No procces";
 
-  if (stateOs == ERROR)
+  if (stateOs == SYS_ERROR)
   {
   u8g2.setCursor(6, 27);
   u8g2.print(title_1); 
   }
 
   delay(5000);
-  stateOs = OK;
+  stateOs = SYS_OK;
 }
