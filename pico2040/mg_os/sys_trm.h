@@ -5,38 +5,27 @@
 #pragma once
 #include <Arduino.h>
 
+#include "sys.h"
+#include "sys_gfx.h"
+#include "sys_xbmp.h"
+
 class Terminal
 {
-  private:
-  public:
+private:
+public:
 } trm;
 
-class InputOutput
+struct Command
 {
-  private:
-  public:
+  int nubmerCmd;
+  bool stateCmd;
+  char nameCmd[20];
+} cmd[]
 
-} io;
+{1, false, "sys"},
+{2, false, "help"}
+;
 
-void terminalInputData()
+void terminal()
 {
-  String data{};
-
-  if (Serial.available() > 0)
-  {
-    data = Serial.readString(); data.trim();
-    if (data == "--")
-    {
-      if (data == "sys")
-      {
-        Serial.println("RASPBERRY_PICO_2040_EN");
-      }
-    }
-    else Serial.println("Non command");
-  }
-}
-
-void terminalGfx()
-{
-
 }

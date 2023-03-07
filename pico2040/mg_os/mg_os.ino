@@ -29,6 +29,5 @@ void setup()
 
 void loop()
 {
-  gfx.clear();
-  terminalInputData();
+  terminal();
 }
