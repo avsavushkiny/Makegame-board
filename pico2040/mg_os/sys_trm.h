@@ -20,11 +20,12 @@ struct Command
   int nubmerCmd;
   bool stateCmd;
   char nameCmd[20];
-} cmd[]
-
-{1, false, "sys"},
-{2, false, "help"}
-;
+} cmd[] = 
+{
+{1, false, "sys" },
+{2, false, "help"},
+{3, false, "gfx" }
+};
 
 void terminal()
 {
