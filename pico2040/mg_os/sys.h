@@ -236,14 +236,14 @@ class Systems
         timer_fn(); return 1;
       }
     }
+
+    void debug(String text, int  data_0, int data_1)
+    {
+      String outputData = text + " " + data_0 + " " + data_1;
+      Serial.println(outputData);
+    }
 };
 
 Systems sys;
-
-void debug(String text, int  data_0, int data_1)
-{
-  String outputData = text + " " + data_0 + " " + data_1;
-  Serial.println(outputData);
-}
 
 //add data exceptions by stick

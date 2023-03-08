@@ -9,20 +9,19 @@
 
 /* prototype */
 void frame_1(); void frame_2();
-void buttonPressStart();
 
 /* main func */
 void start_sys_logo()
 {
   gfx.render(frame_1, 1500); // func, delay 1,5 sec
   gfx.render(frame_2, 1500);
+  gfx.clear();
 }
 
 /* func */
 void frame_1()
 {
   u8g2.drawXBMP(36, 18, mg_l_w, mg_l_h, mg_l);
-  //sys.timer_0(buttonPressStart, 300);
 }
 
 void frame_2()
@@ -45,12 +44,4 @@ void frame_2()
 
   u8g2.setCursor(6, 46);
   u8g2.print(title_4);
-}
-
-void buttonPressStart()
-{
-  u8g2.setFont(u8g2_font_u8glib_4_tf);
-  u8g2.setCursor(36, 54);
-  u8g2.print("PRESS START");
-  u8g2.drawRFrame(34, 48, 53, 8, 2);
 }
