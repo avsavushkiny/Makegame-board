@@ -3,78 +3,85 @@
 */
 
 #pragma once
+
 #include <Arduino.h>
 
 #include "sys.h"
 #include "sys_gfx.h"
 #include "sys_xbmp.h"
+#include "sys_logo.h"
 
-class Terminal
+struct Command
 {
-private:
-public:
-} trm;
-
-struct Commands
-{
-  int nubmerCmd;
-  bool stateCmd;
-  String nameCmd;
-  String infoCmd;
-} cmd[] = 
-{
-{1, false, "sys", "Raspbbery PICO 2040 gl ver"},
-{2, false, "help", ""},
-{3, false, "gfx", "ST7565_ERC12864_F_4W_SW_SPI"}
+  char const *text;
+  void (*f)();
+  bool active;
 };
-
-String textData{}, data{}, dataHeaderTrm{"trm "};
-int stackTrm[5]{};
-
-void ioTrm()
-{
-  //search by commands
-  if (Serial.available() != 0)
-  {
-    data = Serial.readString();
-    for (int i = 0; i < 3; i++)
-    {
-      if (data == cmd[i].nameCmd)
-      {
-        textData = cmd[i].infoCmd;
-      }
-    }
-  }
-}
 
 void headerTrm()
 {
   u8g2.setFont(u8g2_font_6x10_tr);
   u8g2.setCursor(0, 10);
-  u8g2.print(dataHeaderTrm);
+  u8g2.print("trm");
 }
 
-void interfaceTrm()
+void functionA()
 {
-  sys.timer_0(headerTrm, 300);
-  
+  u8g2.setFont(u8g2_font_6x10_tr);
+  u8g2.setCursor(0, 10);
+  u8g2.print("function A");
+  Serial.println("This is function A.");
+}
+
+void functionB()
+{
   u8g2.setFont(u8g2_font_6x10_tr);
   u8g2.setCursor(0, 20);
-  u8g2.print(textData);
+  u8g2.print("function B");
+  Serial.println("This is function B.");
 }
 
-void terminal()
+void functionC()
 {
-  ioTrm();
-  gfx.render(interfaceTrm, 1500);
+  u8g2.drawXBMP(36, 18, mg_l_w, mg_l_h, mg_l);
 }
 
+Command commands[]
+{
+  { "sys", functionA, false },
+  { "gfx", functionB, false },
+  { "mgl", functionC, false }
+};
 
+void bodyTrm()
+{
+  for (Command const &command : commands)
+  {
+    if (command.active)
+    {
+      command.f();
+    }
+  }
+}
 
+void terminal() 
+{
+  gfx.render(bodyTrm, 0);
+  
+  if (not Serial.available()) {
+    return;
+  }
 
-
-
-
+  char text[10]{};
+  Serial.readBytesUntil('\n', text, sizeof(text));
+  for (Command &command : commands)
+  {
+    if (not strncmp(command.text, text, 3))
+    {
+      command.active = true;
+    }
+  }
+}
 
 
 

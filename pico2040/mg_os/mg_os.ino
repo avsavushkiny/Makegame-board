@@ -28,7 +28,7 @@ void setup()
   analogReadResolution(12);
   start_sys_logo();
 
-  stateOs = SYS_OK;
+  Serial.begin(9600);
 }
 
 void loop()

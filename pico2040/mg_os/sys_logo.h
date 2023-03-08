@@ -1,6 +1,8 @@
 /*
     sys logo
 */
+
+#pragma once
 #include <Arduino.h>
 
 #include "sys.h"
