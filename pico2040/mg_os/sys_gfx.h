@@ -63,6 +63,7 @@ class Gfx
       } while ( millis() < time );
     }
 
+    /* clear gfx */
     void clear()
     {
       u8g2.clearBuffer();
