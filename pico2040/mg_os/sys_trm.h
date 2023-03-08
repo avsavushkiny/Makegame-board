@@ -15,7 +15,7 @@ private:
 public:
 } trm;
 
-struct Command
+struct Commands
 {
   int nubmerCmd;
   bool stateCmd;
