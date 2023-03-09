@@ -10,13 +10,13 @@
 #include "sys_xbmp.h"
 
 /* prototype */
-void frame_1(); void frame_2();
+void frame_1(); void frame_2(); void frame_3();
 
 /* main func */
 void start_sys_logo()
 {
   gfx.render(frame_1, 1500); // func, delay 1,5 sec
-  gfx.render(frame_2, 1500);
+  gfx.render(frame_3, 30500);
   gfx.clear();
 }
 
@@ -47,3 +47,27 @@ void frame_2()
   u8g2.setCursor(6, 46);
   u8g2.print(title_4);
 }
+
+char text[] = "Hey Bro!\nI am Console,\nOpen source project!";
+
+void frame_3()
+{
+  int sizeText = sizeof(text); int y{10};
+  
+  for(int i = 0, x = 0; i < sizeText, x < (sizeText*6); i++, x+=6)
+  {
+    u8g2.setFont(u8g2_font_6x10_tr);
+    u8g2.setCursor(x, y);
+    u8g2.print(text[i]);
+
+    if (text[i] == '\n') 
+    {
+      y += 10; x = -6;
+    }
+  }
+
+  Serial.println(sizeText);
+}
+
+
+
