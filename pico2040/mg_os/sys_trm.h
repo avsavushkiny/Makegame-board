@@ -11,6 +11,8 @@
 #include "sys_xbmp.h"
 #include "sys_logo.h"
 
+int k{10};
+
 struct Command
 {
   char const *text;
@@ -25,12 +27,12 @@ void headerTrm()
   u8g2.print("trm");
 }
 
-void functionA()
+void trmSys()
 {
   u8g2.setFont(u8g2_font_6x10_tr);
   u8g2.setCursor(0, 10);
-  u8g2.print("function A");
-  Serial.println("This is function A.");
+  u8g2.print("Raspberry Pico 2040 \n Dual ARM Cortex-M0+ \n Raspberry Pi co ltd");
+  Serial.println();
 }
 
 void functionB()
@@ -46,9 +48,15 @@ void functionC()
   u8g2.drawXBMP(36, 18, mg_l_w, mg_l_h, mg_l);
 }
 
+//drawField
+//drawBall
+//drawRackets
+//drawTable
+//calculate
+
 Command commands[]
 {
-  { "sys", functionA, false },
+  { "sys", trmSys, false },
   { "gfx", functionB, false },
   { "mgl", functionC, false }
 };
@@ -82,7 +90,3 @@ void terminal()
     }
   }
 }
-
-
-
-
