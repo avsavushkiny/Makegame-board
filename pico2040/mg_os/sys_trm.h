@@ -22,25 +22,18 @@ struct Command
 
 void headerTrm()
 {
-  u8g2.setFont(u8g2_font_6x10_tr);
-  u8g2.setCursor(0, 10);
-  u8g2.print("trm");
+  u8g2.drawXBMP(0, 0, trm_l_w, trm_l_h, trm_l);
+  //gfx.print("trm", 0, 0);
 }
 
 void trmSys()
 {
-  u8g2.setFont(u8g2_font_6x10_tr);
-  u8g2.setCursor(0, 10);
-  u8g2.print("Raspberry Pico 2040 \n Dual ARM Cortex-M0+ \n Raspberry Pi co ltd");
-  Serial.println();
+  gfx.print("Raspberry Pico 2040\nDual ARM Cortex-M0+\nCPU speed - 133 MHz\nFlash - 2 MB\nSRAM - 264 KB", 0, 10);
 }
 
 void functionB()
 {
-  u8g2.setFont(u8g2_font_6x10_tr);
-  u8g2.setCursor(0, 20);
-  u8g2.print("function B");
-  Serial.println("This is function B.");
+
 }
 
 void functionC()
@@ -63,6 +56,7 @@ Command commands[]
 
 void bodyTrm()
 {
+  headerTrm();
   for (Command const &command : commands)
   {
     if (command.active)

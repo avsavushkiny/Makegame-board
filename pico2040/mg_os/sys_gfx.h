@@ -26,64 +26,106 @@ const long interval = 300;
 
 class Gfx
 {
-  private:
-  public:
-    
-    /* start gfx */
-    void screen()
-    {
-      u8g2.begin();
-      u8g2.setContrast(0);
-      sys.backlight(true);
-    }
+private:
+public:
 
-    /* render sys message */
-    void renderMessage( void(*draw_fn)(String, String), String a, String b, int timeDelay )
-    {
-      uint32_t time;
-      time = millis() + timeDelay;
+  /* start gfx */
+  void screen()
+  {
+    u8g2.begin();
+    u8g2.setContrast(0);
+    sys.backlight(true);
+  }
 
-      do {
-        u8g2.clearBuffer();
-        draw_fn(a, b);
-        u8g2.sendBuffer();
-      } while ( millis() < time );
-    }
+  /* render sys message */
+  void renderMessage(void (*draw_fn)(String, String), String a, String b, int timeDelay)
+  {
+    uint32_t time;
+    time = millis() + timeDelay;
 
-    /* render gfx */
-    void render( void(*draw_fn)(void), int timeDelay )
-    {
-      uint32_t time;
-      time = millis() + timeDelay;
-
-      do {
-        u8g2.clearBuffer();
-        draw_fn();
-        u8g2.sendBuffer();
-      } while ( millis() < time );
-    }
-
-    /* clear gfx */
-    void clear()
+    do
     {
       u8g2.clearBuffer();
+      draw_fn(a, b);
       u8g2.sendBuffer();
+    } while (millis() < time);
+  }
+
+  /* render gfx */
+  void render(void (*draw_fn)(void), int timeDelay)
+  {
+    uint32_t time;
+    time = millis() + timeDelay;
+
+    do
+    {
+      u8g2.clearBuffer();
+      draw_fn();
+      u8g2.sendBuffer();
+    } while (millis() < time);
+  }
+
+  /* clear gfx */
+  void clear()
+  {
+    u8g2.clearBuffer();
+    u8g2.sendBuffer();
+  }
+
+  /* print to "text" */
+  void print(String text, int x, int y)
+  {
+    int sizeText = text.length() + 1;
+    int yy{ 10 };
+    
+    for (int i = 0, xx = 0; i < sizeText, xx < (sizeText * 6); i++, xx += 6)
+    {
+      u8g2.setFont(u8g2_font_6x10_tr); 
+      u8g2.setCursor(xx + x, yy + y);
+      u8g2.print(text[i]);
+
+      if (text[i] == '\n')
+      {
+        yy += 10;
+        xx = -6;
+      }
     }
+  }
 };
 
 Gfx gfx;
 
 /* cursor */
-bool drawCursor(bool stateCursor)
-{
-  if (stateCursor == true)
-  {
+bool drawCursor(bool stateCursor) {
+  if (stateCursor == true) {
     u8g2.setDrawColor(2);
     u8g2.setBitmapMode(1);
     u8g2.drawXBMP(sys.joi0x(), sys.joi0y(), cursor_w, cursor_h, cursor);
     u8g2.setDrawColor(1);
     u8g2.setBitmapMode(0);
     return true;
-  }
-  else return false;
+  } else return false;
 }
+
+/*
+//old version function - print
+
+char text[] = "Hey Bro!\nI am Console,\nOpen source project!";
+
+void print()
+{
+  int sizeText = sizeof(text); int y{10};
+  
+  for(int i = 0, x = 0; i < sizeText, x < (sizeText*6); i++, x+=6)
+  {
+    u8g2.setFont(u8g2_font_6x10_tr);
+    u8g2.setCursor(x, y);
+    u8g2.print(text[i]);
+
+    if (text[i] == '\n') 
+    {
+      y += 10; x = -6;
+    }
+  }
+}
+*/
