@@ -39,7 +39,7 @@ public:
   }
   
   /* render gfx */
-  void render(void (*draw_fn)(void), int timeDelay)
+  void render(void (*ptr_draw_fn)(void), int timeDelay)
   {
     uint32_t time;
     time = millis() + timeDelay;
@@ -47,7 +47,7 @@ public:
     do
     {
       u8g2.clearBuffer();
-      draw_fn();
+      ptr_draw_fn();
       u8g2.sendBuffer();
     } while (millis() < time);
   }
@@ -80,7 +80,7 @@ public:
   }
 
   /* print to "wink text" */
-  bool winkPrint(void(*winkPrint_fn)(String, int, int), String text, int x, int y, /*delay*/ int interval)
+  bool winkPrint(void(*ptr_fn)(String, int, int), String text, int x, int y, /*delay*/ int interval)
   {
     unsigned long currTime = millis();
     if (currTime - prevTime_0 >= interval)
@@ -89,7 +89,7 @@ public:
     }
     else
     {
-      winkPrint_fn(text, x, y); return 1;
+      ptr_fn(text, x, y); return 1;
     }
   }
 
@@ -108,8 +108,7 @@ public:
 };
 
 Gfx gfx;
-
-/* cursor */
+/*
 bool drawCursor0(bool stateCursor) {
   if (stateCursor == true) {
     u8g2.setDrawColor(2);
@@ -120,7 +119,7 @@ bool drawCursor0(bool stateCursor) {
     return true;
   } else return false;
 }
-
+*/
 void printf(String text, int x, int y)
 {
   int sizeText = text.length() + 1;

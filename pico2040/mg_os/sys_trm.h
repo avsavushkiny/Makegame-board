@@ -30,8 +30,8 @@ String userData = "command";
 void headerTrm()
 {
   //u8g2.drawXBMP(0, 2, trm_l_w, trm_l_h, trm_l);
-  gfx.winkPrint(printf, "<" + userData + ">", 0, 9, 300);
-  //u8g2.drawHLine(0, 11, 128);
+  gfx.winkPrint(printf, "trm " + userData , 0, 9, 300);
+  u8g2.drawHLine(0, 11, 128);
   //gfx.print("" + userData + "", 18, 10);
 }
 

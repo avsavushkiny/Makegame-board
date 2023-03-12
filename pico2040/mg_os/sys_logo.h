@@ -10,7 +10,7 @@
 #include "sys_xbmp.h"
 
 /* prototype */
-void frame_1(); void frame_2(); void frame_3();
+void frame_1(); void frame_2(); void frame_3(); void frame_4();
 
 /* main func */
 void start_sys_logo()
@@ -18,6 +18,7 @@ void start_sys_logo()
   gfx.render(frame_1, 1500); // func, delay 1,5 sec
   gfx.render(frame_2, 3000);
   gfx.render(frame_3, 3000);
+  gfx.render(frame_4, 3000);
   gfx.clear();
 }
 
@@ -35,4 +36,9 @@ void frame_2()
 void frame_3()
 {
   gfx.print("Do you want to make\nyour own game?", 6, 23);
+}
+
+void frame_4()
+{
+  gfx.print("Enjoy!", 6, 23);
 }
