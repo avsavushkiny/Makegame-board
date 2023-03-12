@@ -237,7 +237,7 @@ class Systems
       }
     }
 
-    void debug(String text, int  data_0, int data_1)
+    void db(String text, int  data_0, int data_1)
     {
       String outputData = text + " " + data_0 + " " + data_1;
       Serial.println(outputData);

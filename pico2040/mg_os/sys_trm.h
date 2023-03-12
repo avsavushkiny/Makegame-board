@@ -18,55 +18,37 @@ struct Command
   bool active;
 };
 
-class Terminal
-{
-  private:
-  public:
+String trmUserData = "command";
 
-} trm;
-
-String userData = "command";
-
-void headerTrm()
+void headerTerminal()
 {
   //u8g2.drawXBMP(0, 2, trm_l_w, trm_l_h, trm_l);
-  gfx.winkPrint(printf, "trm " + userData , 0, 9, 300);
+  gfx.winkPrint(printf, "trm " + trmUserData , 0, 9, 300);
   u8g2.drawHLine(0, 11, 128);
-  //gfx.print("" + userData + "", 18, 10);
 }
 
-void trmSys()
+/* info */
+void infoSystems()
 {
   gfx.print("Raspberry Pico 2040\nDual ARM Cortex-M0+\nCPU speed - 133 MHz\nFlash - 2 MB\nSRAM - 264 KB", 0, 20);
 }
 
-void functionB()
+void infoGfx()
 {
-
+  gfx.print("Chip - ST7565\nRes - 128x64\nVersion - White", 0, 20);
 }
 
-void functionC()
-{
-  u8g2.drawXBMP(36, 18, mg_l_w, mg_l_h, mg_l);
-}
-
-//drawField
-//drawBall
-//drawRackets
-//drawTable
-//calculate
-
+/* all commands */
 Command commands[]
 {
-  { "sys", trmSys, false },
-  { "gfx", functionB, false },
-  { "mgl", functionC, false }
+  { "sys", infoSystems, false },
+  { "gfx", infoGfx, false },
 };
 
-void bodyTrm()
+/* terminal core */
+void calcTerminal()
 {
-  headerTrm();
-  //gfx.drawCursor(true);
+  headerTerminal();
 
   for (Command const &command : commands)
   {
@@ -77,21 +59,30 @@ void bodyTrm()
   }
 }
 
+/* entry point */
 void terminal() 
 {
-  gfx.render(bodyTrm, 0);
+  gfx.render(calcTerminal, 0);
   
   if (not Serial.available()) {
     return;
   }
 
   char text[10]{};
-  Serial.readBytesUntil('\n', text, sizeof(text)); userData = text;
+  Serial.readBytesUntil('\n', text, sizeof(text));
+  trmUserData = text;
+
   for (Command &command : commands)
   {
     if (not strncmp(command.text, text, 3))
     {
       command.active = true;
     }
+    else command.active = false;
   }
 }
+
+
+
+
+
