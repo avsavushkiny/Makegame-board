@@ -11,8 +11,6 @@
 #include "sys_xbmp.h"
 #include "sys_logo.h"
 
-int k{10};
-
 struct Command
 {
   char const *text;
@@ -20,15 +18,26 @@ struct Command
   bool active;
 };
 
+class Terminal
+{
+  private:
+  public:
+
+} trm;
+
+String userData = "command";
+
 void headerTrm()
 {
-  u8g2.drawXBMP(0, 0, trm_l_w, trm_l_h, trm_l);
-  //gfx.print("trm", 0, 0);
+  //u8g2.drawXBMP(0, 2, trm_l_w, trm_l_h, trm_l);
+  gfx.winkPrint(printf, "<" + userData + ">", 0, 9, 300);
+  //u8g2.drawHLine(0, 11, 128);
+  //gfx.print("" + userData + "", 18, 10);
 }
 
 void trmSys()
 {
-  gfx.print("Raspberry Pico 2040\nDual ARM Cortex-M0+\nCPU speed - 133 MHz\nFlash - 2 MB\nSRAM - 264 KB", 0, 10);
+  gfx.print("Raspberry Pico 2040\nDual ARM Cortex-M0+\nCPU speed - 133 MHz\nFlash - 2 MB\nSRAM - 264 KB", 0, 20);
 }
 
 void functionB()
@@ -57,6 +66,8 @@ Command commands[]
 void bodyTrm()
 {
   headerTrm();
+  //gfx.drawCursor(true);
+
   for (Command const &command : commands)
   {
     if (command.active)
@@ -75,7 +86,7 @@ void terminal()
   }
 
   char text[10]{};
-  Serial.readBytesUntil('\n', text, sizeof(text));
+  Serial.readBytesUntil('\n', text, sizeof(text)); userData = text;
   for (Command &command : commands)
   {
     if (not strncmp(command.text, text, 3))

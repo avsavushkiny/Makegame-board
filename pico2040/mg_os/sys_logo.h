@@ -29,10 +29,10 @@ void frame_1()
 
 void frame_2()
 {
-  gfx.print("Hey Bro!\nI am Console,\nOpen source project!", 6, 13);
+  gfx.print("Hey Bro!\nI am Console,\nOpen source project!", 6, 23);
 }
 
 void frame_3()
 {
-  gfx.print("Do you want to make\nyour own game?", 6, 13);
+  gfx.print("Do you want to make\nyour own game?", 6, 23);
 }

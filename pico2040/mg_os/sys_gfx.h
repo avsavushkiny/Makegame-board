@@ -27,6 +27,7 @@ const long interval = 300;
 class Gfx
 {
 private:
+  unsigned long prevTime_0{};
 public:
 
   /* start gfx */
@@ -36,21 +37,7 @@ public:
     u8g2.setContrast(0);
     sys.backlight(true);
   }
-
-  /* render sys message */
-  void renderMessage(void (*draw_fn)(String, String), String a, String b, int timeDelay)
-  {
-    uint32_t time;
-    time = millis() + timeDelay;
-
-    do
-    {
-      u8g2.clearBuffer();
-      draw_fn(a, b);
-      u8g2.sendBuffer();
-    } while (millis() < time);
-  }
-
+  
   /* render gfx */
   void render(void (*draw_fn)(void), int timeDelay)
   {
@@ -76,7 +63,7 @@ public:
   void print(String text, int x, int y)
   {
     int sizeText = text.length() + 1;
-    int yy{ 10 };
+    int yy{ 0 };
     
     for (int i = 0, xx = 0; i < sizeText, xx < (sizeText * 6); i++, xx += 6)
     {
@@ -91,12 +78,39 @@ public:
       }
     }
   }
+
+  /* print to "wink text" */
+  bool winkPrint(void(*winkPrint_fn)(String, int, int), String text, int x, int y, /*delay*/ int interval)
+  {
+    unsigned long currTime = millis();
+    if (currTime - prevTime_0 >= interval)
+    {
+      prevTime_0 = currTime; return 0;
+    }
+    else
+    {
+      winkPrint_fn(text, x, y); return 1;
+    }
+  }
+
+  bool drawCursor(bool stateCursor)
+  {
+    if (stateCursor == true)
+    {
+      u8g2.setDrawColor(2);
+      u8g2.setBitmapMode(1);
+      u8g2.drawXBMP(sys.joi0x(), sys.joi0y(), cursor_w, cursor_h, cursor);
+      u8g2.setDrawColor(1);
+      u8g2.setBitmapMode(0);
+      return true;
+    } else return false;
+  }
 };
 
 Gfx gfx;
 
 /* cursor */
-bool drawCursor(bool stateCursor) {
+bool drawCursor0(bool stateCursor) {
   if (stateCursor == true) {
     u8g2.setDrawColor(2);
     u8g2.setBitmapMode(1);
@@ -105,6 +119,25 @@ bool drawCursor(bool stateCursor) {
     u8g2.setBitmapMode(0);
     return true;
   } else return false;
+}
+
+void printf(String text, int x, int y)
+{
+  int sizeText = text.length() + 1;
+  int yy{ 0 };
+    
+  for (int i = 0, xx = 0; i < sizeText, xx < (sizeText * 6); i++, xx += 6)
+  {
+    u8g2.setFont(u8g2_font_6x10_tr); 
+    u8g2.setCursor(xx + x, yy + y);
+    u8g2.print(text[i]);
+
+    if (text[i] == '\n')
+    {
+      yy += 10;
+      xx = -6;
+    }
+  }
 }
 
 /*
@@ -128,4 +161,19 @@ void print()
     }
   }
 }
+
+//old version function - renderMessage
+void renderMessage(void (*draw_fn)(String, String), String a, String b, int timeDelay)
+{
+  uint32_t time;
+  time = millis() + timeDelay;
+
+  do
+  {
+    u8g2.clearBuffer();
+    draw_fn(a, b);
+    u8g2.sendBuffer();
+  } while (millis() < time);
+}
+
 */
