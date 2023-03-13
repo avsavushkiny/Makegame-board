@@ -1,7 +1,7 @@
 /*
-    system xbmp map
+  system xbmp map
 
-    bmp to xbmp image converter https://www.online-utility.org/image/convert/to/XBM
+  bmp to xbmp image converter https://www.online-utility.org/image/convert/to/XBM
 */
 
 #pragma once

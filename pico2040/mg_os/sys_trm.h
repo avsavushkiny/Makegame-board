@@ -1,5 +1,5 @@
 /*
-    terminal
+  terminal
 */
 
 #pragma once

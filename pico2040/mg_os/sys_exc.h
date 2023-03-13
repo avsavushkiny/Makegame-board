@@ -1,5 +1,5 @@
 /*
-    exceptions
+  exceptions
 */
 
 #pragma once

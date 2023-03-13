@@ -1,5 +1,5 @@
 /*
-    coordinate calculation, buttons, backlight
+  coordinate calculation, buttons, backlight
 */
 
 #pragma once

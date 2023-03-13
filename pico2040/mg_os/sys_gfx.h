@@ -1,9 +1,9 @@
 /*
-    graphics output library
-    ST7565 128*64  
+  graphics output library
+  ST7565 128*64  
 
-    reference manual https://github.com/olikraus/u8g2/wiki/u8g2reference
-    fonts            https://github.com/olikraus/u8g2/wiki/fntlistall      
+  reference manual https://github.com/olikraus/u8g2/wiki/u8g2reference
+  fonts            https://github.com/olikraus/u8g2/wiki/fntlistall      
 */
 
 #pragma once

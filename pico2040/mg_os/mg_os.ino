@@ -1,6 +1,6 @@
 /*
-makegame OS / beta / 191222
-update 090323
+  makegame OS / beta / 191222
+  update 090323
 */
 
 #include <Arduino.h>
@@ -13,6 +13,7 @@ update 090323
 #include "sys_logo.h"     //start page - logotype
 #include "sys_exc.h"      //exceptions
 #include "sys_trm.h"      //terminal
+#include "sys_game.h"     //default game
 
 /* user include */
 
@@ -30,5 +31,6 @@ void setup()
 
 void loop()
 {
-  terminal();
+  loops();
+  //terminal();
 }
