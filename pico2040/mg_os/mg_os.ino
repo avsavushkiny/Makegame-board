@@ -9,11 +9,13 @@
 #include "sys.h"          //sticks
 #include "sys_gfx.h"      //lcd
 #include "sys_xbmp.h"     //bitmap
-#include "sys_page_0.h"   //user start page
 #include "sys_logo.h"     //start page - logotype
 #include "sys_exc.h"      //exceptions
 #include "sys_trm.h"      //terminal
 #include "sys_game.h"     //default game
+#include "sys_adc.h"      //test ADC
+
+#include "sys_page_0.h"   //user start page
 
 /* user include */
 
@@ -31,6 +33,5 @@ void setup()
 
 void loop()
 {
-  loops();
-  //terminal();
+  terminal();
 }

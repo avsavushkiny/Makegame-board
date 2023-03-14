@@ -67,7 +67,7 @@ public:
     
     for (int i = 0, xx = 0; i < sizeText, xx < (sizeText * 6); i++, xx += 6)
     {
-      u8g2.setFont(u8g2_font_6x10_tr); 
+      u8g2.setFont(u8g2_font_6x10_tr);
       u8g2.setCursor(xx + x, yy + y);
       u8g2.print(text[i]);
 

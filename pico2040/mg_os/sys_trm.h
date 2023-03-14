@@ -10,6 +10,7 @@
 #include "sys_gfx.h"
 #include "sys_xbmp.h"
 #include "sys_logo.h"
+#include "sys_adc.h"
 
 struct Command
 {
@@ -43,6 +44,7 @@ Command commands[]
 {
   { "sys", infoSystems, false },
   { "gfx", infoGfx, false },
+  { "adc", infoAdc, false }
 };
 
 /* terminal core */
@@ -64,7 +66,8 @@ void terminal()
 {
   gfx.render(calcTerminal, 0);
   
-  if (not Serial.available()) {
+  if (not Serial.available())
+  {
     return;
   }
 
@@ -81,8 +84,3 @@ void terminal()
     else command.active = false;
   }
 }
-
-
-
-
-

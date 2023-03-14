@@ -19,8 +19,8 @@ U8G2_ST7565_ERC12864_F_4W_SW_SPI u8g2(U8G2_R0, 18, 19, 17, 16, 20);
 void addEffect(int paddleSpeed);
 
 //def pins
-int CONTROL_A {sys.joi0y()};
-int CONTROL_B {sys.joi1y()};
+#define CONTROL_A 27;
+#define CONTROL_B 28;
 
 //def visuals
 #define SCREEN_OX 0
@@ -51,8 +51,19 @@ int lastPaddleLocationB = 0;
 int scoreA = 0;
 int scoreB = 0;
 
-//pong_log.XBM
-const uint8_t pongLogo[] PROGMEM={
+
+
+/*
+void setups()
+{
+  renderStartMessage();  //draw logo, set font, set print pos, print, delay
+}
+
+//rendering start on message
+void renderStartMessage()
+{
+  //pong_log.XBM
+  const uint8_t pongLogo[] PROGMEM={
   //w 70px, h 20px
   0x00, 0x00, 0x00, 0x06, 0x00, 0x60, 0x00, 0x00, 0x00, 0xFE, 0x03, 0xE0, 
   0x7F, 0x00, 0xFC, 0x03, 0xE0, 0x1F, 0xFE, 0x0F, 0xF0, 0xFF, 0x01, 0xFE, 
@@ -70,16 +81,7 @@ const uint8_t pongLogo[] PROGMEM={
   0xFF, 0x80, 0x07, 0x1E, 0xF0, 0x1F, 0x1E, 0x00, 0x80, 0x3F, 0x80, 0x07, 
   0x1E, 0xE0, 0x1F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
-
-/*
-void setups()
-{
-  renderStartMessage();  //draw logo, set font, set print pos, print, delay
-}
-
-//rendering start on message
-void renderStartMessage()
-{
+  
   u8g2.firstPage();
 	do {	
 	  u8g2.drawXBMP(29, 16, 70, 20, pongLogo); //x, y, w, h, xbmp
@@ -99,11 +101,11 @@ void renderStartMessage()
 //calculate
 void calculateMovement()
 {
-  int controlA = analogRead(CONTROL_A);
-  int controlB = analogRead(CONTROL_B);
+  int controlA = CONTROL_A; //u8g2.drawFrame(128/2, sys.joi0y(), 10, 10);
+  int controlB = CONTROL_B; //u8g2.drawFrame(128/2, sys.joi1y(), 10, 10);
 
-  paddleLocationA = map(controlA, 0, 1023, 0, SCREEN_HEIGHT - PADDLE_HEIGHT);
-  paddleLocationB = map(controlB, 0, 1023, 0, SCREEN_HEIGHT - PADDLE_HEIGHT);
+  paddleLocationA = map(controlA, 0, 4096, 0, SCREEN_HEIGHT - PADDLE_HEIGHT);
+  paddleLocationB = map(controlB, 0, 4096, 0, SCREEN_HEIGHT - PADDLE_HEIGHT);
 
   int paddleSpeedA = paddleLocationA - lastPaddleLocationA;
   int paddleSpeedB = paddleLocationB - lastPaddleLocationB;
