@@ -23,9 +23,8 @@ String trmUserData = "command";
 
 void headerTerminal()
 {
-  //u8g2.drawXBMP(0, 2, trm_l_w, trm_l_h, trm_l);
-  gfx.winkPrint(printf, "trm " + trmUserData , 0, 9, 300);
-  u8g2.drawHLine(0, 11, 128);
+  u8g2.drawXBMP(0, 2, trm_l_w, trm_l_h, trm_l);
+  gfx.winkPrint(printf, "" + trmUserData , 13, 10, 500);
 }
 
 /* info */

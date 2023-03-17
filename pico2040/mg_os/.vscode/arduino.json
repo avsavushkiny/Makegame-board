@@ -1,0 +1,5 @@
+{
+    "board": "arduino:mbed_rp2040:pico",
+    "sketch": "mg_os.ino",
+    "port": "COM3"
+}
