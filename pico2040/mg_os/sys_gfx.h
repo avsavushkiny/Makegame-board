@@ -10,7 +10,7 @@
 
 #include <Arduino.h>
 #include <U8g2lib.h>
-#include <SPI.h>
+//#include <SPI.h>
 
 #include "sys.h"
 #include "sys_xbmp.h"

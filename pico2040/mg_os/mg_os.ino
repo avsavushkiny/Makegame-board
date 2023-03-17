@@ -3,7 +3,7 @@
   update 090323
 */
 
-#include <Arduino.h>
+//#include <Arduino.h>
 
 /* sys include */
 #include "sys.h"          //sticks

@@ -3,29 +3,29 @@
     "configurations": [
         {
             "name": "Arduino",
-            "compilerPath": "C:\\Users\\Teacher\\AppData\\Local\\Arduino15\\packages\\arduino\\tools\\arm-none-eabi-gcc\\7-2017q4\\bin\\arm-none-eabi-g++",
+            "compilerPath": "C:\\Users\\avsav\\AppData\\Local\\Arduino15\\packages\\arduino\\tools\\arm-none-eabi-gcc\\7-2017q4\\bin\\arm-none-eabi-g++",
             "compilerArgs": [
                 "-w",
                 "-nostdlib"
             ],
             "intelliSenseMode": "gcc-x64",
             "includePath": [
-                "C:\\Users\\Teacher\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\mbed_rp2040\\4.0.2\\cores\\arduino",
-                "C:\\Users\\Teacher\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\mbed_rp2040\\4.0.2\\variants\\RASPBERRY_PI_PICO",
-                "C:\\Users\\Teacher\\Documents\\Arduino\\libraries\\U8g2\\src",
-                "C:\\Users\\Teacher\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\mbed_rp2040\\4.0.2\\libraries\\SPI",
-                "C:\\Users\\Teacher\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\mbed_rp2040\\4.0.2\\libraries\\Wire",
-                "C:\\Users\\Teacher\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\mbed_rp2040\\4.0.2\\cores\\arduino\\api\\deprecated",
-                "C:\\Users\\Teacher\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\mbed_rp2040\\4.0.2\\cores\\arduino\\api\\deprecated-avr-comp",
-                "c:\\users\\teacher\\appdata\\local\\arduino15\\packages\\arduino\\tools\\arm-none-eabi-gcc\\7-2017q4\\arm-none-eabi\\include\\c++\\7.2.1",
-                "c:\\users\\teacher\\appdata\\local\\arduino15\\packages\\arduino\\tools\\arm-none-eabi-gcc\\7-2017q4\\arm-none-eabi\\include\\c++\\7.2.1\\arm-none-eabi",
-                "c:\\users\\teacher\\appdata\\local\\arduino15\\packages\\arduino\\tools\\arm-none-eabi-gcc\\7-2017q4\\arm-none-eabi\\include\\c++\\7.2.1\\backward",
-                "c:\\users\\teacher\\appdata\\local\\arduino15\\packages\\arduino\\tools\\arm-none-eabi-gcc\\7-2017q4\\lib\\gcc\\arm-none-eabi\\7.2.1\\include",
-                "c:\\users\\teacher\\appdata\\local\\arduino15\\packages\\arduino\\tools\\arm-none-eabi-gcc\\7-2017q4\\lib\\gcc\\arm-none-eabi\\7.2.1\\include-fixed",
-                "c:\\users\\teacher\\appdata\\local\\arduino15\\packages\\arduino\\tools\\arm-none-eabi-gcc\\7-2017q4\\arm-none-eabi\\include"
+                "C:\\Users\\avsav\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\mbed_rp2040\\4.0.2\\cores\\arduino",
+                "C:\\Users\\avsav\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\mbed_rp2040\\4.0.2\\variants\\RASPBERRY_PI_PICO",
+                "C:\\Users\\avsav\\Documents\\Arduino\\libraries\\U8g2\\src",
+                "C:\\Users\\avsav\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\mbed_rp2040\\4.0.2\\libraries\\SPI",
+                "C:\\Users\\avsav\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\mbed_rp2040\\4.0.2\\libraries\\Wire",
+                "C:\\Users\\avsav\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\mbed_rp2040\\4.0.2\\cores\\arduino\\api\\deprecated",
+                "C:\\Users\\avsav\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\mbed_rp2040\\4.0.2\\cores\\arduino\\api\\deprecated-avr-comp",
+                "c:\\users\\avsav\\appdata\\local\\arduino15\\packages\\arduino\\tools\\arm-none-eabi-gcc\\7-2017q4\\arm-none-eabi\\include\\c++\\7.2.1",
+                "c:\\users\\avsav\\appdata\\local\\arduino15\\packages\\arduino\\tools\\arm-none-eabi-gcc\\7-2017q4\\arm-none-eabi\\include\\c++\\7.2.1\\arm-none-eabi",
+                "c:\\users\\avsav\\appdata\\local\\arduino15\\packages\\arduino\\tools\\arm-none-eabi-gcc\\7-2017q4\\arm-none-eabi\\include\\c++\\7.2.1\\backward",
+                "c:\\users\\avsav\\appdata\\local\\arduino15\\packages\\arduino\\tools\\arm-none-eabi-gcc\\7-2017q4\\lib\\gcc\\arm-none-eabi\\7.2.1\\include",
+                "c:\\users\\avsav\\appdata\\local\\arduino15\\packages\\arduino\\tools\\arm-none-eabi-gcc\\7-2017q4\\lib\\gcc\\arm-none-eabi\\7.2.1\\include-fixed",
+                "c:\\users\\avsav\\appdata\\local\\arduino15\\packages\\arduino\\tools\\arm-none-eabi-gcc\\7-2017q4\\arm-none-eabi\\include"
             ],
             "forcedInclude": [
-                "C:\\Users\\Teacher\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\mbed_rp2040\\4.0.2\\cores\\arduino\\Arduino.h"
+                "C:\\Users\\avsav\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\mbed_rp2040\\4.0.2\\cores\\arduino\\Arduino.h"
             ],
             "cStandard": "c11",
             "cppStandard": "c++11",

@@ -51,7 +51,7 @@ void calcTerminal()
 {
   headerTerminal();
 
-  for (Command const &command : commands)
+  for (Command &command : commands)
   {
     if (command.active)
     {
