@@ -70,7 +70,7 @@ void terminal()
     return;
   }
 
-  char text[10]{};
+  char text[4]{};
   Serial.readBytesUntil('\n', text, sizeof(text));
   trmUserData = text;
 
