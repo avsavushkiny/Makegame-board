@@ -3,7 +3,6 @@
 */
 
 #pragma once
-#include <Arduino.h>
 
 #include "sys.h"
 #include "sys_gfx.h"

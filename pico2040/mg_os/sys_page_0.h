@@ -1,18 +1,12 @@
 /*
-  page 0
+  user page
 */
-#include <Arduino.h>
 
 #include "sys.h"
 #include "sys_gfx.h"
 #include "sys_xbmp.h"
 
-void buttonPressStart()
-{
-
-}
-
-void start_page_0()
+void start_user_page()
 {
     
 }
