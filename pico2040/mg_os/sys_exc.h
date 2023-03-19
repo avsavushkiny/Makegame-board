@@ -1,5 +1,0 @@
-/*
-  exceptions
-*/
-
-#pragma once

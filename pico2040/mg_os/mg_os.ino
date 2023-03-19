@@ -10,10 +10,7 @@
 #include "sys_gfx.h"      //lcd
 #include "sys_xbmp.h"     //bitmap
 #include "sys_logo.h"     //start page - logotype
-#include "sys_exc.h"      //exceptions
 #include "sys_trm.h"      //terminal
-
-#include "sys_page_0.h"   //user start page
 
 /* user include */
 

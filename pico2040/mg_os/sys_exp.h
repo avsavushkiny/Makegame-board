@@ -1,6 +1,6 @@
 /*
   systems test
-*/
+
 
 double divide(int a, int b)
 {
@@ -39,3 +39,4 @@ int mainn()
     test(100, 1000);    // The first number is greater than the second one
 }
 
+*/
