@@ -9,8 +9,10 @@
 #include "sys_xbmp.h"
 #include "sys_logo.h"
 
+/* prototype */
 void clearCommandTerminal();
 
+/* command type */
 struct Command
 {
   char const *text;
@@ -18,27 +20,32 @@ struct Command
   bool active;
 };
 
+/* data entered by the user */
 String trmUserData = "command";
 
+/* terminal interface */
 void headerTerminal()
 {
   u8g2.drawXBMP(0, 2, trm_l_w, trm_l_h, trm_l);
   gfx.winkPrint(printf, "" + trmUserData, 13, 10, 500);
 }
 
+/* standard commands */
 namespace defCommand
 {
-  /* info */
+  /* microcontroller information */
   void infoSystems()
   {
-    gfx.print("Raspberry Pico 2040\nDual ARM Cortex-M0+\nCPU speed - 133 MHz\nFlash - 2 MB\nSRAM - 264 KB", 0, 20);
+    gfx.print("Raspberry Pico 2040\nDual ARM Cortex-M0+\nCPU speed - 133 MHz\nFlash - 2 MB\nSRAM - 264 KB", 0, 20, 10, 6);
   }
 
+  /* graphics chip information */
   void infoGfx()
   {
-    gfx.print("Chip - ST7565\nRes - 128x64\nVersion - White", 0, 20);
+    gfx.print("Chip - ST7565\nRes - 128x64\nVersion - White", 0, 20, 10, 6);
   }
 
+  /* information about the analog-to-digital converter */
   void infoAdc()
   {
     if (sys.sw0() == true)
@@ -61,11 +68,13 @@ namespace defCommand
   }
 }
 
+/* commands for standard game */
 namespace defGame
 {
+  /* prototype defGame */
   void addEffectBall(int paddleSpeed);
   
-  // def visuals
+  /* def visuals */
   #define SCREEN_OX 0
   #define SCREEN_OY 0
   #define SCREEN_WIDTH 127
@@ -80,10 +89,10 @@ namespace defGame
   #define MIN_Y_SPEED 0.5
   #define MAX_Y_SPEED 2
 
-  // state effect ball
+  /* state effect ball */
   byte stateEffectBall = false;
 
-  // def value
+  /* def value */
   float ballX = SCREEN_WIDTH / 2;
   float ballY = SCREEN_HEIGHT / 2;
   float ballSpeedX = 2;
@@ -97,6 +106,8 @@ namespace defGame
   int scoreA = 0;
   int scoreB = 0;
 
+  /* display and calculation functions */
+  /* draw the playing field */
   void drawField()
   {
     // draw central line
@@ -109,6 +120,7 @@ namespace defGame
     u8g2.drawHLine(SCREEN_OX, SCREEN_HEIGHT, SCREEN_WIDTH); // x, y, length
   }
 
+  /* draw players rackets */
   void drawRacket()
   {
     // draw paddle A
@@ -116,13 +128,15 @@ namespace defGame
     // draw paddle B
     u8g2.drawFrame(SCREEN_WIDTH - PADDLE_WIDTH - PADDLE_PADDING, paddleLocationB, PADDLE_WIDTH, PADDLE_HEIGHT); // x, y, w, h
   }
-
+  
+  /* draw a ball */
   void drawBall()
   {
     // draw ball
     u8g2.drawFrame(ballX, ballY, BALL_SIZE, BALL_SIZE); // x, y, w, h
   }
 
+  /* draw a scoreboard */
   void drawScore()
   {
     // print scores
@@ -134,9 +148,10 @@ namespace defGame
     u8g2.print(scoreB);              // var scoreB
   }
 
+  /* draw the logo of the game */
   void drawLogo()
   {
-  //pong_log.XBM
+    //pong_log.XBM
     const uint8_t pongLogo[] PROGMEM=
     {
       //w 70px, h 20px
@@ -270,7 +285,7 @@ namespace defGame
   }
 }
 
-/* all commands */
+/* enumeration of objects - commands */
 Command commands[]
 {
     {"system", defCommand::infoSystems, false},
@@ -287,7 +302,7 @@ Command commands[]
     //{"clceff", defGame::addEffectBall, false}
 };
 
-/* clear command terminal */
+/* delete all commands */
 void clearCommandTerminal()
 {
   for (Command &command : commands)
@@ -296,7 +311,7 @@ void clearCommandTerminal()
   }
 }
 
-/* terminal core */
+/* command stack */
 void calcTerminal()
 {
   headerTerminal();
@@ -310,7 +325,7 @@ void calcTerminal()
   }
 }
 
-/* entry point */
+/* pushing data onto the stack */
 void terminal()
 {
   gfx.render(calcTerminal, 0);

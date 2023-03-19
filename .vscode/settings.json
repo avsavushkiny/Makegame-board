@@ -9,5 +9,6 @@
         "workbench.colorTheme": "undefined",
         "workbench.colorCustomizations": "undefined",
         "window.zoomLevel": "undefined"
-    }
+    },
+    "C_Cpp.errorSquiggles": "enabled"
 }

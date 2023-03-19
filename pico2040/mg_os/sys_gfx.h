@@ -14,22 +14,25 @@
 #include "sys.h"
 #include "sys_xbmp.h"
 
+/* def variables */
 #define WIDTH 128
 #define HEIGHT 64
 #define CTRL_TO 50
 
-U8G2_ST7565_ERC12864_F_4W_SW_SPI u8g2(U8G2_R0, 18, 19, 17, 16, 20);
-
 unsigned long previousMillis = 0;
 const long interval = 300;
 
+/* graphics chip setup */
+U8G2_ST7565_ERC12864_F_4W_SW_SPI u8g2(U8G2_R0, 18, 19, 17, 16, 20);
+
+/* graphics output objects */
 class Gfx
 {
 private:
   unsigned long prevTime_0{};
 public:
 
-  /* start gfx */
+  /* initial setting */
   void screen()
   {
     u8g2.begin();
@@ -37,7 +40,7 @@ public:
     sys.backlight(true);
   }
   
-  /* render gfx */
+  /* data render */
   void render(void (*ptr_draw_fn)(void), int timeDelay)
   {
     uint32_t time;
@@ -51,20 +54,20 @@ public:
     } while (millis() < time);
   }
 
-  /* clear gfx */
+  /* clearing the output buffer */
   void clear()
   {
     u8g2.clearBuffer();
     u8g2.sendBuffer();
   }
 
-  /* print to "text" */
-  void print(String text, int x, int y)
+  /* text output with parameters */
+  void print(String text, int x, int y, int lii, int chi) // text, x-position, y-position, line interval (8-10), character interval (4-6)
   {
     int sizeText = text.length() + 1;
     int yy{ 0 };
     
-    for (int i = 0, xx = 0; i < sizeText, xx < (sizeText * 6); i++, xx += 6)
+    for (int i = 0, xx = 0; i < sizeText, xx < (sizeText * chi); i++, xx += chi)
     {
       u8g2.setFont(u8g2_font_6x10_tr);
       u8g2.setCursor(xx + x, yy + y);
@@ -72,13 +75,13 @@ public:
 
       if (text[i] == '\n')
       {
-        yy += 10;
-        xx = -6;
+        yy += lii; //10
+        xx = -chi; //6
       }
     }
   }
 
-  /* print to "wink text" */
+  /* "wink text" output  */
   bool winkPrint(void(*ptr_fn)(String, int, int), String text, int x, int y, /*delay*/ int interval)
   {
     unsigned long currTime = millis();
@@ -92,6 +95,7 @@ public:
     }
   }
 
+  /* displaying the cursor on the screen */
   bool drawCursor(bool stateCursor)
   {
     if (stateCursor == true)
@@ -107,18 +111,8 @@ public:
 };
 
 Gfx gfx;
-/*
-bool drawCursor0(bool stateCursor) {
-  if (stateCursor == true) {
-    u8g2.setDrawColor(2);
-    u8g2.setBitmapMode(1);
-    u8g2.drawXBMP(sys.joi0x(), sys.joi0y(), cursor_w, cursor_h, cursor);
-    u8g2.setDrawColor(1);
-    u8g2.setBitmapMode(0);
-    return true;
-  } else return false;
-}
-*/
+
+/* text output without parameters */
 void printf(String text, int x, int y)
 {
   int sizeText = text.length() + 1;

@@ -3,8 +3,6 @@
   update 090323
 */
 
-//#include <Arduino.h>
-
 /* sys include */
 #include "sys.h"          //sticks
 #include "sys_gfx.h"      //lcd
@@ -16,7 +14,7 @@
 
 /* global variable */
 
-/* run */
+/* initial setting */
 void setup()
 {
   gfx.screen();
@@ -26,6 +24,7 @@ void setup()
   //Serial.begin(9600);
 }
 
+/* terminal entry point */
 void loop()
 {
   terminal();
