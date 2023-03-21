@@ -27,7 +27,7 @@ String trmUserData = "com";
 void headerTerminal()
 {
   //u8g2.drawXBMP(0, 2, trm_l_w, trm_l_h, trm_l);
-  gfx.winkPrint(printf, "cli_" + trmUserData, 0, 10, 500);
+  gfx.winkPrint(printf, "-" /* identifier */ + trmUserData, 0, 10, 500);
 }
 
 /* standard commands */
