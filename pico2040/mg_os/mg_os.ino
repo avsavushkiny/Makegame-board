@@ -4,28 +4,37 @@
 */
 
 /* include */
+#include "mg.h"           //mg
 #include "sys.h"          //sticks
 #include "sys_gfx.h"      //lcd
 #include "sys_xbmp.h"     //bitmap
 #include "sys_logo.h"     //start page - logotype
-#include "sys_trm.h"      //terminal       
-
-/* user include */
+#include "sys_trm.h"      //terminal
 
 /* global variable */
+void renderHelloWorld(); void printHelloWorld();
+
+mg::Use myFirstProject {1, renderHelloWorld, "Hello World", false};
 
 /* initial setting */
 void setup()
 {
-  gfx.screen();
-  analogReadResolution(12);
-  start_sys_logo();
-
-  //Serial.begin(9600);
+  mg::initialization();
+  mg::greetings();
 }
 
-/* terminal entry point */
+/* entry point */
 void loop()
 {
-  terminal();
+  myFirstProject.function();
+}
+
+void renderHelloWorld()
+{
+  gfx.render(printHelloWorld, 0);
+}
+
+void printHelloWorld()
+{
+  gfx.print(myFirstProject.discription, 0, 10, 10, 6);
 }

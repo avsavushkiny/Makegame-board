@@ -12,12 +12,12 @@
 void frame_1(); void frame_2(); void frame_3(); void frame_4();
 
 /* main func */
-void start_sys_logo()
+void systemsLogo()
 {
-  gfx.render(frame_1, 1500); // func, delay 1,5 sec
-  gfx.render(frame_2, 3000);
-  gfx.render(frame_3, 3000);
-  gfx.render(frame_4, 3000);
+  gfx.render(frame_1, 2000); // func, delay 2 sec
+  gfx.render(frame_2, 1500);
+  gfx.render(frame_3, 1500);
+  gfx.render(frame_4, 1500);
   gfx.clear();
 }
 
