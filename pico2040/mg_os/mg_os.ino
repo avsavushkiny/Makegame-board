@@ -3,12 +3,12 @@
   update 090323
 */
 
-/* sys include */
+/* include */
 #include "sys.h"          //sticks
 #include "sys_gfx.h"      //lcd
 #include "sys_xbmp.h"     //bitmap
 #include "sys_logo.h"     //start page - logotype
-#include "sys_trm.h"      //terminal
+#include "sys_trm.h"      //terminal       
 
 /* user include */
 

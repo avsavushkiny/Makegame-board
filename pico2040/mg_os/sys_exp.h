@@ -2,6 +2,9 @@
   systems test
 
 
+
+#include <Arduino.h>
+
 double divide(int a, int b)
 {
     if(!b)  // если b == 0
