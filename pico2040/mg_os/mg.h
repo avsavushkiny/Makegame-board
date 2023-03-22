@@ -41,9 +41,4 @@ namespace mg
         const char *discription;
         bool active;
     };
-
-    void user()
-    {
-
-    }
 }
