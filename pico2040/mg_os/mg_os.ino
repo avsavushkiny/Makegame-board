@@ -4,7 +4,6 @@
 */
 
 /* include */
-#include "mg.h"           //mg
 #include "sys.h"          //sticks
 #include "sys_gfx.h"      //lcd
 #include "sys_xbmp.h"     //bitmap
@@ -14,13 +13,14 @@
 /* global variable */
 void renderHelloWorld(); void printHelloWorld();
 
-mg::Use myFirstProject {1, renderHelloWorld, "Hello World", false};
+user::Project myFirstProject {1, renderHelloWorld, "Hello World", false};
 
 /* initial setting */
 void setup()
 {
   mg::initialization();
   mg::greetings();
+  mg::terminal();
 }
 
 /* entry point */

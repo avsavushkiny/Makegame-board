@@ -11,7 +11,7 @@
 #include "sys_logo.h"
 
 /* prototype */
-void clearCommandTerminal();
+void clearCommandTerminal(); void calcUserMenu(); void terminalCore(bool state);
 
 /* command type */
 struct Command
@@ -22,13 +22,78 @@ struct Command
 };
 
 /* data entered by the user */
-String trmUserData = "com";
+String trmUserData = "enter the command";
 
 /* terminal interface */
 void headerTerminal()
 {
-  //u8g2.drawXBMP(0, 2, trm_l_w, trm_l_h, trm_l);
-  gfx.winkPrint(printf, "-" /* identifier */ + trmUserData, 0, 10, 500);
+  // u8g2.drawXBMP(0, 2, trm_l_w, trm_l_h, trm_l);
+  gfx.winkPrint(printf, "$" + trmUserData, 0, 10, 500);
+}
+
+/* user */
+namespace user
+{
+  void calcUserMenu()
+  {
+
+  }
+  
+  void userMenu()
+  {
+    while (true)
+    {
+      
+    }
+  }
+
+  /* user-object to run */
+  struct Project
+  {
+    const int number;
+    void (*function)();
+    const char *discription;
+    bool active;
+  };
+}
+
+namespace mg
+{
+  /* initial settings */
+  int initialization()
+  {
+    gfx.screen();
+    analogReadResolution(12);
+    return 0;
+  }
+
+  /* start greeting */
+  int greetings()
+  {
+    systemsLogo();
+    return 0;
+  }
+
+  /* start command-line-interface terminal */
+  int terminal()
+  {
+    if (sys.sw0() == true)
+    {
+      while (true)
+      {
+        terminalCore(true);
+      }
+    }
+    else
+    {
+      while (true)
+      {
+        terminalCore(false);
+      }
+    }
+
+    return 0;
+  }
 }
 
 /* standard commands */
@@ -74,21 +139,21 @@ namespace defGame
 {
   /* prototype defGame */
   void addEffectBall(int paddleSpeed);
-  
-  /* def visuals */
-  #define SCREEN_OX 0
-  #define SCREEN_OY 0
-  #define SCREEN_WIDTH 127
-  #define SCREEN_HEIGHT 63
-  #define PADDLE_WIDTH 4
-  #define PADDLE_HEIGHT 10
-  #define PADDLE_PADDING 10
-  #define BALL_SIZE 3
-  #define SCORE_PADDING 10
 
-  #define EFFECT_SPEED 0.5
-  #define MIN_Y_SPEED 0.5
-  #define MAX_Y_SPEED 2
+/* def visuals */
+#define SCREEN_OX 0
+#define SCREEN_OY 0
+#define SCREEN_WIDTH 127
+#define SCREEN_HEIGHT 63
+#define PADDLE_WIDTH 4
+#define PADDLE_HEIGHT 10
+#define PADDLE_PADDING 10
+#define BALL_SIZE 3
+#define SCORE_PADDING 10
+
+#define EFFECT_SPEED 0.5
+#define MIN_Y_SPEED 0.5
+#define MAX_Y_SPEED 2
 
   /* state effect ball */
   byte stateEffectBall = false;
@@ -129,7 +194,7 @@ namespace defGame
     // draw paddle B
     u8g2.drawFrame(SCREEN_WIDTH - PADDLE_WIDTH - PADDLE_PADDING, paddleLocationB, PADDLE_WIDTH, PADDLE_HEIGHT); // x, y, w, h
   }
-  
+
   /* draw a ball */
   void drawBall()
   {
@@ -152,26 +217,191 @@ namespace defGame
   /* draw the logo of the game */
   void drawLogo()
   {
-    //pong_log.XBM
-    const uint8_t pongLogo[] PROGMEM=
-    {
-      //w 70px, h 20px
-      0x00, 0x00, 0x00, 0x06, 0x00, 0x60, 0x00, 0x00, 0x00, 0xFE, 0x03, 0xE0, 
-      0x7F, 0x00, 0xFC, 0x03, 0xE0, 0x1F, 0xFE, 0x0F, 0xF0, 0xFF, 0x01, 0xFE, 
-      0x07, 0xF0, 0x1F, 0xFE, 0x0F, 0xF8, 0xFF, 0x03, 0xFF, 0x0F, 0xFC, 0x1F, 
-      0x1E, 0x1E, 0x7C, 0xE0, 0x03, 0x0F, 0x0F, 0xFC, 0x19, 0x1E, 0x1E, 0x3E, 
-      0xC0, 0x87, 0x07, 0x1E, 0x3E, 0x00, 0x1E, 0x1C, 0x1E, 0x80, 0x8F, 0x07, 
-      0x1E, 0x1F, 0x00, 0x1E, 0x1E, 0x0F, 0x00, 0x8F, 0x07, 0x1E, 0x0F, 0x00, 
-      0x1E, 0x1F, 0x0F, 0x00, 0x8F, 0x07, 0x1E, 0x0F, 0x00, 0xFE, 0x0F, 0x0F, 
-      0x00, 0x8F, 0x07, 0x1E, 0x0F, 0x00, 0xFE, 0x07, 0x0F, 0x00, 0x8F, 0x07, 
-      0x1E, 0x8F, 0x1F, 0xFE, 0x03, 0x0F, 0x00, 0x8F, 0x07, 0x1E, 0x8F, 0x1F, 
-      0x1E, 0x00, 0x1E, 0x00, 0x8F, 0x07, 0x1E, 0x8F, 0x1F, 0x1E, 0x00, 0x1E, 
-      0x80, 0x87, 0x07, 0x1E, 0x1F, 0x1E, 0x1E, 0x00, 0x7E, 0xC0, 0x87, 0x07, 
-      0x1E, 0x3E, 0x1E, 0x1E, 0x00, 0xFC, 0xF9, 0x83, 0x07, 0x1E, 0x7C, 0x1E, 
-      0x1E, 0x00, 0xF8, 0xFF, 0x81, 0x07, 0x1E, 0xFC, 0x1F, 0x1E, 0x00, 0xE0, 
-      0xFF, 0x80, 0x07, 0x1E, 0xF0, 0x1F, 0x1E, 0x00, 0x80, 0x3F, 0x80, 0x07, 
-      0x1E, 0xE0, 0x1F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-    };
+    // pong_log.XBM
+    const uint8_t pongLogo[] PROGMEM =
+        {
+            // w 70px, h 20px
+            0x00,
+            0x00,
+            0x00,
+            0x06,
+            0x00,
+            0x60,
+            0x00,
+            0x00,
+            0x00,
+            0xFE,
+            0x03,
+            0xE0,
+            0x7F,
+            0x00,
+            0xFC,
+            0x03,
+            0xE0,
+            0x1F,
+            0xFE,
+            0x0F,
+            0xF0,
+            0xFF,
+            0x01,
+            0xFE,
+            0x07,
+            0xF0,
+            0x1F,
+            0xFE,
+            0x0F,
+            0xF8,
+            0xFF,
+            0x03,
+            0xFF,
+            0x0F,
+            0xFC,
+            0x1F,
+            0x1E,
+            0x1E,
+            0x7C,
+            0xE0,
+            0x03,
+            0x0F,
+            0x0F,
+            0xFC,
+            0x19,
+            0x1E,
+            0x1E,
+            0x3E,
+            0xC0,
+            0x87,
+            0x07,
+            0x1E,
+            0x3E,
+            0x00,
+            0x1E,
+            0x1C,
+            0x1E,
+            0x80,
+            0x8F,
+            0x07,
+            0x1E,
+            0x1F,
+            0x00,
+            0x1E,
+            0x1E,
+            0x0F,
+            0x00,
+            0x8F,
+            0x07,
+            0x1E,
+            0x0F,
+            0x00,
+            0x1E,
+            0x1F,
+            0x0F,
+            0x00,
+            0x8F,
+            0x07,
+            0x1E,
+            0x0F,
+            0x00,
+            0xFE,
+            0x0F,
+            0x0F,
+            0x00,
+            0x8F,
+            0x07,
+            0x1E,
+            0x0F,
+            0x00,
+            0xFE,
+            0x07,
+            0x0F,
+            0x00,
+            0x8F,
+            0x07,
+            0x1E,
+            0x8F,
+            0x1F,
+            0xFE,
+            0x03,
+            0x0F,
+            0x00,
+            0x8F,
+            0x07,
+            0x1E,
+            0x8F,
+            0x1F,
+            0x1E,
+            0x00,
+            0x1E,
+            0x00,
+            0x8F,
+            0x07,
+            0x1E,
+            0x8F,
+            0x1F,
+            0x1E,
+            0x00,
+            0x1E,
+            0x80,
+            0x87,
+            0x07,
+            0x1E,
+            0x1F,
+            0x1E,
+            0x1E,
+            0x00,
+            0x7E,
+            0xC0,
+            0x87,
+            0x07,
+            0x1E,
+            0x3E,
+            0x1E,
+            0x1E,
+            0x00,
+            0xFC,
+            0xF9,
+            0x83,
+            0x07,
+            0x1E,
+            0x7C,
+            0x1E,
+            0x1E,
+            0x00,
+            0xF8,
+            0xFF,
+            0x81,
+            0x07,
+            0x1E,
+            0xFC,
+            0x1F,
+            0x1E,
+            0x00,
+            0xE0,
+            0xFF,
+            0x80,
+            0x07,
+            0x1E,
+            0xF0,
+            0x1F,
+            0x1E,
+            0x00,
+            0x80,
+            0x3F,
+            0x80,
+            0x07,
+            0x1E,
+            0xE0,
+            0x1F,
+            0x00,
+            0x00,
+            0x00,
+            0x00,
+            0x00,
+            0x00,
+            0x00,
+            0x00,
+            0x00,
+        };
 
     u8g2.drawXBMP(29, 16, 70, 20, pongLogo); // x, y, w, h, xbmp
 
@@ -200,13 +430,13 @@ namespace defGame
     int paddleSpeedA = paddleLocationA - lastPaddleLocationA;
     int paddleSpeedB = paddleLocationB - lastPaddleLocationB;
 
-    //bounce from top and bottom
+    // bounce from top and bottom
     if (ballY >= SCREEN_HEIGHT - BALL_SIZE || ballY <= 0)
     {
       ballSpeedY *= -1;
     }
 
-    //bounce from paddle A
+    // bounce from paddle A
     if (ballX >= PADDLE_PADDING && ballX <= PADDLE_PADDING + BALL_SIZE && ballSpeedX < 0)
     {
       if (ballY > paddleLocationA - BALL_SIZE && ballY < paddleLocationA + PADDLE_HEIGHT)
@@ -217,7 +447,7 @@ namespace defGame
       }
     }
 
-    //bounce from paddle B
+    // bounce from paddle B
     if (ballX >= SCREEN_WIDTH - PADDLE_WIDTH - PADDLE_PADDING - BALL_SIZE && ballX <= SCREEN_WIDTH - PADDLE_PADDING - BALL_SIZE && ballSpeedX > 0)
     {
       if (ballY > paddleLocationB - BALL_SIZE && ballY < paddleLocationB + PADDLE_HEIGHT)
@@ -228,7 +458,7 @@ namespace defGame
       }
     }
 
-    //score points if ball hits wall behind paddle
+    // score points if ball hits wall behind paddle
     if (ballX >= SCREEN_WIDTH - BALL_SIZE || ballX <= 0)
     {
       if (ballSpeedX > 0)
@@ -243,18 +473,18 @@ namespace defGame
       }
     }
 
-    //set last paddle locations
+    // set last paddle locations
     lastPaddleLocationA = paddleLocationA;
     lastPaddleLocationB = paddleLocationB;
-    }
+  }
 
-  //effect
+  // effect
   void addEffectBall(int paddleSpeed)
   {
     float oldBallSpeedY = ballSpeedY;
 
-    //add effect to ball when paddle is moving while bouncing
-    //for every pixel of paddle movement, add or substact EFFECT_SPEED to ballspeed
+    // add effect to ball when paddle is moving while bouncing
+    // for every pixel of paddle movement, add or substact EFFECT_SPEED to ballspeed
     for (int effect = 0; effect < abs(paddleSpeed); effect++)
     {
       if (paddleSpeed > 0)
@@ -267,7 +497,7 @@ namespace defGame
       }
     }
 
-    //limit to minimum speed
+    // limit to minimum speed
     if (ballSpeedY < MIN_Y_SPEED && ballSpeedY > -MIN_Y_SPEED)
     {
       if (ballSpeedY > 0)
@@ -278,7 +508,7 @@ namespace defGame
         ballSpeedY = oldBallSpeedY;
     }
 
-    //limit to maximum speed
+    // limit to maximum speed
     if (ballSpeedY > MAX_Y_SPEED)
       ballSpeedY = MAX_Y_SPEED;
     if (ballSpeedY < -MAX_Y_SPEED)
@@ -287,8 +517,8 @@ namespace defGame
 }
 
 /* enumeration of objects - commands */
-Command commands[]
-{
+Command commands[]{
+    {"usmenu", user::userMenu, false},
     {"system", defCommand::infoSystems, false},
     {"graphc", defCommand::infoGfx, false},
     {"sticks", defCommand::infoAdc, false},
@@ -299,9 +529,7 @@ Command commands[]
     {"drwscr", defGame::drawScore, false},
     {"drwlog", defGame::drawLogo, false},
     {"clcrac", defGame::calculateMovementRackets, false},
-    {"clcbal", defGame::calculateMovementBall, false},
-    {"user", &mg::user, false}
-};
+    {"clcbal", defGame::calculateMovementBall, false}};
 
 /* delete all commands */
 void clearCommandTerminal()
@@ -326,27 +554,46 @@ void calcTerminal()
   }
 }
 
-/* pushing data onto the stack */
-void terminal()
+void calcTerminalNoHeader()
 {
-  gfx.render(calcTerminal, 0);
-
-  if (not Serial.available())
-  {
-    return;
-  }
-
-  char text[10]{};
-  Serial.readBytesUntil('\n', text, sizeof(text));
-  trmUserData = text;
-
   for (Command &command : commands)
   {
-    if (not strncmp(command.text, text, 6))
+    if (command.active)
     {
-      command.active = true;
+      command.f();
     }
-    // else
-    // command.active = false;
+  }
+}
+
+/* pushing data onto the stack */
+void terminalCore(bool state)
+{
+  if (state == true)
+  {
+    gfx.render(calcTerminal, 0);
+
+    if (not Serial.available())
+    {
+      return;
+    }
+
+    char text[10]{};
+    Serial.readBytesUntil('\n', text, sizeof(text));
+    trmUserData = text;
+
+    for (Command &command : commands)
+    {
+      if (not strncmp(command.text, text, 6))
+      {
+        command.active = true;
+      }
+      // else
+      // command.active = false;
+    }
+  }
+  else
+  {
+    gfx.render(calcTerminalNoHeader, 0);
+    commands[0].active = true;
   }
 }

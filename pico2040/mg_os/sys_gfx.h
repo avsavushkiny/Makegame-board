@@ -41,7 +41,7 @@ public:
   }
   
   /* data render */
-  void render(void (*ptr_draw_fn)(void), int timeDelay)
+  void render(void (*ptr_draw_fn)(), int timeDelay)
   {
     uint32_t time;
     time = millis() + timeDelay;
