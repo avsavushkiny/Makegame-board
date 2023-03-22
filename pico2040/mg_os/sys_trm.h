@@ -5,6 +5,7 @@
 #pragma once
 
 #include "sys.h"
+#include "mg.h"
 #include "sys_gfx.h"
 #include "sys_xbmp.h"
 #include "sys_logo.h"
@@ -299,7 +300,7 @@ Command commands[]
     {"drwlog", defGame::drawLogo, false},
     {"clcrac", defGame::calculateMovementRackets, false},
     {"clcbal", defGame::calculateMovementBall, false},
-    //{"clceff", defGame::addEffectBall, false}
+    {"user", &mg::user, false}
 };
 
 /* delete all commands */

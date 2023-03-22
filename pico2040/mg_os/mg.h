@@ -37,8 +37,13 @@ namespace mg
     struct Use
     {
         const int number;
-        void (*myFunction)();
+        void (*function)();
         const char *discription;
         bool active;
     };
+
+    void user()
+    {
+
+    }
 }
