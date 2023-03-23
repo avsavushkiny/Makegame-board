@@ -25,26 +25,12 @@ struct Command
 /* data entered by the user */
 String trmUserData = "enter the command";
 
-/* terminal interface */
-void headerTerminal()
-{
-  gfx.winkPrint(printf, "$" + trmUserData, 0, 10, 500);
-}
-
 /* user */
 namespace user
-{
-  void calcUserMenu()
-  {
-
-  }
-  
+{ 
   void userMenu()
   {
-    while (true)
-    {
-      
-    }
+    gfx.print("User menu", 0, 20, 10, 6);
   }
 
   /* user-object to run */
@@ -55,6 +41,15 @@ namespace user
     const char *discription;
     bool active;
   };
+}
+
+/* systems */
+namespace systems
+{
+  void systemsMenu()
+  {
+    gfx.print("Systems menu", 0, 20, 10, 6);
+  }
 }
 
 namespace mg
@@ -91,8 +86,13 @@ namespace mg
         terminalCore(false);
       }
     }
-
     return 0;
+  }
+
+  /* terminal interface */
+  void headerTerminal()
+  {
+    gfx.winkPrint(printf, "$" + trmUserData, 0, 10, 500);
   }
 }
 
@@ -136,7 +136,9 @@ namespace defCommand
 
 /* enumeration of objects - commands */
 Command commands[]{
-    {"usmenu", user::userMenu, false},
+    {"symenu", systems::systemsMenu, false}, // 0
+    {"usmenu", user::userMenu, false},       // 1
+    {"hedtrm", mg::headerTerminal,false},    // 2
     {"system", defCommand::infoSystems, false},
     {"graphc", defCommand::infoGfx, false},
     {"sticks", defCommand::infoAdc, false},
@@ -161,7 +163,7 @@ void clearCommandTerminal()
 /* command stack */
 void calcTerminal()
 {
-  headerTerminal();
+  //mg::headerTerminal();
 
   for (Command &command : commands)
   {
@@ -190,6 +192,9 @@ void terminalCore(bool state)
   {
     gfx.render(calcTerminal, 0);
 
+    commands[2].active = true; //header true
+    commands[1].active = true; //user menu
+
     if (not Serial.available())
     {
       return;
@@ -211,7 +216,7 @@ void terminalCore(bool state)
   }
   else
   {
-    gfx.render(calcTerminalNoHeader, 0);
+    gfx.render(calcTerminal, 0);
     commands[0].active = true;
   }
 }
