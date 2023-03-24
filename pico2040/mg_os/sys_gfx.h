@@ -44,6 +44,7 @@ public:
   void render(void (*ptr_draw_fn)(), int timeDelay)
   {
     uint32_t time;
+    
     time = millis() + timeDelay;
 
     do

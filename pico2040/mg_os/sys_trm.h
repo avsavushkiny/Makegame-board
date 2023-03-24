@@ -12,7 +12,8 @@
 #include "sys_def_game.h"
 
 /* prototype */
-void clearCommandTerminal(); void calcUserMenu(); void terminalCore(bool state);
+void clearCommandTerminal();
+void terminalCore(bool state);
 
 /* command type */
 struct Command
@@ -23,11 +24,11 @@ struct Command
 };
 
 /* data entered by the user */
-String trmUserData = "enter the command";
+String trmUserData = "";
 
 /* user */
 namespace user
-{ 
+{
   void userMenu()
   {
     gfx.print("User menu", 0, 20, 10, 6);
@@ -138,7 +139,7 @@ namespace defCommand
 Command commands[]{
     {"symenu", systems::systemsMenu, false}, // 0
     {"usmenu", user::userMenu, false},       // 1
-    {"hedtrm", mg::headerTerminal,false},    // 2
+    {"hedtrm", mg::headerTerminal, false},   // 2
     {"system", defCommand::infoSystems, false},
     {"graphc", defCommand::infoGfx, false},
     {"sticks", defCommand::infoAdc, false},
@@ -163,19 +164,8 @@ void clearCommandTerminal()
 /* command stack */
 void calcTerminal()
 {
-  //mg::headerTerminal();
+  // mg::headerTerminal();
 
-  for (Command &command : commands)
-  {
-    if (command.active)
-    {
-      command.f();
-    }
-  }
-}
-
-void calcTerminalNoHeader()
-{
   for (Command &command : commands)
   {
     if (command.active)
@@ -188,35 +178,33 @@ void calcTerminalNoHeader()
 /* pushing data onto the stack */
 void terminalCore(bool state)
 {
-  if (state == true)
+  if (not Serial.available())
   {
-    gfx.render(calcTerminal, 0);
-
-    commands[2].active = true; //header true
-    commands[1].active = true; //user menu
-
-    if (not Serial.available())
+    if (state == true)
     {
-      return;
+      gfx.render(calcTerminal, 0);
+
+      commands[2].active = true; // header true
+      commands[1].active = true; // user menu
     }
-
-    char text[10]{};
-    Serial.readBytesUntil('\n', text, sizeof(text));
-    trmUserData = text;
-
-    for (Command &command : commands)
+    else
     {
-      if (not strncmp(command.text, text, 6))
-      {
-        command.active = true;
-      }
-      // else
-      // command.active = false;
+      gfx.render(calcTerminal, 0);
+      commands[0].active = true; // systems menu
     }
+    return;
   }
-  else
+
+  char text[10]{};
+  Serial.readBytesUntil('\n', text, sizeof(text));
+  trmUserData = text;
+
+  for (Command &command : commands)
   {
-    gfx.render(calcTerminal, 0);
-    commands[0].active = true;
+    if (not strncmp(command.text, text, 6))
+    {
+      command.active = true;
+    }
+    else command.active = false;
   }
 }
