@@ -11,9 +11,11 @@
 #include "sys_trm.h"      //terminal
 
 /* global variable */
-void renderHelloWorld(); void printHelloWorld();
+void renderHelloWorld(); void printHelloWorld(); void renderMyPong();
+void calcMyPong();
 
 user::Project myFirstProject {1, renderHelloWorld, "Hello World", false};
+user::Project myPong {2, renderMyPong, "Pong\nAtari 1972", false};
 
 /* initial setting */
 void setup()
@@ -26,7 +28,8 @@ void setup()
 /* entry point */
 void loop()
 {
-  myFirstProject.function();
+  //myFirstProject.function();
+  myPong.function();
 }
 
 void renderHelloWorld()
@@ -37,4 +40,22 @@ void renderHelloWorld()
 void printHelloWorld()
 {
   gfx.print(myFirstProject.discription, 0, 10, 10, 6);
+}
+
+void renderMyPong()
+{
+  gfx.render(calcMyPong, 0);
+}
+
+void calcMyPong()
+{
+    //defGame::drawLogo();
+    defGame::drawField();
+    defGame::drawRacket();
+    defGame::calculateMovementRackets();
+    defGame::drawBall();
+    defGame::calculateMovementBall();
+    defGame::drawScore();
+
+    gfx.print(myPong.discription, 39, 53, 9, 5);
 }

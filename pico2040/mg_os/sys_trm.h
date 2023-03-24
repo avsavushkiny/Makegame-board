@@ -34,7 +34,7 @@ namespace user
     gfx.print("User menu", 0, 20, 10, 6);
   }
 
-  /* user-object to run */
+  /* user-project to run */
   struct Project
   {
     const int number;
@@ -75,10 +75,12 @@ namespace mg
   {
     if (sys.sw0() == true)
     {
-      while (true)
+      return 0; // go to User-project
+      
+      /*while (true)
       {
         terminalCore(true);
-      }
+      }*/
     }
     else
     {
@@ -164,8 +166,6 @@ void clearCommandTerminal()
 /* command stack */
 void calcTerminal()
 {
-  // mg::headerTerminal();
-
   for (Command &command : commands)
   {
     if (command.active)
@@ -176,7 +176,7 @@ void calcTerminal()
 }
 
 /* pushing data onto the stack */
-void terminalCore(bool state)
+void terminalCore(bool state) //run terminal user-any-systems / 1-user 0-systems
 {
   if (not Serial.available())
   {

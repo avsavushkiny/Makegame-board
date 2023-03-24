@@ -279,8 +279,6 @@ namespace defGame
         u8g2.drawXBMP(29, 16, 70, 20, pongLogo); // x, y, w, h, xbmp
 
         gfx.print("Atari. 1972\nGame for two", 30, 43, 9, 5);
-
-        // delay(2000);
     }
 
     void calculateMovementRackets()
