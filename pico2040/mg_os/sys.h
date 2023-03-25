@@ -16,10 +16,10 @@ class Systems
 
     int CORR_y0 = 100;
 
-    int JOI_0Y = 27;
-    int JOI_1Y = 28;
-    int JOI_X0 = 26;
-    int JOI_X1 = 26;
+    int8_t JOI_0Y = 27;
+    int8_t JOI_1Y = 28;
+    int8_t JOI_X0 = 26;
+    int8_t JOI_X1 = 26;
 
     int H_RES = 64;
     int W_RES = 128;
