@@ -72,7 +72,7 @@ namespace defGame
     void drawBall()
     {
         // draw ball
-        u8g2.drawFrame(ballX, ballY, BALL_SIZE, BALL_SIZE); // x, y, w, h
+        u8g2.drawBox(ballX, ballY, BALL_SIZE, BALL_SIZE); // x, y, w, h
     }
 
     /* draw a scoreboard */

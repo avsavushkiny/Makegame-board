@@ -16,6 +16,7 @@ void calcMyPong();
 
 user::Project myFirstProject {1, renderHelloWorld, "Hello World", false};
 user::Project myPong {2, renderMyPong, "Pong\nAtari 1972", false};
+Timer timer_0; // add object timer
 
 /* initial setting */
 void setup()
@@ -54,7 +55,7 @@ void calcMyPong()
     defGame::drawRacket();
     defGame::calculateMovementRackets();
     defGame::drawBall();
-    defGame::calculateMovementBall();
+    timer_0.timer(defGame::calculateMovementBall, 0);
     defGame::drawScore();
 
     gfx.print(myPong.discription, 39, 53, 9, 5);
