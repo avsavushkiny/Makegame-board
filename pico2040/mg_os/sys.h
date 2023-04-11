@@ -81,7 +81,7 @@ public:
   }
 
   /* system dADC / joi0y, joi1y, joi0x */
-  int joi0y()
+  int joi0y() //0y
   {
     dataJoiY0 = analogRead(JOI_0Y);
 
@@ -105,7 +105,7 @@ public:
       return yJoi0;
   }
 
-  int joi1y()
+  int joi1y() //1y
   {
     dataJoiY1 = analogRead(JOI_1Y);
 
@@ -129,7 +129,7 @@ public:
       return yJoi1;
   }
 
-  int joi0x()
+  int joi0x() //0x
   {
     dataJoiX0 = analogRead(JOI_X0);
 
@@ -153,6 +153,30 @@ public:
       return xJoi0;
   }
 
+    int joi1x() //1x
+  {
+    dataJoiX1 = analogRead(JOI_X1);
+
+    if ((dataJoiX1 < (DEF_RES_X1 - 200)) && (dataJoiX1 > (DEF_RES_X1 - 1100)))
+    {
+      return xJoi1 = xJoi1 + 1;
+    }
+    else if (dataJoiX1 < (DEF_RES_X1 - 1100))
+    {
+      return xJoi1 = xJoi1 + 2;
+    }
+    else if ((dataJoiX1 > (DEF_RES_X1 + 200)) && (dataJoiX1 < (DEF_RES_X1 + 1100)))
+    {
+      return xJoi1 = xJoi1 - 1;
+    }
+    else if (dataJoiX1 > (DEF_RES_X1 + 1100))
+    {
+      return xJoi1 = xJoi1 - 2;
+    }
+    else
+      return xJoi1;
+  }
+
   /* system backlight */
   void backlight(bool state)
   {
@@ -169,7 +193,7 @@ public:
   }
 
   /* oblect - obj0y, obj1y */
-  int obj0y()
+  int obj0y() //obj 0y
   {
     dataJoiY0 = analogRead(JOI_0Y);
 
@@ -193,7 +217,7 @@ public:
       return objUD0y = 0;
   }
 
-  int obj1y()
+  int obj1y() //obj 1y
   {
     dataJoiY1 = analogRead(JOI_1Y);
 

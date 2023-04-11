@@ -128,11 +128,11 @@ namespace defCommand
 
     if (sys.sw1() == true)
     {
-      u8g2.drawBox(sys.joi0x(), sys.joi1y(), 25, 25);
+      u8g2.drawBox(sys.joi1x(), sys.joi1y(), 25, 25);
     }
     else
     {
-      u8g2.drawFrame(sys.joi0x(), sys.joi1y(), 25, 25);
+      u8g2.drawFrame(sys.joi1x(), sys.joi1y(), 25, 25);
     }
   }
 }
@@ -180,14 +180,14 @@ void terminalCore(bool state) //run terminal user-any-systems / 1-user 0-systems
 {
   if (not Serial.available())
   {
-    if (state == true)
+    if (state == true) // go to User menu
     {
       gfx.render(calcTerminal, 0);
 
       commands[2].active = true; // header true
       commands[1].active = true; // user menu
     }
-    else
+    else //go to System menu
     {
       gfx.render(calcTerminal, 0);
       commands[0].active = true; // systems menu

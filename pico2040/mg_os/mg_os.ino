@@ -18,7 +18,9 @@ user::Project myFirstProject {1, renderHelloWorld, "Hello World", false};
 user::Project myPong {2, renderMyPong, "Pong\nAtari 1972", false};
 user::Project followTheLink {3, renderFollowTheLink, "Follow the link", false};
 
-Timer timer_0; // add object timer
+/* add object timer */
+Timer timer_0;
+Timer timer_1;
 
 /* initial setting */
 void setup()
