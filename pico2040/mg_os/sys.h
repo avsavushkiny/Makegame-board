@@ -19,7 +19,8 @@ private:
   int8_t JOI_0Y = 27;
   int8_t JOI_1Y = 28;
   int8_t JOI_X0 = 26;
-  int8_t JOI_X1 = 26;
+  int8_t JOI_X1 = 29;
+  //int8_t JOI_X1 = 26;
 
   int H_RES = 64;
   int W_RES = 128;
@@ -32,6 +33,7 @@ private:
   int objUD0y{};
   int objUD1y{};
   int objUD0x{};
+  int objUD1x{};
 
   int dataJoiY0{};
   int dataJoiY1{};
