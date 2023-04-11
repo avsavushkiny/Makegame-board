@@ -10,12 +10,14 @@
 #include "sys_logo.h"     //start page - logotype
 #include "sys_trm.h"      //terminal
 
-/* global variable */
+/* prototype */
 void renderHelloWorld(); void printHelloWorld(); void renderMyPong();
-void calcMyPong();
+void calcMyPong(); void calcFollowTheLink(); void renderFollowTheLink();
 
 user::Project myFirstProject {1, renderHelloWorld, "Hello World", false};
 user::Project myPong {2, renderMyPong, "Pong\nAtari 1972", false};
+user::Project followTheLink {3, renderFollowTheLink, "Follow the link", false};
+
 Timer timer_0; // add object timer
 
 /* initial setting */
@@ -30,7 +32,18 @@ void setup()
 void loop()
 {
   //myFirstProject.function();
-  myPong.function();
+  //myPong.function();
+  followTheLink.function();
+}
+
+void renderFollowTheLink()
+{
+  gfx.render(calcFollowTheLink, 0);
+}
+
+void calcFollowTheLink()
+{
+  u8g2.drawXBMP(5, 15, qr_w, qr_w, qr_bits);
 }
 
 void renderHelloWorld()
