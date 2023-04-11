@@ -13,7 +13,10 @@
 
 /* prototype */
 void clearCommandTerminal();
-void terminalCore(bool state);
+void terminalCore(int state); void msgTimer(); void ttt();
+
+Timer timer_1;
+int textData{10};
 
 /* command type */
 struct Command
@@ -79,14 +82,16 @@ namespace mg
       
       /*while (true)
       {
-        terminalCore(true);
+        terminalCore(0);
       }*/
     }
     else
     {
-      while (true)
+      while (textData > 0)
       {
-        terminalCore(false);
+        terminalCore(2);
+        timer_1.timer(ttt, 1000);
+        textData--;
       }
     }
     return 0;
@@ -97,6 +102,16 @@ namespace mg
   {
     gfx.winkPrint(printf, "$" + trmUserData, 0, 10, 500);
   }
+}
+
+void ttt()
+{
+
+}
+
+void msgTimer()
+{
+  gfx.print("Go to user menu after\nsecond ", 0, 10, 10, 6);
 }
 
 /* standard commands */
@@ -152,7 +167,9 @@ Command commands[]{
     {"drwscr", defGame::drawScore, false},
     {"drwlog", defGame::drawLogo, false},
     {"clcrac", defGame::calculateMovementRackets, false},
-    {"clcbal", defGame::calculateMovementBall, false}};
+    {"clcbal", defGame::calculateMovementBall, false},
+    {"msgtex", msgTimer, false}
+};
 
 /* delete all commands */
 void clearCommandTerminal()
@@ -176,23 +193,27 @@ void calcTerminal()
 }
 
 /* pushing data onto the stack */
-void terminalCore(bool state) //run terminal user-any-systems / 1-user 0-systems
+void terminalCore(int state) //run terminal user-any-systems / 1-user 0-systems
 {
   if (not Serial.available())
   {
-    if (state == true) // go to User menu
+    if (state == 1) // go to User menu
     {
-      gfx.render(calcTerminal, 0);
-
       commands[2].active = true; // header true
       commands[1].active = true; // user menu
-    }
-    else //go to System menu
-    {
       gfx.render(calcTerminal, 0);
-      commands[0].active = true; // systems menu
     }
-    return;
+    else if (state == 0) //go to System menu
+    {
+      commands[0].active = true; // systems menu
+      gfx.render(calcTerminal, 0);
+    }
+    else if (state == 2)
+    {
+      commands[14].active = true; // msg timer
+      gfx.render(calcTerminal, 0);
+    }
+    //else return;
   }
 
   char text[10]{};

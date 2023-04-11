@@ -20,7 +20,6 @@ user::Project followTheLink {3, renderFollowTheLink, "Follow the link", false};
 
 /* add object timer */
 Timer timer_0;
-Timer timer_1;
 
 /* initial setting */
 void setup()
