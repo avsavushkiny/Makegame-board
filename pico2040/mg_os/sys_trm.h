@@ -13,10 +13,8 @@
 
 /* prototype */
 void clearCommandTerminal();
-void terminalCore(int state); void msgTimer(); void ttt();
-
-Timer timer_1;
-int textData{10};
+void calcTerminal();
+void terminalCore(int8_t state);
 
 /* command type */
 struct Command
@@ -79,19 +77,12 @@ namespace mg
     if (sys.sw0() == true)
     {
       return 0; // go to User-project
-      
-      /*while (true)
-      {
-        terminalCore(0);
-      }*/
     }
     else
     {
-      while (textData > 0)
+      while (true)
       {
-        terminalCore(2);
-        timer_1.timer(ttt, 1000);
-        textData--;
+        terminalCore(0);
       }
     }
     return 0;
@@ -102,16 +93,6 @@ namespace mg
   {
     gfx.winkPrint(printf, "$" + trmUserData, 0, 10, 500);
   }
-}
-
-void ttt()
-{
-
-}
-
-void msgTimer()
-{
-  gfx.print("Go to user menu after\nsecond ", 0, 10, 10, 6);
 }
 
 /* standard commands */
@@ -168,7 +149,6 @@ Command commands[]{
     {"drwlog", defGame::drawLogo, false},
     {"clcrac", defGame::calculateMovementRackets, false},
     {"clcbal", defGame::calculateMovementBall, false},
-    {"msgtex", msgTimer, false}
 };
 
 /* delete all commands */
@@ -193,39 +173,24 @@ void calcTerminal()
 }
 
 /* pushing data onto the stack */
-void terminalCore(int state) //run terminal user-any-systems / 1-user 0-systems
+void terminalCore(int8_t state) // run terminal user-any-systems / 1-user 0-systems
 {
-  if (not Serial.available())
-  {
-    if (state == 1) // go to User menu
-    {
-      commands[2].active = true; // header true
-      commands[1].active = true; // user menu
-      gfx.render(calcTerminal, 0);
-    }
-    else if (state == 0) //go to System menu
-    {
-      commands[0].active = true; // systems menu
-      gfx.render(calcTerminal, 0);
-    }
-    else if (state == 2)
-    {
-      commands[14].active = true; // msg timer
-      gfx.render(calcTerminal, 0);
-    }
-    //else return;
-  }
+  gfx.render(calcTerminal, 0);
 
-  char text[10]{};
-  Serial.readBytesUntil('\n', text, sizeof(text));
-  trmUserData = text;
-
-  for (Command &command : commands)
+  if (Serial.available() != 0)
   {
-    if (not strncmp(command.text, text, 6))
+    char text[10]{};
+    Serial.readBytesUntil('\n', text, sizeof(text));
+    trmUserData = text;
+
+    for (Command &command : commands)
     {
-      command.active = true;
+      if (not strncmp(command.text, text, 6))
+      {
+        command.active = true;
+      }
+      // else
+      // command.active = false;
     }
-    else command.active = false;
   }
 }

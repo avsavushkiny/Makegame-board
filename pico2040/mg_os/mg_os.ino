@@ -33,8 +33,8 @@ void setup()
 void loop()
 {
   //myFirstProject.function();
-  //myPong.function();
-  followTheLink.function();
+  myPong.function();
+  //followTheLink.function();
 }
 
 void renderFollowTheLink()
