@@ -1,10 +1,10 @@
 #include <Arduino.h>
 #include "mg.h"
 
-const int DEF_RES_Y0 = 2100;
-const int DEF_RES_Y1 = 2100;
-const int DEF_RES_X0 = 2100;
-const int DEF_RES_X1 = 2100;
+int DEF_RES_Y0 = 2100;
+int DEF_RES_Y1 = 2100;
+int DEF_RES_X0 = 2100;
+int DEF_RES_X1 = 2100;
 
 const int8_t CORR_y0 = 100;
 
@@ -17,13 +17,13 @@ const int8_t btn_0 = 6; // gp 6
 const int8_t btn_1 = 7; // gp 7
 const int8_t aLcd = 8;  // gp 8
 
-const uint8_t H_RES = 64;
-const uint8_t W_RES = 128;
+int H_RES = 64;
+int W_RES = 128;
 
-uint8_t yJoi0 = H_RES / 2;
-uint8_t yJoi1 = H_RES / 2;
-uint8_t xJoi0 = W_RES / 2;
-uint8_t xJoi1 = W_RES / 2;
+int yJoi0 = H_RES / 2;
+int yJoi1 = H_RES / 2;
+int xJoi0 = W_RES / 2;
+int xJoi1 = W_RES / 2;
 
 int objUD0y{};
 int objUD1y{};
@@ -217,6 +217,7 @@ int Systems::obj1y() // obj 1y
         return objUD1y = 0;
 }
 
+/* timer */
 unsigned long prevTime{};
 
 void Timer::timer(void (*timer_fn)(void), int interval)
@@ -228,3 +229,5 @@ void Timer::timer(void (*timer_fn)(void), int interval)
         timer_fn();
     }
 }
+
+/* initialization */

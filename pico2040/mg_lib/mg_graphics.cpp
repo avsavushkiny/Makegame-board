@@ -75,15 +75,18 @@ U8G2_ST7565_ERC12864_F_4W_SW_SPI u8g2(U8G2_R0, 18, 19, 17, 16, 20);
 
 /* graphics output objects */
 
-void screen()
+void Graphics::screen()
 {
     u8g2.begin();
     u8g2.setContrast(0);
-    digitalWrite(aLcd, 1);
+    analogReadResolution(12);
+
+    pinMode(aLcd, OUTPUT);
+    digitalWrite(aLcd, true);
 }
 
 /* data render */
-void render(void (*ptr_draw_fn)(), int timeDelay)
+void Graphics::render(void (*ptr_draw_fn)(), int timeDelay)
 {
     uint32_t time;
 
@@ -98,14 +101,14 @@ void render(void (*ptr_draw_fn)(), int timeDelay)
 }
 
 /* clearing the output buffer */
-void clear()
+void Graphics::clear()
 {
     u8g2.clearBuffer();
     u8g2.sendBuffer();
 }
 
 /* text output with parameters */
-void print(String text, int x, int y, int lii, int chi) // text, x-position, y-position, line interval (8-10), character interval (4-6)
+void Graphics::print(String text, int x, int y, int lii, int chi) // text, x-position, y-position, line interval (8-10), character interval (4-6)
 {
     int sizeText = text.length() + 1;
     int yy{0};
@@ -125,7 +128,7 @@ void print(String text, int x, int y, int lii, int chi) // text, x-position, y-p
 }
 
 /* "wink text" output  */
-bool winkPrint(void (*ptr_fn)(String, int, int), String text, int x, int y, /*delay*/ int interval)
+bool Graphics::winkPrint(void (*ptr_fn)(String, int, int), String text, int x, int y, /*delay*/ int interval)
 {
     unsigned long currTime = millis();
     if (currTime - prevTime_0 >= interval)
@@ -141,13 +144,13 @@ bool winkPrint(void (*ptr_fn)(String, int, int), String text, int x, int y, /*de
 }
 
 /* displaying the cursor on the screen */
-bool drawCursor(bool stateCursor, int sysJoi0x, int sysJoi0y)
+bool Graphics::drawCursor(bool stateCursor, int sysJoi0x, int sysJoi0y)
 {
     if (stateCursor == true)
     {
         u8g2.setDrawColor(2);
         u8g2.setBitmapMode(1);
-        u8g2.drawXBMP(sysJoi0x, sysJoi0y, cursor_w, cursor_h, cursor);
+        u8g2.drawXBMP(sysJoi0x, sysJoi0y, cursor_w, cursor_h, cursor_bits);
         u8g2.setDrawColor(1);
         u8g2.setBitmapMode(0);
         return true;
@@ -157,7 +160,7 @@ bool drawCursor(bool stateCursor, int sysJoi0x, int sysJoi0y)
 }
 
 /* text output without parameters */
-void printf(String text, int x, int y)
+void Graphics::printf(String text, int x, int y)
 {
     int sizeText = text.length() + 1;
     int yy{0};
