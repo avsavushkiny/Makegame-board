@@ -13,6 +13,7 @@ void hello()
 void setup()
 {
     gfx.screen();
+    interface::greetings();
 }
 
 void loop()

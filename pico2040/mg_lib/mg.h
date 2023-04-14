@@ -36,12 +36,17 @@ public:
     void print(String text, int x, int y, int lii, int chi);
     bool winkPrint(void (*ptr_fn)(String, int, int), String text, int x, int y, /*delay*/ int interval);
     bool drawCursor(bool stateCursor, int sysJoi0x, int sysJoi0y);
-    void printf(String text, int x, int y); 
+    void printf(String text, int x, int y);
 };
 
 class Terminal
 {
 
 };
+
+namespace interface
+{
+    void greetings();
+}
 
 #endif

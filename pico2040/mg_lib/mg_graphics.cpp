@@ -74,7 +74,6 @@ const uint8_t qr_bits[] = {
 U8G2_ST7565_ERC12864_F_4W_SW_SPI u8g2(U8G2_R0, 18, 19, 17, 16, 20);
 
 /* graphics output objects */
-
 void Graphics::screen()
 {
     u8g2.begin();
@@ -178,3 +177,33 @@ void Graphics::printf(String text, int x, int y)
         }
     }
 }
+
+
+
+Graphics _gfx;
+
+void frame_1()
+{
+    u8g2.drawXBMP(36, 18, mg_l_w, mg_l_h, mg_l_bits);
+}
+void frame_2()
+{
+    _gfx.print("Hey Bro!\nI am Console,\nOpen source project!", 6, 23, 10, 6);
+}
+void frame_3()
+{
+    _gfx.print("Do you want to make\nyour own game?", 6, 23, 10, 6);
+}
+void frame_4()
+{
+    _gfx.print("Enjoy!", 6, 23, 10, 6);
+}
+
+void interface::greetings()
+{
+    _gfx.render(frame_1, 2500);
+    _gfx.render(frame_2, 1500);
+    _gfx.render(frame_3, 1500);
+    _gfx.render(frame_4, 1500);
+}
+
