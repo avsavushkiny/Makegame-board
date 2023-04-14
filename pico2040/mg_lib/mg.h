@@ -41,12 +41,14 @@ public:
 
 class Terminal
 {
-
 };
 
-namespace interface
+class Interface
 {
+private:
+public:
     void greetings();
-}
+    void messageInfo(String text, int del);
+};
 
 #endif

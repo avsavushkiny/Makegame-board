@@ -2,6 +2,7 @@
 
 Systems sys;
 Graphics gfx;
+Interface inf;
 
 void hello()
 {
@@ -13,7 +14,7 @@ void hello()
 void setup()
 {
     gfx.screen();
-    interface::greetings();
+    inf.greetings();
 }
 
 void loop()
@@ -23,5 +24,6 @@ void loop()
     if (sys.sw0())
     {
         Serial.println("hello");
+        inf.messageInfo("game over\ntry again", 1500);
     }
 }

@@ -73,6 +73,7 @@ const uint8_t qr_bits[] = {
 /* graphics chip setup */
 U8G2_ST7565_ERC12864_F_4W_SW_SPI u8g2(U8G2_R0, 18, 19, 17, 16, 20);
 
+/* graphics */
 /* graphics output objects */
 void Graphics::screen()
 {
@@ -178,32 +179,39 @@ void Graphics::printf(String text, int x, int y)
     }
 }
 
-
-
 Graphics _gfx;
 
-void frame_1()
+/* interface */
+void _frame_1()
 {
     u8g2.drawXBMP(36, 18, mg_l_w, mg_l_h, mg_l_bits);
 }
-void frame_2()
+void _frame_2()
 {
     _gfx.print("Hey Bro!\nI am Console,\nOpen source project!", 6, 23, 10, 6);
 }
-void frame_3()
+void _frame_3()
 {
     _gfx.print("Do you want to make\nyour own game?", 6, 23, 10, 6);
 }
-void frame_4()
+void _frame_4()
 {
     _gfx.print("Enjoy!", 6, 23, 10, 6);
 }
 
-void interface::greetings()
+void Interface::greetings()
 {
-    _gfx.render(frame_1, 2500);
-    _gfx.render(frame_2, 1500);
-    _gfx.render(frame_3, 1500);
-    _gfx.render(frame_4, 1500);
+    _gfx.render(_frame_1, 2500);
+    _gfx.render(_frame_2, 1500);
+    _gfx.render(_frame_3, 1500);
+    _gfx.render(_frame_4, 1500);
 }
 
+void Interface::messageInfo(String text, int del)
+{
+    u8g2.clearBuffer();
+    _gfx.print(text, 10, 27, 10, 6);
+    u8g2.drawFrame(10, 27, 50, 50);
+    u8g2.sendBuffer();
+    delay(del);
+}
