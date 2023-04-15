@@ -1,3 +1,11 @@
+/*
+    library for makegame board.
+    [!] Educational version
+    [!] Required u8g2 library
+
+    @avsavushkiny / 15.04.23
+*/
+
 #ifndef MG_H
 #define MG_H
 
@@ -41,6 +49,9 @@ public:
 
 class Terminal
 {
+private:
+public:
+    void terminal();
 };
 
 class Interface

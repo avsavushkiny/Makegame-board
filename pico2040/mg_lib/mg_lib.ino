@@ -3,6 +3,7 @@
 Systems sys;
 Graphics gfx;
 Interface inf;
+Terminal trm;
 
 void hello()
 {
@@ -15,6 +16,7 @@ void setup()
 {
     gfx.screen();
     inf.greetings();
+    trm.terminal();
 }
 
 void loop()

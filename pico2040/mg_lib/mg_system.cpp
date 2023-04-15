@@ -1,3 +1,10 @@
+/*    
+    Contains the definition of functions
+    for working with AD ports.
+
+    @avsavushkiny / 15.04.2023
+*/
+
 #include <Arduino.h>
 #include "mg.h"
 

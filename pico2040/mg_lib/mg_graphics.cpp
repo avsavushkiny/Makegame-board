@@ -1,7 +1,9 @@
 /*
-  system xbmp map
+  Contains function settings for working with the display.
+  [!] Required u8g2 library
+  [!] bmp to xbmp image converter https://www.online-utility.org/image/convert/to/XBM
 
-  bmp to xbmp image converter https://www.online-utility.org/image/convert/to/XBM
+  @avsavushkiny / 15.04.2023
 */
 
 #include <Arduino.h>
@@ -19,11 +21,13 @@ unsigned long previousMillis = 0;
 unsigned long prevTime_0{};
 const long interval = 300;
 
+/* cursor */
 #define cursor_w 7
 #define cursor_h 8
 const uint8_t cursor_bits[] = {
   0x03, 0x05, 0x09, 0x11, 0x21, 0x79, 0x05, 0x03, };
 
+/* logotype makegame */
 #define mg_l_w 56
 #define mg_l_h 28
 const uint8_t mg_l_bits[] = {
@@ -45,12 +49,14 @@ const uint8_t mg_l_bits[] = {
   0x0F, 0xC0, 0xF0, 0x3F, 0xCF, 0xC3, 0xC0, 0xF0, 0x3F, 0xF0, 0x3F, 0xCF, 
   0xC3, 0xC0, 0xF0, 0x3F, };
 
+/* logotype terminal */
 #define trm_l_w 11
 #define trm_l_h 9
 const uint8_t trm_l_bits[] = {
   0xFE, 0x03, 0x01, 0x04, 0x05, 0x04, 0x09, 0x04, 0x11, 0x04, 0x09, 0x04, 
   0xC5, 0x05, 0x01, 0x04, 0xFE, 0x03, };
 
+/* qr-code @avsavushkiny/makegame-board */
 #define qr_w 33
 #define qr_h 33
 const uint8_t qr_bits[] = {
@@ -214,4 +220,62 @@ void Interface::messageInfo(String text, int del)
     u8g2.drawFrame(10, 27, 50, 50);
     u8g2.sendBuffer();
     delay(del);
+}
+
+/* terminal */
+/* prototype */
+void clearCommandTerminal();
+
+/* command type */
+struct Command
+{
+  char const *text;
+  void (*f)();
+  bool active;
+};
+
+/* enumeration of objects - commands */
+Command commands[]{
+    {"clrcom", clearCommandTerminal, false}
+};
+
+/* delete all commands */
+void clearCommandTerminal()
+{
+  for (Command &command : commands)
+  {
+    command.active = false;
+  }
+}
+
+/* command stack */
+void _calcTerminal()
+{
+  for (Command &command : commands)
+  {
+    if (command.active)
+    {
+      command.f();
+    }
+  }
+}
+
+/* pushing data onto the stack */
+void Terminal::terminal()
+{
+  _gfx.render(_calcTerminal, 0);
+
+  if (Serial.available() != 0)
+  {
+    char text[10]{};
+    Serial.readBytesUntil('\n', text, sizeof(text));
+
+    for (Command &command : commands)
+    {
+      if (not strncmp(command.text, text, 10))
+      {
+        command.active = true;
+      }
+    }
+  }
 }
