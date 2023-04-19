@@ -4,7 +4,7 @@
     [!] Educational version
     [!] Required u8g2 library
 
-    author: Savushkin Alexander    
+    author: Savushkin Alexander
     git:    @avsavushkiny
     e-mail: avsavushkiny@live.ru
     date:   18.04.2023
@@ -16,6 +16,40 @@
 class Systems
 {
 private:
+    int DEF_RES_Y0 = 2100;
+    int DEF_RES_Y1 = 2100;
+    int DEF_RES_X0 = 2100;
+    int DEF_RES_X1 = 2100;
+
+    const int8_t CORR_y0 = 100;
+
+    const int8_t JOI_X0 = 26; // adc 0
+    const int8_t JOI_0Y = 27; // adc 1
+    const int8_t JOI_1Y = 28; // adc 2
+    const int8_t JOI_X1 = 29; // adc 3
+
+    const int8_t btn_0 = 6; // gp 6
+    const int8_t btn_1 = 7; // gp 7
+    const int8_t aLcd = 8;  // gp 8
+
+    int H_RES = 64;
+    int W_RES = 128;
+
+    int yJoi0 = H_RES / 2;
+    int yJoi1 = H_RES / 2;
+    int xJoi0 = W_RES / 2;
+    int xJoi1 = W_RES / 2;
+
+    int objUD0y{};
+    int objUD1y{};
+    int objUD0x{};
+    int objUD1x{};
+
+    int dataJoiY0{};
+    int dataJoiY1{};
+    int dataJoiX0{};
+    int dataJoiX1{};
+
 public:
     bool sw0();
     bool sw1();
@@ -64,7 +98,13 @@ private:
 public:
     void greetings();
     void messageInfo(String text, int del, uint8_t col, uint8_t x, uint8_t y);
-    bool button(String text, uint8_t x, uint8_t y);
+};
+
+class Button
+{
+private:
+public:
+    bool button(String text, uint8_t x, uint8_t y, void (*f)(void));
 };
 
 #endif

@@ -236,26 +236,39 @@ void Interface::messageInfo(String text, int del, uint8_t col, uint8_t x, uint8_
 }
 
 
-bool Interface::button(String text, uint8_t x, uint8_t y)
+bool Button::button(String text, uint8_t x, uint8_t y, void (*f)(void)) // x10 y50
 {
   uint8_t sizeText = text.length();
 
-  u8g2.setCursor(x + 3, y);
-  u8g2.setFont(u8g2_font_profont10_mr);
-  u8g2.print(text);
-  u8g2.drawRFrame(x, y - 8, (sizeText * 5) + 5, 10, 2);
+  int xx = _sys.joi0x(); //?
+  int yy = _sys.joi0y();
   
-  for(int i = x; i <= (sizeText * 5) + 5; i++)
+  Serial.println((String)xx + "|" + (String)yy); //debug
+  
+  if ((xx >= x && xx <= (x + (sizeText * 5) + 4)) && (yy >= y - 8 && yy <= y + 2))
   {
-    for(int j = y; j <= y - 10; j++)
+    u8g2.setDrawColor(1);
+    u8g2.drawRBox(x, y - 8, (sizeText * 5) + 5, 10, 2);
+
+    if (_sys.sw0())
     {
-      if ((i == _sys.joi0x()) && (j == _sys.joi0y()))
-      {
-        Serial.println("yes");
-      }
+      f();
+      return true;
     }
   }
+  else
+  {
+    u8g2.setDrawColor(1);
+    u8g2.drawRFrame(x, y - 8, (sizeText * 5) + 5, 10, 2);
+  }
 
+  u8g2.setCursor(x + 3, y);
+  u8g2.setFont(u8g2_font_profont10_mr);
+  u8g2.setFontMode(1);
+  u8g2.setDrawColor(2);
+  u8g2.print(text);
+  u8g2.setFontMode(0);
+  
   return false;
 }
 
