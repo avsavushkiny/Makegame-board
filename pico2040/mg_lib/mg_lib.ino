@@ -3,12 +3,12 @@
 Systems sys;
 Graphics gfx;
 Interface inf;
-Terminal trm;
 
-void hello()
+void helloBro()
 {
+    inf.button("OK", 10, 50);
     gfx.drawCursor(true,sys.joi0x(),sys.joi0y());
-    gfx.print("text\ntext2", 10, 10, 10, 6);
+    gfx.print("Hello Bro!\nI am a MakeGame!\nWhat is your name?", 10, 20, 10, 6);
 }
 
 
@@ -16,16 +16,18 @@ void setup()
 {
     gfx.screen();
     inf.greetings();
-    trm.terminal();
 }
 
 void loop()
 {
-    gfx.render(hello,0);
+    gfx.render(helloBro,0);
 
     if (sys.sw0())
     {
-        Serial.println("hello");
-        inf.messageInfo("game over\ntry again", 1500);
+        inf.messageInfo("You clicked on\nthe Stick 0 button\n:D", 1500, 3, 10, 27);
+    }
+    if (sys.sw1())
+    {
+        inf.messageInfo("You clicked on\nthe Stick 1 button", 1500, 2, 10, 27);
     }
 }

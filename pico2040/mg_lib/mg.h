@@ -1,9 +1,13 @@
 /*
-    library for makegame board.
+    Library for MakeGame board.
+
     [!] Educational version
     [!] Required u8g2 library
 
-    @avsavushkiny / 15.04.23
+    author: Savushkin Alexander    
+    git:    @avsavushkiny
+    e-mail: avsavushkiny@live.ru
+    date:   18.04.2023
 */
 
 #ifndef MG_H
@@ -59,7 +63,8 @@ class Interface
 private:
 public:
     void greetings();
-    void messageInfo(String text, int del);
+    void messageInfo(String text, int del, uint8_t col, uint8_t x, uint8_t y);
+    bool button(String text, uint8_t x, uint8_t y);
 };
 
 #endif

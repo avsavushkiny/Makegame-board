@@ -1,9 +1,8 @@
 /*
   Contains function settings for working with the display.
+
   [!] Required u8g2 library
   [!] bmp to xbmp image converter https://www.online-utility.org/image/convert/to/XBM
-
-  @avsavushkiny / 15.04.2023
 */
 
 #include <Arduino.h>
@@ -186,6 +185,7 @@ void Graphics::printf(String text, int x, int y)
 }
 
 Graphics _gfx;
+Systems _sys;
 
 /* interface */
 void _frame_1()
@@ -213,13 +213,50 @@ void Interface::greetings()
     _gfx.render(_frame_4, 1500);
 }
 
-void Interface::messageInfo(String text, int del)
-{
+void Interface::messageInfo(String text, int del, uint8_t col, uint8_t x, uint8_t y)
+{  
     u8g2.clearBuffer();
-    _gfx.print(text, 10, 27, 10, 6);
-    u8g2.drawFrame(10, 27, 50, 50);
+
+    for(int i = 0; i < WIDTH_LCD; i+=2)
+    {
+      for (int j = 0; j < (y - 10); j+=2)
+      {
+        u8g2.drawPixel(i, j);
+      }
+
+      for (int k = y + ((col-1) * 10) + 4 /* correction */; k < HEIGHT_LCD; k+=2)
+      {
+        u8g2.drawPixel(i, k);
+      }
+    }
+
+    _gfx.print(text, x, y, 10, 6);
     u8g2.sendBuffer();
     delay(del);
+}
+
+
+bool Interface::button(String text, uint8_t x, uint8_t y)
+{
+  uint8_t sizeText = text.length();
+
+  u8g2.setCursor(x + 3, y);
+  u8g2.setFont(u8g2_font_profont10_mr);
+  u8g2.print(text);
+  u8g2.drawRFrame(x, y - 8, (sizeText * 5) + 5, 10, 2);
+  
+  for(int i = x; i <= (sizeText * 5) + 5; i++)
+  {
+    for(int j = y; j <= y - 10; j++)
+    {
+      if ((i == _sys.joi0x()) && (j == _sys.joi0y()))
+      {
+        Serial.println("yes");
+      }
+    }
+  }
+
+  return false;
 }
 
 /* terminal */
