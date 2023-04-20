@@ -124,6 +124,7 @@ int Systems::joi1x() // 1x
         return xJoi1;
 }
 
+/* Updating Stick coordinates */
 void Systems::sticks()
 {
     s0x = joi0x();
@@ -208,5 +209,3 @@ void Timer::timer(void (*timer_fn)(void), int interval)
         timer_fn();
     }
 }
-
-/* initialization */

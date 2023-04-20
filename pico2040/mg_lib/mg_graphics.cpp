@@ -235,7 +235,6 @@ void Interface::messageInfo(String text, int del, uint8_t col, uint8_t x, uint8_
     delay(del);
 }
 
-
 bool Button::button(String text, uint8_t x, uint8_t y, void (*f)(void), int xx, int yy) // x10 y50
 {
   uint8_t sizeText = text.length();
