@@ -149,7 +149,7 @@ bool Graphics::winkPrint(void (*ptr_fn)(String, int, int), String text, int x, i
 }
 
 /* displaying the cursor on the screen */
-bool Graphics::drawCursor(bool stateCursor, int sysJoi0x, int sysJoi0y)
+bool Cursor::cursor(bool stateCursor, int sysJoi0x, int sysJoi0y)
 {
     if (stateCursor == true)
     {
@@ -236,12 +236,9 @@ void Interface::messageInfo(String text, int del, uint8_t col, uint8_t x, uint8_
 }
 
 
-bool Button::button(String text, uint8_t x, uint8_t y, void (*f)(void)) // x10 y50
+bool Button::button(String text, uint8_t x, uint8_t y, void (*f)(void), int xx, int yy) // x10 y50
 {
   uint8_t sizeText = text.length();
-
-  int xx = _sys.joi0x(); //?
-  int yy = _sys.joi0y();
   
   Serial.println((String)xx + "|" + (String)yy); //debug
   

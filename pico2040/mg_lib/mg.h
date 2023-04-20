@@ -51,6 +51,8 @@ private:
     int dataJoiX1{};
 
 public:
+    int s0x, s0y, s1x, s1y;
+
     bool sw0();
     bool sw1();
 
@@ -58,6 +60,8 @@ public:
     int joi1y();
     int joi0x();
     int joi1x();
+
+    void sticks();
 
     void backlight(bool state);
 
@@ -81,7 +85,6 @@ public:
     void clear();
     void print(String text, int x, int y, int lii, int chi);
     bool winkPrint(void (*ptr_fn)(String, int, int), String text, int x, int y, /*delay*/ int interval);
-    bool drawCursor(bool stateCursor, int sysJoi0x, int sysJoi0y);
     void printf(String text, int x, int y);
 };
 
@@ -104,7 +107,14 @@ class Button
 {
 private:
 public:
-    bool button(String text, uint8_t x, uint8_t y, void (*f)(void));
+    bool button(String text, uint8_t x, uint8_t y, void (*f)(void), int xx, int yy);
+};
+
+class Cursor
+{
+private:
+public:
+    bool cursor(bool stateCursor, int sysJoi0x, int sysJoi0y);
 };
 
 #endif

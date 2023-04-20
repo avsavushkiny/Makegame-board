@@ -124,6 +124,14 @@ int Systems::joi1x() // 1x
         return xJoi1;
 }
 
+void Systems::sticks()
+{
+    s0x = joi0x();
+    s0y = joi0y();
+    s1x = joi1x();
+    s1y = joi1y();
+}
+
 /* system backlight */
 void Systems::backlight(bool state)
 {
