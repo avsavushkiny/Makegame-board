@@ -121,7 +121,7 @@ public:
     bool button(String text, uint8_t x, uint8_t y, void (*f)(void), int xx, int yy);
 };
 
-class Cursor
+class Cursor : Systems
 {
 private:
 public:

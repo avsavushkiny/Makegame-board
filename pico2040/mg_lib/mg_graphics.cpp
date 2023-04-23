@@ -185,7 +185,7 @@ void Graphics::printf(String text, int x, int y)
 }
 
 Graphics _gfx;
-Systems _sys;
+//Systems _sys;
 
 /* interface */
 void _frame_1()
@@ -247,7 +247,7 @@ bool Button::button(String text, uint8_t x, uint8_t y, void (*f)(void), int xx, 
     u8g2.setDrawColor(1);
     u8g2.drawRBox(x, y - 8, (sizeText * 5) + 5, 10, 2);
 
-    if (_sys.sw0())
+    if (Systems::sw0())
     {
       f();
       return true;
