@@ -238,8 +238,9 @@ void Interface::messageInfo(String text, int del, uint8_t col, uint8_t x, uint8_
 bool Button::button(String text, uint8_t x, uint8_t y, void (*f)(void), int xx, int yy) // x10 y50
 {
   uint8_t sizeText = text.length();
-  
-  Serial.println((String)xx + "|" + (String)yy); //debug
+
+  //Serial.println((String)Systems::s0x + "|" + (String)Systems::s0y);
+  //Serial.println((String)xx + "|" + (String)yy); //debug
   
   if ((xx >= x && xx <= (x + (sizeText * 5) + 4)) && (yy >= y - 8 && yy <= y + 2))
   {

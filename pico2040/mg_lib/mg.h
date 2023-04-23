@@ -68,6 +68,7 @@ public:
     /* Counts objects by +1, normally 0 */
     int obj0y();
     int obj1y();
+protected:
 };
 
 class Timer
@@ -112,9 +113,10 @@ public:
     void messageInfo(String text, int del, uint8_t col, uint8_t x, uint8_t y);
 };
 
-class Button
+class Button : Systems
 {
 private:
+    int xx, yy;
 public:
     bool button(String text, uint8_t x, uint8_t y, void (*f)(void), int xx, int yy);
 };

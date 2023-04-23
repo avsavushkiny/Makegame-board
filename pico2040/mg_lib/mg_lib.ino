@@ -20,7 +20,7 @@ void helloBro()
     btn3.button("EXIT", 70, 50, NULL, sys.s0x, sys.s0y);
 
     crs1.cursor(true, sys.s0x, sys.s0y);
-    crs2.cursor(true, sys.s1x, sys.s1y);
+    crs2.cursor(false, sys.s1x, sys.s1y);
 
     gfx.print("Hello Bro!\nI am a MakeGame!\nWhat is your name?", 10, 20, 10, 6);
 }
