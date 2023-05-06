@@ -6,7 +6,7 @@
 */
 
 #include <Arduino.h>
-#include <U8g2lib.h>
+#include <U8g2lib.h> 
 #include "mg.h"
 
 #define CHIP_GFX ST7565
@@ -149,13 +149,13 @@ bool Graphics::winkPrint(void (*ptr_fn)(String, int, int), String text, int x, i
 }
 
 /* displaying the cursor on the screen */
-bool Cursor::cursor(bool stateCursor, int sysJoi0x, int sysJoi0y)
+bool Cursor::cursor(bool stateCursor, int xCursor, int yCursor)
 {
     if (stateCursor == true)
     {
         u8g2.setDrawColor(2);
         u8g2.setBitmapMode(1);
-        u8g2.drawXBMP(sysJoi0x, sysJoi0y, cursor_w, cursor_h, cursor_bits);
+        u8g2.drawXBMP(xCursor, yCursor, cursor_w, cursor_h, cursor_bits);
         u8g2.setDrawColor(1);
         u8g2.setBitmapMode(0);
         return true;
@@ -235,14 +235,11 @@ void Interface::messageInfo(String text, int del, uint8_t col, uint8_t x, uint8_
     delay(del);
 }
 
-bool Button::button(String text, uint8_t x, uint8_t y, void (*f)(void), int xx, int yy) // x10 y50
+bool Button::button(String text, uint8_t x, uint8_t y, void (*f)(void), int xCursor, int yCursor) // x10 y50
 {
   uint8_t sizeText = text.length();
 
-  //Serial.println((String)Systems::s0x + "|" + (String)Systems::s0y);
-  //Serial.println((String)xx + "|" + (String)yy); //debug
-  
-  if ((xx >= x && xx <= (x + (sizeText * 5) + 4)) && (yy >= y - 8 && yy <= y + 2))
+  if ((xCursor >= x && xCursor <= (x + (sizeText * 5) + 4)) && (yCursor >= y - 8 && yCursor <= y + 2))
   {
     u8g2.setDrawColor(1);
     u8g2.drawRBox(x, y - 8, (sizeText * 5) + 5, 10, 2);

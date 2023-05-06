@@ -7,8 +7,12 @@
     author: Savushkin Alexander
     git:    @avsavushkiny
     e-mail: avsavushkiny@live.ru
-    date:   20.04.2023
+    date:   06.05.2023
 */
+
+#include <U8g2lib.h>
+/* We let the compiler know that the u8g2 object is defined in another file */
+extern U8G2_ST7565_ERC12864_F_4W_SW_SPI u8g2;
 
 #ifndef MAKEGAME_H
 #define MAKEGAME_H
@@ -28,8 +32,8 @@ private:
     const int8_t JOI_0Y = 27; // adc 1
     const int8_t JOI_1Y = 28; // adc 2
     const int8_t JOI_X1 = 29; // adc 3
-    const int8_t btn_0  = 6; // gp 6
-    const int8_t btn_1  = 7; // gp 7
+    const int8_t btn_0  = 6;  // gp 6
+    const int8_t btn_1  = 7;  // gp 7
     const int8_t aLcd   = 8;  // gp 8
     /* Field (lcd) resolution. */
     int H_RES = 64;
@@ -95,7 +99,7 @@ public:
     /* Runs a void-function with text-string and output x-y-coordinates parameters. The interval-interval controls the output. */
     bool winkPrint(void (*ptr_fn)(String, int, int), String text, int x, int y, /*delay*/ int interval);
     /* Text output with newline '\n' support. */
-    void printf(String text, int x, int y);
+    void printf(String text, int x, int y); 
 };
 
 class Terminal
@@ -111,21 +115,23 @@ private:
 public:
     void greetings();
     void messageInfo(String text, int del, uint8_t col, uint8_t x, uint8_t y);
+    //messageAlert
+    //messageQuestion
 };
 
 class Button : Systems
 {
 private:
-    int xx, yy;
+    int xCursor, yCursor;
 public:
-    bool button(String text, uint8_t x, uint8_t y, void (*f)(void), int xx, int yy);
+    bool button(String text, uint8_t x, uint8_t y, void (*f)(void), int xCursor, int yCursor);
 };
 
 class Cursor : Systems
 {
 private:
 public:
-    bool cursor(bool stateCursor, int sysJoi0x, int sysJoi0y);
+    bool cursor(bool stateCursor, int xCursor, int yCursor);
 };
 
 #endif

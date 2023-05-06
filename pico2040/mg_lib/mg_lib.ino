@@ -11,6 +11,11 @@ void helloSerial()
     Serial.println("click button");
 }
 
+void test()
+{
+    u8g2.drawHLine(0, 0, 128);
+}
+
 void helloBro()
 {
     sys.sticks();
@@ -18,7 +23,8 @@ void helloBro()
     btn1.button("OK", 10, 50, helloSerial, sys.s0x, sys.s0y);
     btn2.button("CANCEL", 30, 50, NULL, sys.s0x, sys.s0y);
     btn3.button("EXIT", 70, 50, NULL, sys.s0x, sys.s0y);
-
+    test();
+ 
     crs1.cursor(true, sys.s0x, sys.s0y);
     //crs2.cursor(true);
 
