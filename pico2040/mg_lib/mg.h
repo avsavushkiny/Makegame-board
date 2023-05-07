@@ -89,14 +89,17 @@ private:
 public:
     /* Initial display setting. Sets Contrast to 0, analog DC at 12, sets port 8 to 1 */
     void screen();
-    /* We send the void-function to the display buffer for output. The void-function will be completed by time-Delay-interval. */
+    /* We send the void-function to the display buffer for output. 
+       The void-function will be completed by time-Delay-interval. */
     void render(void (*ptr_draw_fn)(), int timeDelay);
     /* Clearing the display buffer. */
     void clear();
-    /* Data output in x, y coordinates. lii-line spacing (10 by default), chi-character spacing (6 by default) */
-    /* Line break is supported - '\n' */
+    /* Data output in x, y coordinates. lii-line spacing (10 by default),
+       chi-character spacing (6 by default).
+       Line break is supported - '\n' */
     void print(String text, int x, int y, int lii, int chi);
-    /* Runs a void-function with text-string and output x-y-coordinates parameters. The interval-interval controls the output. */
+    /* Runs a void-function with text-string and output x-y-coordinates parameters.
+       The interval-interval controls the output. */
     bool winkPrint(void (*ptr_fn)(String, int, int), String text, int x, int y, /*delay*/ int interval);
     /* Text output with newline '\n' support. */
     void printf(String text, int x, int y); 
@@ -113,10 +116,12 @@ class Interface
 {
 private:
 public:
+    /* Greetings. Contains logo and text. */
     void greetings();
-    void messageInfo(String text, int del, uint8_t col, uint8_t x, uint8_t y);
-    //messageAlert
-    //messageQuestion
+    /* Sending a text-message to the user.
+       Determine the duration-duration and x-y-coordinates of the output.
+       Line break is supported - '\n'. */
+    void message(String text, int duration, uint8_t x, uint8_t y);
 };
 
 class Button : Systems
@@ -124,13 +129,22 @@ class Button : Systems
 private:
     int xCursor, yCursor;
 public:
+    /* The button starts the void-function, define the button text-text and output x-y-coordinates.
+       Cursor xCursor-yCursor-coordinates must be specified. */
     bool button(String text, uint8_t x, uint8_t y, void (*f)(void), int xCursor, int yCursor);
+};
+
+class Icon : Systems{
+    private:
+    public:
+
 };
 
 class Cursor : Systems
 {
 private:
 public:
+    /* Cursor. If the stateCursor-status is 1 - is displayed, if 0 - then not. */
     bool cursor(bool stateCursor, int xCursor, int yCursor);
 };
 
