@@ -74,6 +74,13 @@ const uint8_t qr_bits[] = {
   0x00, 0x5D, 0x03, 0xBC, 0xA8, 0x01, 0x5D, 0x05, 0x48, 0x6C, 0x00, 0x41, 
   0xDC, 0xCF, 0x1B, 0x01, 0x7F, 0xE3, 0xA6, 0x50, 0x00, };
 
+#define messageAlert_w 16
+#define messageAlert_h 16
+const uint8_t messageAlert_bits[] = {
+  0xF0, 0x07, 0x0C, 0x18, 0xC2, 0x31, 0x82, 0x61, 0x01, 0x60, 0xC1, 0xC1, 
+  0x81, 0xC1, 0x81, 0xC1, 0x83, 0xE1, 0xE2, 0x73, 0x0C, 0x78, 0x38, 0x3C, 
+  0xE0, 0x0E, 0x80, 0x06, 0x00, 0x07, 0x00, 0x06, };
+
 
 /* graphics chip setup */
 U8G2_ST7565_ERC12864_F_4W_SW_SPI u8g2(U8G2_R0, 18, 19, 17, 16, 20);
@@ -213,26 +220,42 @@ void Interface::greetings()
     _gfx.render(_frame_4, 1500);
 }
 
-void Interface::messageInfo(String text, int del, uint8_t col, uint8_t x, uint8_t y)
-{  
-    u8g2.clearBuffer();
+void Interface::message(String text, int duration, uint8_t stateMessage, uint8_t x, uint8_t y)
+{
 
-    for(int i = 0; i < WIDTH_LCD; i+=2)
+    int sizeText = text.length() + 1, line{};
+
+    for (int i = 0; i < sizeText; i++)
     {
-      for (int j = 0; j < (y - 10); j+=2)
-      {
-        u8g2.drawPixel(i, j);
-      }
+        if (text[i] == '\n')
+        {
+          line++;
+        }
+    }
 
-      for (int k = y + ((col-1) * 10) + 4 /* correction */; k < HEIGHT_LCD; k+=2)
-      {
-        u8g2.drawPixel(i, k);
-      }
+    u8g2.clearBuffer();
+    for (int i = 0; i < WIDTH_LCD; i += 2)
+    {
+        for (int j = 0; j < (y - 10); j += 2)
+        {
+            u8g2.drawPixel(i, j);
+        }
+
+        for (int k = y + ((line) * 10) + 4 /* correction */; k < HEIGHT_LCD; k += 2)
+        {
+            u8g2.drawPixel(i, k);
+        }
+    }
+
+    if (stateMessage == 1)
+    {
+      //u8g2.drawXBMP(2, y - 7, messageAlert_w, messageAlert_h, messageAlert_bits);
     }
 
     _gfx.print(text, x, y, 10, 6);
     u8g2.sendBuffer();
-    delay(del);
+
+    delay(duration);
 }
 
 bool Button::button(String text, uint8_t x, uint8_t y, void (*f)(void), int xCursor, int yCursor) // x10 y50
