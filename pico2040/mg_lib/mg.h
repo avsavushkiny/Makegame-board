@@ -13,6 +13,7 @@
 #include <U8g2lib.h>
 /* We let the compiler know that the u8g2 object is defined in another file */
 extern U8G2_ST7565_ERC12864_F_4W_SW_SPI u8g2;
+extern const uint8_t gears_bits[];
 
 #ifndef MAKEGAME_H
 #define MAKEGAME_H
@@ -134,10 +135,11 @@ public:
     bool button(String text, uint8_t x, uint8_t y, void (*f)(void), int xCursor, int yCursor);
 };
 
-class Icon : Systems{
-    private:
-    public:
-
+class Icon : Systems
+{
+private:
+public:
+    bool icon(const uint8_t *icon, uint8_t x, uint8_t y, void (*f)(void), int xCursor, int yCursor);
 };
 
 class Cursor : Systems
