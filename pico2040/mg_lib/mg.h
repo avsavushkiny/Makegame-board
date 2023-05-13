@@ -11,6 +11,7 @@
 */
 
 #include <U8g2lib.h>
+
 /* We let the compiler know that the u8g2 object is defined in another file */
 extern U8G2_ST7565_ERC12864_F_4W_SW_SPI u8g2;
 extern const uint8_t gears_bits[];
@@ -54,34 +55,25 @@ private:
     int dataJoiY1{};
     int dataJoiX0{};
     int dataJoiX1{};
-
+    /* Contains the coordinates of the Sticks along the axes. */
+    int joi0y();
+    int joi1y();
+    int joi0x();
+    int joi1x();
 public:
     /* Variables for storing coordinates from the axes of the Sticks. */
     int s0x, s0y, s1x, s1y;
     /* Generates 1 or 0 if the button is pressed or not. */
     bool sw0();
     bool sw1();
-    /* Contains the coordinates of the Sticks along the axes. */
-    int joi0y();
-    int joi1y();
-    int joi0x();
-    int joi1x();
     /* Updating Stick coordinates. */
-    void sticks();
+    void updateSticks();
     /* Turn on the backlight of the LCD screen. 1 enabled, 0 disabled. */
     void backlight(bool state);
     /* Counts objects by +1, normally 0 */
     int obj0y();
     int obj1y();
 protected:
-};
-
-class Timer
-{
-private:
-public:
-    /* Starting a void-function on a interval-timer. */
-    void timer(void (*timer_fn)(void), int interval);
 };
 
 class Graphics
@@ -104,6 +96,14 @@ public:
     bool winkPrint(void (*ptr_fn)(String, int, int), String text, int x, int y, /*delay*/ int interval);
     /* Text output with newline '\n' support. */
     void printf(String text, int x, int y); 
+};
+
+class Timer
+{
+private:
+public:
+    /* Starting a void-function on a interval-timer. */
+    void timer(void (*timer_fn)(void), int interval);
 };
 
 class Terminal
@@ -135,11 +135,11 @@ public:
     bool button(String text, uint8_t x, uint8_t y, void (*f)(void), int xCursor, int yCursor);
 };
 
-class Icon : Systems
+class Shortcut : Systems
 {
 private:
 public:
-    bool icon(const uint8_t *icon, uint8_t x, uint8_t y, void (*f)(void), int xCursor, int yCursor);
+    bool shortcut(const uint8_t *icon, uint8_t x, uint8_t y, void (*f)(void), int xCursor, int yCursor);
 };
 
 class Cursor : Systems

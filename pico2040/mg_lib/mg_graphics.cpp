@@ -300,7 +300,7 @@ bool Button::button(String text, uint8_t x, uint8_t y, void (*f)(void), int xCur
   return false;
 }
 
-bool Icon::icon(const uint8_t *icon, uint8_t x, uint8_t y, void (*f)(void), int xCursor, int yCursor)
+bool Shortcut::shortcut(const uint8_t *icon, uint8_t x, uint8_t y, void (*f)(void), int xCursor, int yCursor)
 {
   u8g2.setDrawColor(1);
   u8g2.setBitmapMode(0);

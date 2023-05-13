@@ -5,7 +5,7 @@ Graphics gfx;
 Interface inf;
 Button btn1, btn2;
 Cursor crs1;
-Icon iconSapper, iconGears;
+Shortcut iconSapper, iconGears;
 
 const uint8_t sapper_bits[] = {
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x80, 0x01, 0x00, 
@@ -32,13 +32,13 @@ void clickBtn2()
 
 void helloBro()
 {
-    sys.sticks();
+    sys.updateSticks();
     
     btn1.button("OK", 10, 50, clickBtn1, sys.s0x, sys.s0y);
     btn2.button("CANCEL", 30, 50, clickBtn2, sys.s0x, sys.s0y);
 
-    iconSapper.icon(sapper_bits, 0, 0, NULL, sys.s0x, sys.s0y);
-    iconSapper.icon(gears_bits, 32, 0, NULL, sys.s0x, sys.s0y);
+    iconSapper.shortcut(sapper_bits, 0, 0, NULL, sys.s0x, sys.s0y);
+    iconGears.shortcut(gears_bits, 32, 0, NULL, sys.s0x, sys.s0y);
 
  
     crs1.cursor(true, sys.s0x, sys.s0y);

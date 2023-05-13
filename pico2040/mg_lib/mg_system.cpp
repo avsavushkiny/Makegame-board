@@ -125,7 +125,7 @@ int Systems::joi1x() // 1x
 }
 
 /* Updating Stick coordinates */
-void Systems::sticks()
+void Systems::updateSticks()
 {
     s0x = joi0x();
     s0y = joi0y();
