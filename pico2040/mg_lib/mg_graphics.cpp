@@ -226,7 +226,7 @@ void _frame_4()
     _gfx.print("Enjoy!", 6, 23, 10, 6);
 }
 
-void Interface::greetings()
+void Interface::greetingsBoard()
 {
     _gfx.render(_frame_1, 2500);
     _gfx.render(_frame_2, 1500);
@@ -234,9 +234,10 @@ void Interface::greetings()
     _gfx.render(_frame_4, 1500);
 }
 
-void Interface::message(String text, int duration, uint8_t x, uint8_t y)
+void Interface::message(String text, int duration)
 {
-
+    uint8_t x{10}, y{34};
+    
     /* Counting the number of lines in a message
        Line break is supported - '\n' */   
     int sizeText = text.length() + 1, line{};
@@ -249,21 +250,23 @@ void Interface::message(String text, int duration, uint8_t x, uint8_t y)
         }
     }
 
+    uint8_t correction = (line * 10)/2;
+    
     u8g2.clearBuffer();
     for (int i = 0; i < WIDTH_LCD; i += 2)
     {
-        for (int j = 0; j < (y - 10); j += 2)
+        for (int j = 0; j < (y - 10) - correction; j += 2)
         {
             u8g2.drawPixel(i, j);
         }
 
-        for (int k = y + ((line) * 10) + 4 /* correction */; k < HEIGHT_LCD; k += 2)
+        for (int k = y + ((line) * 10) + 4 - correction /* correction */; k < HEIGHT_LCD; k += 2)
         {
             u8g2.drawPixel(i, k);
         }
     }
 
-    _gfx.print(text, x, y, 10, 6);
+    _gfx.print(text, x, y - correction, 10, 6);
     u8g2.sendBuffer();
 
     delay(duration);

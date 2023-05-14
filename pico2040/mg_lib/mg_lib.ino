@@ -22,12 +22,12 @@ const uint8_t sapper_bits[] = {
 
 void clickBtn1()
 {
-    inf.message("You clicked on\nthe Stick 0 button\n:D", 1500, 10, 27);
+    inf.message("You clicked on\nthe Stick 0 button\n:D", 1500);
 }
 
 void clickBtn2()
 {
-    inf.message("Okay :((\nplease Exit!", 1500, 10, 27);
+    inf.message("Okay :((", 1500);
 }
 
 void helloBro()
@@ -47,7 +47,8 @@ void helloBro()
 void setup()
 {
     gfx.screen();
-    inf.greetings();
+    sys.backlight(false);
+    inf.greetingsBoard();
 }
 
 void loop()

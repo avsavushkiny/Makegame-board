@@ -118,11 +118,10 @@ class Interface
 private:
 public:
     /* Greetings. Contains logo and text. */
-    void greetings();
-    /* Sending a text-message to the user.
-       Determine the duration-duration and x-y-coordinates of the output.
+    void greetingsBoard();
+    /* Output of a message to the user. Define the text-text and duration-duration.
        Line break is supported - '\n'. */
-    void message(String text, int duration, uint8_t x, uint8_t y);
+    void message(String text, int duration);
 };
 
 class Button : Systems
@@ -131,7 +130,7 @@ private:
     int xCursor, yCursor;
 public:
     /* The button starts the void-function, define the button text-text and output x-y-coordinates.
-       Cursor xCursor-yCursor-coordinates must be specified. */
+       xCursor-yCursor-coordinates of interaction with the cursor. */
     bool button(String text, uint8_t x, uint8_t y, void (*f)(void), int xCursor, int yCursor);
 };
 
@@ -139,6 +138,9 @@ class Shortcut : Systems
 {
 private:
 public:
+    /* A shortcut on the desktop to launch the void-function.
+       Define an icon-image with a resolution of 32x32 pixels, x-y-coordinates for output,
+       xCursor-yCursor-coordinates of interaction with the cursor. */
     bool shortcut(const uint8_t *icon, uint8_t x, uint8_t y, void (*f)(void), int xCursor, int yCursor);
 };
 
@@ -146,7 +148,8 @@ class Cursor : Systems
 {
 private:
 public:
-    /* Cursor. If the stateCursor-status is 1 - is displayed, if 0 - then not. */
+    /* Cursor. If the stateCursor status is 1 - visible, if 0 - not visible.
+       Determine the coordinates of the Cursor to interact with the selected Stick. */
     bool cursor(bool stateCursor, int xCursor, int yCursor);
 };
 
