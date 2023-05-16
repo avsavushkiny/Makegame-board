@@ -112,7 +112,7 @@ void Graphics::screen()
 }
 
 /* data render */
-void Graphics::render(void (*ptr_draw_fn)(), int timeDelay)
+void Graphics::render(void (*draw_fn)(), int timeDelay)
 {
     uint32_t time;
 
@@ -121,7 +121,7 @@ void Graphics::render(void (*ptr_draw_fn)(), int timeDelay)
     do
     {
         u8g2.clearBuffer();
-        ptr_draw_fn();
+        draw_fn();
         u8g2.sendBuffer();
     } while (millis() < time);
 }
@@ -213,25 +213,14 @@ void _frame_1()
 {
     u8g2.drawXBMP(36, 18, mg_l_w, mg_l_h, mg_l_bits);
 }
-void _frame_2()
-{
-    _gfx.print("Hey Bro!\nI am Console,\nOpen source project!", 6, 23, 10, 6);
-}
-void _frame_3()
-{
-    _gfx.print("Do you want to make\nyour own game?", 6, 23, 10, 6);
-}
-void _frame_4()
-{
-    _gfx.print("Enjoy!", 6, 23, 10, 6);
-}
+
 
 void Interface::greetingsBoard()
 {
-    _gfx.render(_frame_1, 2500);
-    _gfx.render(_frame_2, 1500);
-    _gfx.render(_frame_3, 1500);
-    _gfx.render(_frame_4, 1500);
+    u8g2.clearBuffer();
+    _frame_1();
+    u8g2.sendBuffer();
+    delay(2500);
 }
 
 void Interface::message(String text, int duration)

@@ -149,7 +149,7 @@ void Systems::backlight(bool state)
 }
 
 /* oblect - obj0y, obj1y */
-int Systems::obj0y() // obj 0y
+int8_t Systems::obj0y() // obj 0y
 {
     dataJoiY0 = analogRead(JOI_0Y);
 
@@ -173,7 +173,7 @@ int Systems::obj0y() // obj 0y
         return objUD0y = 0;
 }
 
-int Systems::obj1y() // obj 1y
+int8_t Systems::obj1y() // obj 1y
 {
     dataJoiY1 = analogRead(JOI_1Y);
 

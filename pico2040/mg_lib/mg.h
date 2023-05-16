@@ -71,8 +71,8 @@ public:
     /* Turn on the backlight of the LCD screen. 1 enabled, 0 disabled. */
     void backlight(bool state);
     /* Counts objects by +1, normally 0 */
-    int obj0y();
-    int obj1y();
+    int8_t obj0y();
+    int8_t obj1y();
 protected:
 };
 
@@ -84,7 +84,7 @@ public:
     void screen();
     /* We send the void-function to the display buffer for output. 
        The void-function will be completed by time-Delay-interval. */
-    void render(void (*ptr_draw_fn)(), int timeDelay);
+    void render(void (*draw_fn)(), int timeDelay);
     /* Clearing the display buffer. */
     void clear();
     /* Data output in x, y coordinates. lii-line spacing (10 by default),
