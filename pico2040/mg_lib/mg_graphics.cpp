@@ -292,11 +292,11 @@ bool Button::button(String text, uint8_t x, uint8_t y, void (*f)(void), int xCur
   return false;
 }
 
-bool Shortcut::shortcut(const uint8_t *icon, uint8_t x, uint8_t y, void (*f)(void), int xCursor, int yCursor)
+bool Shortcut::shortcut(const uint8_t *bitMap, uint8_t x, uint8_t y, void (*f)(void), int xCursor, int yCursor)
 {
   u8g2.setDrawColor(1);
   u8g2.setBitmapMode(0);
-  u8g2.drawXBMP(x, y, 32, 32, icon);
+  u8g2.drawXBMP(x, y, 32, 32, bitMap);
   u8g2.drawXBMP(x, y + 24, 8, 8, icon_bits);
 
   if ((xCursor >= x && xCursor <= (x + 32)) && (yCursor >= y && yCursor <= (y + 32)))
