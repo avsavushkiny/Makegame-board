@@ -9,7 +9,7 @@
 #include <U8g2lib.h> 
 #include "mg.h"
 
-#define CHIP_GFX ST7565
+extern Systems _sys;
 
 const uint8_t WIDTH_LCD = 128;
 const uint8_t HEIGHT_LCD = 64;
@@ -133,7 +133,8 @@ void Graphics::clear()
     u8g2.sendBuffer();
 }
 
-/* text output with parameters */
+/* print */
+/* text output with parameters, add line interval (def: 10) and character interval (def: 6) */
 void Graphics::print(String text, int x, int y, int lii, int chi) // text, x-position, y-position, line interval (8-10), character interval (4-6)
 {
     int sizeText = text.length() + 1;
@@ -153,8 +154,29 @@ void Graphics::print(String text, int x, int y, int lii, int chi) // text, x-pos
     }
 }
 
+/* text output with parameters */
+void Graphics::print(String text, int x, int y) // text, x-position, y-position, line interval (8-10), character interval (4-6)
+{
+    int8_t lii{10}, chi{6};
+    int sizeText = text.length() + 1;
+    int yy{0};
+
+    for (int i = 0, xx = 0; i < sizeText, xx < (sizeText * chi); i++, xx += chi)
+    {
+        u8g2.setFont(u8g2_font_6x10_tr);
+        u8g2.setCursor(xx + x, yy + y);
+        u8g2.print(text[i]);
+
+        if (text[i] == '\n')
+        {
+            yy += lii; // 10
+            xx = -chi; // 6
+        }
+    }
+}
+
 /* "wink text" output  */
-bool Graphics::winkPrint(void (*ptr_fn)(String, int, int), String text, int x, int y, /*delay*/ int interval)
+bool Graphics::winkPrint(void (*ptr_fn)(String, int, int), String text, int x, int y, int interval)
 {
     unsigned long currTime = millis();
     if (currTime - prevTime_0 >= interval)
@@ -214,7 +236,6 @@ void _frame_1()
     u8g2.drawXBMP(36, 18, mg_l_w, mg_l_h, mg_l_bits);
 }
 
-
 void Interface::greetingsBoard()
 {
     u8g2.clearBuffer();
@@ -261,7 +282,8 @@ void Interface::message(String text, int duration)
     delay(duration);
 }
 
-bool Button::button(String text, uint8_t x, uint8_t y, void (*f)(void), int xCursor, int yCursor) // x10 y50
+/* button */
+bool Button::button(String text, uint8_t x, uint8_t y, void (*f)(void), int xCursor, int yCursor)
 {
   uint8_t sizeText = text.length();
 
@@ -292,6 +314,40 @@ bool Button::button(String text, uint8_t x, uint8_t y, void (*f)(void), int xCur
   return false;
 }
 
+bool Button::button(String text, uint8_t x, uint8_t y, void (*f)(void))
+{
+  xCursor = _sys.s0x; yCursor = _sys.s0y;
+  
+  uint8_t sizeText = text.length();
+
+  if ((xCursor >= x && xCursor <= (x + (sizeText * 5) + 4)) && (yCursor >= y - 8 && yCursor <= y + 2))
+  {
+    u8g2.setDrawColor(1);
+    u8g2.drawRBox(x, y - 8, (sizeText * 5) + 5, 10, 2);
+
+    if (Systems::sw0())
+    {
+      f();
+      return true;
+    }
+  }
+  else
+  {
+    u8g2.setDrawColor(1);
+    u8g2.drawRFrame(x, y - 8, (sizeText * 5) + 5, 10, 2);
+  }
+
+  u8g2.setCursor(x + 3, y);
+  u8g2.setFont(u8g2_font_profont10_mr);
+  u8g2.setFontMode(1);
+  u8g2.setDrawColor(2);
+  u8g2.print(text);
+  u8g2.setFontMode(0);
+  
+  return false;
+}
+
+/* shortcut */
 bool Shortcut::shortcut(const uint8_t *bitMap, uint8_t x, uint8_t y, void (*f)(void), int xCursor, int yCursor)
 {
   u8g2.setDrawColor(1);

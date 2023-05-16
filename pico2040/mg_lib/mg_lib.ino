@@ -35,10 +35,13 @@ void helloBro()
     sys.updateSticks();
     
     btn1.button("OK", 10, 50, clickBtn1, sys.s0x, sys.s0y);
-    btn2.button("CANCEL", 30, 50, clickBtn2, sys.s0x, sys.s0y);
+    btn2.button("CANCEL", 30, 50, clickBtn2);
 
     iconSapper.shortcut(sapper_bits, 0, 0, NULL, sys.s0x, sys.s0y);
     iconGears.shortcut(gears_bits, 32, 0, NULL, sys.s0x, sys.s0y);
+
+    gfx.print("hello world", 10, 60);
+    gfx.print("hello\nworld\nuser!", 65, 10, 8, 4);
 
  
     crs1.cursor(true, sys.s0x, sys.s0y);
@@ -47,7 +50,7 @@ void helloBro()
 void setup()
 {
     gfx.screen();
-    sys.backlight(false);
+    //sys.backlight(false);
     inf.greetingsBoard();
 }
 

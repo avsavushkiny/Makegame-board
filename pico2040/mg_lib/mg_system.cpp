@@ -209,3 +209,5 @@ void Timer::timer(void (*timer_fn)(void), int interval)
         timer_fn();
     }
 }
+
+Systems _sys;
