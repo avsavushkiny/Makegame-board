@@ -3,7 +3,7 @@
 Systems sys;
 Graphics gfx;
 Interface inf;
-Button btn1, btn2;
+Button btn1, btn2, btn3;
 Cursor crs1;
 Shortcut iconSapper, iconGears;
 
@@ -35,7 +35,7 @@ void helloBro()
     sys.updateSticks();
     
     btn1.button("OK", 10, 50, clickBtn1, sys.s0x, sys.s0y);
-    btn2.button("CANCEL", 30, 50, clickBtn2);
+    //btn2.button("CANCEL", 30, 50, clickBtn2);
 
     iconSapper.shortcut(sapper_bits, 0, 0, NULL, sys.s0x, sys.s0y);
     iconGears.shortcut(gears_bits, 32, 0, NULL, sys.s0x, sys.s0y);

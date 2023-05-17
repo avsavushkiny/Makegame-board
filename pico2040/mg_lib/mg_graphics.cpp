@@ -9,8 +9,6 @@
 #include <U8g2lib.h> 
 #include "mg.h"
 
-extern Systems _sys;
-
 const uint8_t WIDTH_LCD = 128;
 const uint8_t HEIGHT_LCD = 64;
 
@@ -228,7 +226,6 @@ void Graphics::printf(String text, int x, int y)
 }
 
 Graphics _gfx;
-//Systems _sys;
 
 /* interface */
 void _frame_1()
@@ -285,39 +282,6 @@ void Interface::message(String text, int duration)
 /* button */
 bool Button::button(String text, uint8_t x, uint8_t y, void (*f)(void), int xCursor, int yCursor)
 {
-  uint8_t sizeText = text.length();
-
-  if ((xCursor >= x && xCursor <= (x + (sizeText * 5) + 4)) && (yCursor >= y - 8 && yCursor <= y + 2))
-  {
-    u8g2.setDrawColor(1);
-    u8g2.drawRBox(x, y - 8, (sizeText * 5) + 5, 10, 2);
-
-    if (Systems::sw0())
-    {
-      f();
-      return true;
-    }
-  }
-  else
-  {
-    u8g2.setDrawColor(1);
-    u8g2.drawRFrame(x, y - 8, (sizeText * 5) + 5, 10, 2);
-  }
-
-  u8g2.setCursor(x + 3, y);
-  u8g2.setFont(u8g2_font_profont10_mr);
-  u8g2.setFontMode(1);
-  u8g2.setDrawColor(2);
-  u8g2.print(text);
-  u8g2.setFontMode(0);
-  
-  return false;
-}
-
-bool Button::button(String text, uint8_t x, uint8_t y, void (*f)(void))
-{
-  xCursor = _sys.s0x; yCursor = _sys.s0y;
-  
   uint8_t sizeText = text.length();
 
   if ((xCursor >= x && xCursor <= (x + (sizeText * 5) + 4)) && (yCursor >= y - 8 && yCursor <= y + 2))
