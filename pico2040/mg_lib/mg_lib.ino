@@ -34,8 +34,13 @@ void helloBro()
 {
     sys.updateSticks();
     
+<<<<<<< Updated upstream
     btn1.button("HELLO", 20, 20, clickBtn1, sys.s0x, sys.s0y);
     btn2.button("WORLD", 20, 50, clickBtn2, sys.s0x, sys.s0y);
+=======
+    btn1.button("OK", 10, 50, clickBtn1, sys.s0x, sys.s0y);
+    btn2.button("Cancel", 30, 50, clickBtn2, sys.s0x, sys.s0y);
+>>>>>>> Stashed changes
 
     //iconSapper.shortcut(sapper_bits, 0, 0, NULL, sys.s0x, sys.s0y);
     //iconGears.shortcut(gears_bits, 32, 0, NULL, sys.s0x, sys.s0y);
@@ -43,7 +48,6 @@ void helloBro()
     //gfx.print("hello world", 10, 60);
     //gfx.print("hello\nworld\nuser!", 65, 10, 8, 4);
 
- 
     crs1.cursor(true, sys.s0x, sys.s0y);
 }
 
@@ -54,16 +58,18 @@ void setup()
     inf.greetingsBoard();
 }
 
+void setup1(){}
+
 void loop()
 {
+<<<<<<< Updated upstream
     //gfx.render(helloBro,0);
+=======
+    gfx.render(helloBro,0);
+}
 
-    /*if (sys.sw0())
-    {
-        inf.messageInfo("You clicked on\nthe Stick 0 button\n:D", 1500, 3, 10, 27);
-    }
-    if (sys.sw1())
-    {
-        inf.messageInfo("You clicked on\nthe Stick 1 button", 1500, 2, 10, 27);
-    }*/
+void loop1()
+{
+>>>>>>> Stashed changes
+
 }
