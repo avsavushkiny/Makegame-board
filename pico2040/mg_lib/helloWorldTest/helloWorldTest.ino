@@ -6,16 +6,17 @@ Interface inf;
 
 void helloWorld()
 {
-    gfx.print("hello world!", 0, 10);
-    gfx.print("hello world\nBro!", 0, 20, 8, 5);
+    gfx.print("Hello world! Bro!", 0, 10, 8, 5);
+    gfx.print("Hello world! Bro!", 0, 20);
+    gfx.print("Hello world! Bro!", 0, 30, 8, 8);
 }
 
 void setup()
 {
     gfx.screen();
-    gfx.greetingsBoard();
-
+    inf.greetingsBoard();
 }
+
 void loop()
 {
     gfx.render(helloWorld, 0);
