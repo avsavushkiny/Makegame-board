@@ -35,8 +35,6 @@ void helloBro()
     sys.updateSticks();
     btn1.button("HELLO", 20, 20, clickBtn1, sys.s0x, sys.s0y);
     btn2.button("WORLD", 20, 50, clickBtn2, sys.s0x, sys.s0y);
-    btn1.button("OK", 10, 50, clickBtn1, sys.s0x, sys.s0y);
-    btn2.button("Cancel", 30, 50, clickBtn2, sys.s0x, sys.s0y);
 
     //iconSapper.shortcut(sapper_bits, 0, 0, NULL, sys.s0x, sys.s0y);
     //iconGears.shortcut(gears_bits, 32, 0, NULL, sys.s0x, sys.s0y);

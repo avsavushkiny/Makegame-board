@@ -91,13 +91,12 @@ public:
        chi-character spacing (6 by default).
        Line break is supported - '\n' */
     void print(String text, int x, int y, int lii, int chi);
-    /* Data output in x, y coordinates. Line break is supported - '\n' */
+    /* Data output in x, y coordinates. 
+       Line break is supported - '\n' */
     void print(String text, int x, int y);
     /* Runs a void-function with text-string and output x-y-coordinates parameters.
        The interval-interval controls the output. */
     bool winkPrint(void (*ptr_fn)(String, int, int), String text, int x, int y, /*delay*/ int interval);
-    /* Text output with newline '\n' support. */
-    void printf(String text, int x, int y); 
 };
 
 class Timer
