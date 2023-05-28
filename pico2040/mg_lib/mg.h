@@ -7,7 +7,7 @@
     author: Savushkin Alexander
     git:    @avsavushkiny
     e-mail: avsavushkiny@live.ru
-    date:   06.05.2023
+    date:   28.05.2023
 */
 
 #include <U8g2lib.h>
@@ -84,7 +84,9 @@ public:
     void screen();
     /* We send the void-function to the display buffer for output. 
        The void-function will be completed by time-Delay-interval. */
-    void render(void (*draw_fn)(), int timeDelay);
+    void render(void (*f)(), int timeDelay);
+    /* We send the void-function to the display buffer for output. */
+    void render(void (*f)());
     /* Clearing the display buffer. */
     void clear();
     /* Data output in x, y coordinates. lii-line spacing (10 by default),

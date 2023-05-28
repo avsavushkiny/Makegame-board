@@ -109,8 +109,8 @@ void Graphics::screen()
     digitalWrite(aLcd, true);
 }
 
-/* data render */
-void Graphics::render(void (*draw_fn)(), int timeDelay)
+/* data render (full frame) */
+void Graphics::render(void (*f)(), int timeDelay)
 {
     uint32_t time;
 
@@ -119,9 +119,16 @@ void Graphics::render(void (*draw_fn)(), int timeDelay)
     do
     {
         u8g2.clearBuffer();
-        draw_fn();
+        f();
         u8g2.sendBuffer();
     } while (millis() < time);
+}
+/* data render (full frame) no time delay */
+void Graphics::render(void (*f)())
+{
+      u8g2.clearBuffer();
+      f();
+      u8g2.sendBuffer();
 }
 
 /* clearing the output buffer */
