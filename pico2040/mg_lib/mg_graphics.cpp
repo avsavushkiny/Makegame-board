@@ -11,8 +11,8 @@
 
 const uint8_t WIDTH_LCD = 128;
 const uint8_t HEIGHT_LCD = 64;
-
-const int8_t aLcd = 8;
+const int8_t  BACKLIGHT_PIN_LCD = 8;
+const int8_t  RESOLUTION_ADC = 12;
 
 unsigned long previousMillis = 0;
 unsigned long prevTime_0{};
@@ -99,14 +99,21 @@ U8G2_ST7565_ERC12864_F_4W_SW_SPI u8g2(U8G2_R0, 18, 19, 17, 16, 20);
 
 /* graphics */
 /* graphics output objects */
-void Graphics::screen()
+void Graphics::initializationSystem()
 {
+    //setting display, contrast
     u8g2.begin();
     u8g2.setContrast(0);
-    analogReadResolution(12);
-
-    pinMode(aLcd, OUTPUT);
-    digitalWrite(aLcd, true);
+    //setting the resolution of the analog-to-digital converter
+    analogReadResolution(RESOLUTION_ADC);
+    //display backlight
+    pinMode(BACKLIGHT_PIN_LCD, OUTPUT);
+    digitalWrite(BACKLIGHT_PIN_LCD, true);
+    //platform logo output
+    u8g2.clearBuffer();
+    u8g2.drawXBMP(((WIDTH_LCD - mg_l_w)/2), ((HEIGHT_LCD - mg_l_h)/2), mg_l_w, mg_l_h, mg_l_bits); //56x28 px
+    u8g2.sendBuffer();
+    delay(2500);
 }
 
 /* data render (full frame) */
@@ -215,17 +222,8 @@ bool Cursor::cursor(bool stateCursor, int xCursor, int yCursor)
 Graphics _gfx;
 
 /* interface */
-void _frame_1()
-{
-    u8g2.drawXBMP(36, 18, mg_l_w, mg_l_h, mg_l_bits);
-}
-
 void Interface::greetingsBoard()
 {
-    u8g2.clearBuffer();
-    _frame_1();
-    u8g2.sendBuffer();
-    delay(2500);
 }
 
 void Interface::message(String text, int duration)

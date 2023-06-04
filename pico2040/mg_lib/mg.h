@@ -81,7 +81,7 @@ class Graphics
 private:
 public:
     /* Initial display setting. Sets Contrast to 0, analog DC at 12, sets port 8 to 1 */
-    void screen();
+    void initializationSystem();
     /* We send the void-function to the display buffer for output. 
        The void-function will be completed by time-Delay-interval. */
     void render(void (*f)(), int timeDelay);

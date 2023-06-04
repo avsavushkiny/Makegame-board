@@ -117,15 +117,14 @@ void helloBro()
 
 void setup()
 {
-    gfx.screen();
-    inf.greetingsBoard();
+    gfx.initializationSystem();
 }
 
 void setup1(){}
 
 void loop()
 {
-    gfx.render(gamePong);
+    //gfx.render(gamePong);
 }
 
 void loop1()
