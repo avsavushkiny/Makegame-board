@@ -9,11 +9,10 @@
 #include <U8g2lib.h> 
 #include "mg.h"
 
-const uint8_t WIDTH_LCD = 128;
-const uint8_t HEIGHT_LCD = 64;
-const int8_t  BACKLIGHT_PIN_LCD = 8;
-const int8_t  RESOLUTION_ADC = 12;
-
+//const uint8_t WIDTH_LCD = 128;
+//const uint8_t HEIGHT_LCD = 64;
+//const int8_t  BACKLIGHT_PIN_LCD = 8;
+//const int8_t  RESOLUTION_ADC = 12;
 unsigned long previousMillis = 0;
 unsigned long prevTime_0{};
 const long interval = 300;
@@ -107,8 +106,8 @@ void Graphics::initializationSystem()
     //setting the resolution of the analog-to-digital converter
     analogReadResolution(RESOLUTION_ADC);
     //display backlight
-    pinMode(BACKLIGHT_PIN_LCD, OUTPUT);
-    digitalWrite(BACKLIGHT_PIN_LCD, true);
+    pinMode(PIN_BACKLIGHT_LCD, OUTPUT);
+    digitalWrite(PIN_BACKLIGHT_LCD, true);
     //platform logo output
     u8g2.clearBuffer();
     u8g2.drawXBMP(((WIDTH_LCD - mg_l_w)/2), ((HEIGHT_LCD - mg_l_h)/2), mg_l_w, mg_l_h, mg_l_bits); //56x28 px
@@ -274,7 +273,7 @@ bool Button::button(String text, uint8_t x, uint8_t y, void (*f)(void), int xCur
     u8g2.setDrawColor(1);
     u8g2.drawRBox(x, y - 8, (sizeText * 5) + 5, 10, 2);
 
-    if (Systems::sw0())
+    if (Systems::keyControlStick0())
     {
       f();
       return true;
@@ -307,7 +306,7 @@ bool Shortcut::shortcut(const uint8_t *bitMap, uint8_t x, uint8_t y, void (*f)(v
   if ((xCursor >= x && xCursor <= (x + 32)) && (yCursor >= y && yCursor <= (y + 32)))
   {
     u8g2.drawFrame(x, y, 32, 32);
-    if (Systems::sw0())
+    if (Systems::keyControlStick0())
     {
       f();
       return true;

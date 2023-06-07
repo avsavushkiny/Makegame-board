@@ -6,10 +6,10 @@
 #include <Arduino.h>
 #include "mg.h"
 
-/* system buttons / sw0, sw1 */
-bool Systems::sw0()
+/* system button control */
+bool Systems::keyControlStick0()
 {
-    if (digitalRead(btn_0) == false)
+    if (digitalRead(PIN_BUTTON_STICK_0) == false)
     {
         return true;
     }
@@ -17,9 +17,9 @@ bool Systems::sw0()
         return false;
 }
 
-bool Systems::sw1()
+bool Systems::keyControlStick1()
 {
-    if (digitalRead(btn_1) == false)
+    if (digitalRead(PIN_BUTTON_STICK_1) == false)
     {
         return true;
     }
@@ -27,185 +27,186 @@ bool Systems::sw1()
         return false;
 }
 
-/* system ADC / joi0y, joi1y, joi0x, joi1x */
-int Systems::joi0y() // 0y
+/* calculate Stick position */
+int Systems::calculateStickPosition0Y() // 0y
 {
-    dataJoiY0 = analogRead(JOI_0Y);
+    RAW_DATA_Y0 = analogRead(PIN_STICK_0Y);
 
-    if ((dataJoiY0 < (DEF_RES_Y0 - 200)) && (dataJoiY0 > (DEF_RES_Y0 - 1100)))
+    if ((RAW_DATA_Y0 < (DEF_RES_Y0 - 200)) && (RAW_DATA_Y0 > (DEF_RES_Y0 - 1100)))
     {
-        return yJoi0 = yJoi0 - 1;
+        return COOR_Y0 = COOR_Y0 - 1;
     }
-    else if (dataJoiY0 < (DEF_RES_Y0 - 1100))
+    else if (RAW_DATA_Y0 < (DEF_RES_Y0 - 1100))
     {
-        return yJoi0 = yJoi0 - 2;
+        return COOR_Y0 = COOR_Y0 - 2;
     }
-    else if ((dataJoiY0 > (DEF_RES_Y0 + 200)) && (dataJoiY0 < (DEF_RES_Y0 + 1100)))
+    else if ((RAW_DATA_Y0 > (DEF_RES_Y0 + 200)) && (RAW_DATA_Y0 < (DEF_RES_Y0 + 1100)))
     {
-        return yJoi0 = yJoi0 + 1;
+        return COOR_Y0 = COOR_Y0 + 1;
     }
-    else if (dataJoiY0 > (DEF_RES_Y0 + 1100))
+    else if (RAW_DATA_Y0 > (DEF_RES_Y0 + 1100))
     {
-        return yJoi0 = yJoi0 + 2;
+        return COOR_Y0 = COOR_Y0 + 2;
     }
     else
-        return yJoi0;
+        return COOR_Y0;
 }
 
-int Systems::joi1y() // 1y
+int Systems::calculateStickPosition1Y() // 1y
 {
-    dataJoiY1 = analogRead(JOI_1Y);
+    RAW_DATA_Y1 = analogRead(PIN_STICK_1Y);
 
-    if ((dataJoiY1 < (DEF_RES_Y1 - 200)) && (dataJoiY1 > (DEF_RES_Y1 - 1100)))
+    if ((RAW_DATA_Y1 < (DEF_RES_Y1 - 200)) && (RAW_DATA_Y1 > (DEF_RES_Y1 - 1100)))
     {
-        return yJoi1 = yJoi1 - 1;
+        return COOR_Y1 = COOR_Y1 - 1;
     }
-    else if (dataJoiY1 < (DEF_RES_Y1 - 1100))
+    else if (RAW_DATA_Y1 < (DEF_RES_Y1 - 1100))
     {
-        return yJoi1 = yJoi1 - 2;
+        return COOR_Y1 = COOR_Y1 - 2;
     }
-    else if ((dataJoiY1 > (DEF_RES_Y1 + 200)) && (dataJoiY1 < (DEF_RES_Y1 + 1100)))
+    else if ((RAW_DATA_Y1 > (DEF_RES_Y1 + 200)) && (RAW_DATA_Y1 < (DEF_RES_Y1 + 1100)))
     {
-        return yJoi1 = yJoi1 + 1;
+        return COOR_Y1 = COOR_Y1 + 1;
     }
-    else if (dataJoiY1 > (DEF_RES_Y1 + 1100))
+    else if (RAW_DATA_Y1 > (DEF_RES_Y1 + 1100))
     {
-        return yJoi1 = yJoi1 + 2;
+        return COOR_Y1 = COOR_Y1 + 2;
     }
     else
-        return yJoi1;
+        return COOR_Y1;
 }
 
-int Systems::joi0x() // 0x
+int Systems::calculateStickPosition0X() // 0x
 {
-    dataJoiX0 = analogRead(JOI_X0);
+    RAW_DATA_X0 = analogRead(PIN_STICK_0X);
 
-    if ((dataJoiX0 < (DEF_RES_X0 - 200)) && (dataJoiX0 > (DEF_RES_X0 - 1100)))
+    if ((RAW_DATA_X0 < (DEF_RES_X0 - 200)) && (RAW_DATA_X0 > (DEF_RES_X0 - 1100)))
     {
-        return xJoi0 = xJoi0 + 1;
+        return COOR_X0 = COOR_X0 + 1;
     }
-    else if (dataJoiX0 < (DEF_RES_X0 - 1100))
+    else if (RAW_DATA_X0 < (DEF_RES_X0 - 1100))
     {
-        return xJoi0 = xJoi0 + 2;
+        return COOR_X0 = COOR_X0 + 2;
     }
-    else if ((dataJoiX0 > (DEF_RES_X0 + 200)) && (dataJoiX0 < (DEF_RES_X0 + 1100)))
+    else if ((RAW_DATA_X0 > (DEF_RES_X0 + 200)) && (RAW_DATA_X0 < (DEF_RES_X0 + 1100)))
     {
-        return xJoi0 = xJoi0 - 1;
+        return COOR_X0 = COOR_X0 - 1;
     }
-    else if (dataJoiX0 > (DEF_RES_X0 + 1100))
+    else if (RAW_DATA_X0 > (DEF_RES_X0 + 1100))
     {
-        return xJoi0 = xJoi0 - 2;
+        return COOR_X0 = COOR_X0 - 2;
     }
     else
-        return xJoi0;
+        return COOR_X0;
 }
 
-int Systems::joi1x() // 1x
+int Systems::calculateStickPosition1X() // 1x
 {
-    dataJoiX1 = analogRead(JOI_X1);
+    RAW_DATA_X1 = analogRead(PIN_STICK_1X);
 
-    if ((dataJoiX1 < (DEF_RES_X1 - 200)) && (dataJoiX1 > (DEF_RES_X1 - 1100)))
+    if ((RAW_DATA_X1 < (DEF_RES_X1 - 200)) && (RAW_DATA_X1 > (DEF_RES_X1 - 1100)))
     {
-        return xJoi1 = xJoi1 + 1;
+        return COOR_X1 = COOR_X1 + 1;
     }
-    else if (dataJoiX1 < (DEF_RES_X1 - 1100))
+    else if (RAW_DATA_X1 < (DEF_RES_X1 - 1100))
     {
-        return xJoi1 = xJoi1 + 2;
+        return COOR_X1 = COOR_X1 + 2;
     }
-    else if ((dataJoiX1 > (DEF_RES_X1 + 200)) && (dataJoiX1 < (DEF_RES_X1 + 1100)))
+    else if ((RAW_DATA_X1 > (DEF_RES_X1 + 200)) && (RAW_DATA_X1 < (DEF_RES_X1 + 1100)))
     {
-        return xJoi1 = xJoi1 - 1;
+        return COOR_X1 = COOR_X1 - 1;
     }
-    else if (dataJoiX1 > (DEF_RES_X1 + 1100))
+    else if (RAW_DATA_X1 > (DEF_RES_X1 + 1100))
     {
-        return xJoi1 = xJoi1 - 2;
+        return COOR_X1 = COOR_X1 - 2;
     }
     else
-        return xJoi1;
+        return COOR_X1;
 }
 
 /* Updating Stick coordinates */
-void Systems::updateSticks()
+void Systems::updateSticksPosition()
 {
-    s0x = joi0x();
-    s0y = joi0y();
-    s1x = joi1x();
-    s1y = joi1y();
+    stickPositionX0 = calculateStickPosition0X();
+    stickPositionY0 = calculateStickPosition0Y();
+    stickPositionX1 = calculateStickPosition1X();
+    stickPositionY1 = calculateStickPosition1Y();
 }
 
 /* system backlight */
-void Systems::backlight(bool state)
+void Systems::backlightControl(bool state)
 {
-    pinMode(aLcd, OUTPUT);
+    pinMode(PIN_BACKLIGHT_LCD, OUTPUT);
 
     if (state == true)
     {
-        digitalWrite(aLcd, 1); // on
+        digitalWrite(PIN_BACKLIGHT_LCD, 1); // on
     }
     else
     {
-        digitalWrite(aLcd, 0); // off
+        digitalWrite(PIN_BACKLIGHT_LCD, 0); // off
     }
 }
 
 /* oblect - obj0y, obj1y */
-int8_t Systems::obj0y() // obj 0y
+int8_t Systems::countingObjectStick0Y() // obj 0y
 {
-    dataJoiY0 = analogRead(JOI_0Y);
+    RAW_DATA_Y0 = analogRead(PIN_STICK_0Y);
 
-    if ((dataJoiY0 < (DEF_RES_Y0 - 200)) && (dataJoiY0 > (DEF_RES_Y0 - 1100)))
+    if ((RAW_DATA_Y0 < (DEF_RES_Y0 - 200)) && (RAW_DATA_Y0 > (DEF_RES_Y0 - 1100)))
     {
-        return objUD0y = objUD0y - 1;
+        return OBJ_Y0 = OBJ_Y0 - 1;
     }
-    else if (dataJoiY0 < (DEF_RES_Y0 - 1100))
+    else if (RAW_DATA_Y0 < (DEF_RES_Y0 - 1100))
     {
-        return objUD0y = objUD0y - 1; // 2
+        return OBJ_Y0 = OBJ_Y0 - 1; // 2
     }
-    else if ((dataJoiY0 > (DEF_RES_Y0 + 200)) && (dataJoiY0 < (DEF_RES_Y0 + 1100)))
+    else if ((RAW_DATA_Y0 > (DEF_RES_Y0 + 200)) && (RAW_DATA_Y0 < (DEF_RES_Y0 + 1100)))
     {
-        return objUD0y = objUD0y + 1;
+        return OBJ_Y0 = OBJ_Y0 + 1;
     }
-    else if (dataJoiY0 > (DEF_RES_Y0 + 1100))
+    else if (RAW_DATA_Y0 > (DEF_RES_Y0 + 1100))
     {
-        return objUD0y = objUD0y + 1; // 2
+        return OBJ_Y0 = OBJ_Y0 + 1; // 2
     }
     else
-        return objUD0y = 0;
+        return OBJ_Y0 = 0;
 }
 
-int8_t Systems::obj1y() // obj 1y
+int8_t Systems::countingObjectStick1Y() // obj 1y
 {
-    dataJoiY1 = analogRead(JOI_1Y);
+    RAW_DATA_Y1 = analogRead(PIN_STICK_1Y);
 
-    if ((dataJoiY1 < (DEF_RES_Y1 - 200)) && (dataJoiY1 > (DEF_RES_Y1 - 1100)))
+    if ((RAW_DATA_Y1 < (DEF_RES_Y1 - 200)) && (RAW_DATA_Y1 > (DEF_RES_Y1 - 1100)))
     {
-        return objUD1y = objUD1y - 1;
+        return OBJ_Y1 = OBJ_Y1 - 1;
     }
-    else if (dataJoiY1 < (DEF_RES_Y1 - 1100))
+    else if (RAW_DATA_Y1 < (DEF_RES_Y1 - 1100))
     {
-        return objUD1y = objUD1y - 1; // 2
+        return OBJ_Y1 = OBJ_Y1 - 1; // 2
     }
-    else if ((dataJoiY1 > (DEF_RES_Y1 + 200)) && (dataJoiY1 < (DEF_RES_Y1 + 1100)))
+    else if ((RAW_DATA_Y1 > (DEF_RES_Y1 + 200)) && (RAW_DATA_Y1 < (DEF_RES_Y1 + 1100)))
     {
-        return objUD1y = objUD1y + 1;
+        return OBJ_Y1 = OBJ_Y1 + 1;
     }
-    else if (dataJoiY1 > (DEF_RES_Y1 + 1100))
+    else if (RAW_DATA_Y1 > (DEF_RES_Y1 + 1100))
     {
-        return objUD1y = objUD1y + 1; // 2
+        return OBJ_Y1 = OBJ_Y1 + 1; // 2
     }
     else
-        return objUD1y = 0;
+        return OBJ_Y1 = 0;
 }
+
+int8_t Systems::countingObjectStick0X(){};
+int8_t Systems::countingObjectStick1X(){};
 
 /* timer */
-unsigned long prevTime{};
-
-void Timer::timer(void (*timer_fn)(void), int interval)
+void Timer::timer(void (*f)(void), int interval)
 {
     unsigned long currTime = millis();
     if (currTime - prevTime >= interval)
     {
         prevTime = currTime;
-        timer_fn();
+        f();
     }
 }

@@ -7,7 +7,7 @@
     author: Savushkin Alexander
     git:    @avsavushkiny
     e-mail: avsavushkiny@live.ru
-    date:   28.05.2023
+    date:   06.06.2023
 */
 
 #include <U8g2lib.h>
@@ -21,63 +21,58 @@ extern const uint8_t gears_bits[];
 
 class Systems
 {
+protected:
+    /* Port data. */
+    const int8_t PIN_STICK_0X = 26; // adc 0
+    const int8_t PIN_STICK_0Y = 27; // adc 1
+    const int8_t PIN_STICK_1Y = 28; // adc 2
+    const int8_t PIN_STICK_1X = 29; // adc 3
+    const int8_t PIN_BUTTON_STICK_0 = 6;  // gp 6
+    const int8_t PIN_BUTTON_STICK_1 = 7;  // gp 7
+    const int8_t PIN_BACKLIGHT_LCD = 8;   // gp 8
+    /* Liquid crystal display resolution. */
+    int HEIGHT_LCD{64}, WIDTH_LCD{128};
+    /* Analog-to-digital converter resolution (Chip PICO 2040). */
+    const int8_t RESOLUTION_ADC{12};
 private:
     /* The sticks are in the middle position. */
-    int DEF_RES_Y0 = 2100;
-    int DEF_RES_Y1 = 2100;
-    int DEF_RES_X0 = 2100;
-    int DEF_RES_X1 = 2100;
+    int DEF_RES_Y0{2100}, DEF_RES_Y1{2100}, DEF_RES_X0{2100}, DEF_RES_X1{2100};
     /* Correction on the y0-axis. */
-    const int8_t CORR_y0 = 100;
-    /* Port data. */
-    const int8_t JOI_X0 = 26; // adc 0
-    const int8_t JOI_0Y = 27; // adc 1
-    const int8_t JOI_1Y = 28; // adc 2
-    const int8_t JOI_X1 = 29; // adc 3
-    const int8_t btn_0  = 6;  // gp 6
-    const int8_t btn_1  = 7;  // gp 7
-    const int8_t aLcd   = 8;  // gp 8
-    /* Field (lcd) resolution. */
-    int H_RES = 64;
-    int W_RES = 128;
+    const int8_t CORR_Y0{100}, CORR_Y1{100};
     /* Initial setting of coordinates. */
-    int yJoi0 = H_RES / 2;
-    int yJoi1 = H_RES / 2;
-    int xJoi0 = W_RES / 2;
-    int xJoi1 = W_RES / 2;
+    int COOR_Y0 = HEIGHT_LCD / 2; 
+    int COOR_Y1 = HEIGHT_LCD / 2;
+    int COOR_X0 = WIDTH_LCD  / 2;
+    int COOR_X1 = WIDTH_LCD  / 2;
     /* Reset the counter of objects. */
-    int objUD0y{};
-    int objUD1y{};
-    int objUD0x{};
-    int objUD1x{};
+    int OBJ_Y0{}, OBJ_Y1{}, OBJ_X0{}, OBJ_X1{};
     /* Raw data from Sticks. */
-    int dataJoiY0{};
-    int dataJoiY1{};
-    int dataJoiX0{};
-    int dataJoiX1{};
+    int RAW_DATA_Y0{}, RAW_DATA_Y1{}, RAW_DATA_X0{}, RAW_DATA_X1{};
     /* Contains the coordinates of the Sticks along the axes. */
-    int joi0y();
-    int joi1y();
-    int joi0x();
-    int joi1x();
+    int calculateStickPosition0Y(); 
+    int calculateStickPosition1Y();
+    int calculateStickPosition0X();
+    int calculateStickPosition1X();
 public:
     /* Variables for storing coordinates from the axes of the Sticks. */
-    int s0x, s0y, s1x, s1y;
+    int stickPositionX0, stickPositionY0, stickPositionX1, stickPositionY1;
     /* Generates 1 or 0 if the button is pressed or not. */
-    bool sw0();
-    bool sw1();
+    bool keyControlStick0();
+    bool keyControlStick1();
     /* Updating Stick coordinates. */
-    void updateSticks();
+    void updateSticksPosition();
     /* Turn on the backlight of the LCD screen. 1 enabled, 0 disabled. */
-    void backlight(bool state);
+    void backlightControl(bool state);
     /* Counts objects by +1, normally 0 */
-    int8_t obj0y();
-    int8_t obj1y();
-protected:
+    int8_t countingObjectStick0Y();
+    int8_t countingObjectStick1Y();
+    int8_t countingObjectStick0X();
+    int8_t countingObjectStick1X();
 };
 
-class Graphics
+class Graphics : Systems
 {
+protected:
 private:
 public:
     /* Initial display setting. Sets Contrast to 0, analog DC at 12, sets port 8 to 1 */
@@ -103,10 +98,12 @@ public:
 
 class Timer
 {
+protected:
 private:
+    unsigned long prevTime{};
 public:
     /* Starting a void-function on a interval-timer. */
-    void timer(void (*timer_fn)(void), int interval);
+    void timer(void (*f)(void), int interval);
 };
 
 class Terminal
@@ -116,7 +113,7 @@ public:
     void terminal();
 };
 
-class Interface
+class Interface : Systems
 {
 private:
 public:
