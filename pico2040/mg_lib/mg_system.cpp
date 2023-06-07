@@ -197,8 +197,15 @@ int8_t Systems::countingObjectStick1Y() // obj 1y
         return OBJ_Y1 = 0;
 }
 
-int8_t Systems::countingObjectStick0X(){};
-int8_t Systems::countingObjectStick1X(){};
+int8_t Systems::countingObjectStick0X()
+{
+    return 0;
+}
+
+int8_t Systems::countingObjectStick1X()
+{
+    return 0;
+}
 
 /* timer */
 void Timer::timer(void (*f)(void), int interval)
