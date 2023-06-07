@@ -55,19 +55,19 @@ private:
     int calculateStickPosition1X();
 public:
     /* Variables for storing coordinates from the axes of the Sticks. */
-    int stickPositionX0, stickPositionY0, stickPositionX1, stickPositionY1;
+    int stickPosX0, stickPosY0, stickPosX1, stickPosY1;
     /* Generates 1 or 0 if the button is pressed or not. */
-    bool keyControlStick0();
-    bool keyControlStick1();
+    bool keyStick0();
+    bool keyStick1();
     /* Updating Stick coordinates. */
     void updateSticksPosition();
     /* Turn on the backlight of the LCD screen. 1 enabled, 0 disabled. */
     void backlightControl(bool state);
     /* Counts objects by +1, normally 0 */
-    int8_t countingObjectStick0Y();
-    int8_t countingObjectStick1Y();
-    int8_t countingObjectStick0X();
-    int8_t countingObjectStick1X();
+    int8_t countingObjectStickPosition0Y();
+    int8_t countingObjectStickPosition1Y();
+    int8_t countingObjectStickPosition0X();
+    int8_t countingObjectStickPosition1X();
 };
 
 class Graphics : Systems
@@ -93,7 +93,7 @@ public:
     void print(String text, int x, int y);
     /* Runs a void-function with text-string and output x-y-coordinates parameters.
        The interval-interval controls the output. */
-    bool winkPrint(void (*ptr_fn)(String, int, int), String text, int x, int y, /*delay*/ int interval);
+    bool winkPrint(void (*f)(String, int, int), String text, int x, int y, /*delay*/ int interval);
 };
 
 class Timer

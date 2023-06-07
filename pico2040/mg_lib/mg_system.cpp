@@ -7,7 +7,7 @@
 #include "mg.h"
 
 /* system button control */
-bool Systems::keyControlStick0()
+bool Systems::keyStick0()
 {
     if (digitalRead(PIN_BUTTON_STICK_0) == false)
     {
@@ -17,7 +17,7 @@ bool Systems::keyControlStick0()
         return false;
 }
 
-bool Systems::keyControlStick1()
+bool Systems::keyStick1()
 {
     if (digitalRead(PIN_BUTTON_STICK_1) == false)
     {
@@ -127,10 +127,10 @@ int Systems::calculateStickPosition1X() // 1x
 /* Updating Stick coordinates */
 void Systems::updateSticksPosition()
 {
-    stickPositionX0 = calculateStickPosition0X();
-    stickPositionY0 = calculateStickPosition0Y();
-    stickPositionX1 = calculateStickPosition1X();
-    stickPositionY1 = calculateStickPosition1Y();
+    stickPosX0 = calculateStickPosition0X();
+    stickPosY0 = calculateStickPosition0Y();
+    stickPosX1 = calculateStickPosition1X();
+    stickPosY1 = calculateStickPosition1Y();
 }
 
 /* system backlight */
@@ -149,7 +149,7 @@ void Systems::backlightControl(bool state)
 }
 
 /* oblect - obj0y, obj1y */
-int8_t Systems::countingObjectStick0Y() // obj 0y
+int8_t Systems::countingObjectStickPosition0Y() // obj 0y
 {
     RAW_DATA_Y0 = analogRead(PIN_STICK_0Y);
 
@@ -173,7 +173,7 @@ int8_t Systems::countingObjectStick0Y() // obj 0y
         return OBJ_Y0 = 0;
 }
 
-int8_t Systems::countingObjectStick1Y() // obj 1y
+int8_t Systems::countingObjectStickPosition1Y() // obj 1y
 {
     RAW_DATA_Y1 = analogRead(PIN_STICK_1Y);
 
@@ -197,12 +197,12 @@ int8_t Systems::countingObjectStick1Y() // obj 1y
         return OBJ_Y1 = 0;
 }
 
-int8_t Systems::countingObjectStick0X()
+int8_t Systems::countingObjectStickPosition0X()
 {
     return 0;
 }
 
-int8_t Systems::countingObjectStick1X()
+int8_t Systems::countingObjectStickPosition1X()
 {
     return 0;
 }

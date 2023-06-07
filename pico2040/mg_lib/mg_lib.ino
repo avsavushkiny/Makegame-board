@@ -53,7 +53,7 @@ void calculate()
     //rebound player 1
     if ((ballX >= 10) && (ballX <= 10 + 4))
     {
-        if ((ballY >= sys.stickPositionY0) && (ballY <= sys.stickPositionY0 + 10))
+        if ((ballY >= sys.stickPosY0) && (ballY <= sys.stickPosY0 + 10))
         {
             ballXspeed *= -1;
         }
@@ -61,7 +61,7 @@ void calculate()
     //rebound player 2
     if ((ballX >= 113 - 4) && (ballX <= 113 + 4))
     {
-        if ((ballY >= sys.stickPositionY1 && (ballY <= sys.stickPositionY1 + 10))
+        if ((ballY >= sys.stickPosY1) && (ballY <= sys.stickPosY1 + 10))
         {
             ballXspeed *= -1;
         }
@@ -72,9 +72,9 @@ void calculate()
 
 void drawRackets()
 {
-    sys.updateSticksControl();
-    u8g2.drawFrame(10, sys.stickPositionY0, 4, 10);
-    u8g2.drawFrame(113, sys.stickPositionY1, 4, 10);
+    sys.updateSticksPosition();
+    u8g2.drawFrame(10, sys.stickPosY0, 4, 10);
+    u8g2.drawFrame(113, sys.stickPosY1, 4, 10);
     calculate();
 }
 
@@ -108,11 +108,11 @@ void clickBtn2()
 
 void helloBro()
 {
-    sys.updateSticks();
-    btn1.button("HELLO", 5, 40, clickBtn1, sys.stickPositionX0, sys.stickPositionY0);
-    iconSapper.shortcut(sapper_bits, 0, 0, NULL, sys.stickPositionX0, sys.stickPositionY0);
+    sys.updateSticksPosition();
+    btn1.button("HELLO", 5, 40, clickBtn1, sys.stickPosX0, sys.stickPosY0);
+    iconSapper.shortcut(sapper_bits, 0, 0, NULL, sys.stickPosX1, sys.stickPosY1);
     gfx.print("hello\nworld\nuser!", 65, 10, 8, 4);
-    crs1.cursor(true, sys.stickPositionX0, sys.stickPositionY0);
+    crs1.cursor(true, sys.stickPosX0, sys.stickPosY0);
 }
 
 void setup()

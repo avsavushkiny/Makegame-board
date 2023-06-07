@@ -9,10 +9,8 @@
 #include <U8g2lib.h> 
 #include "mg.h"
 
-//const uint8_t WIDTH_LCD = 128;
-//const uint8_t HEIGHT_LCD = 64;
-//const int8_t  BACKLIGHT_PIN_LCD = 8;
-//const int8_t  RESOLUTION_ADC = 12;
+Graphics _gfx;
+
 unsigned long previousMillis = 0;
 unsigned long prevTime_0{};
 const long interval = 300;
@@ -187,7 +185,7 @@ void Graphics::print(String text, int x, int y) // text, x-position, y-position,
 }
 
 /* "wink text" output  */
-bool Graphics::winkPrint(void (*ptr_fn)(String, int, int), String text, int x, int y, int interval)
+bool Graphics::winkPrint(void (*f)(String, int, int), String text, int x, int y, int interval)
 {
     unsigned long currTime = millis();
     if (currTime - prevTime_0 >= interval)
@@ -197,7 +195,7 @@ bool Graphics::winkPrint(void (*ptr_fn)(String, int, int), String text, int x, i
     }
     else
     {
-        ptr_fn(text, x, y);
+        f(text, x, y);
         return 1;
     }
 }
@@ -217,8 +215,6 @@ bool Cursor::cursor(bool stateCursor, int xCursor, int yCursor)
     else
         return false;
 }
-
-Graphics _gfx;
 
 /* interface */
 void Interface::greetingsBoard()
@@ -273,7 +269,7 @@ bool Button::button(String text, uint8_t x, uint8_t y, void (*f)(void), int xCur
     u8g2.setDrawColor(1);
     u8g2.drawRBox(x, y - 8, (sizeText * 5) + 5, 10, 2);
 
-    if (Systems::keyControlStick0())
+    if (Systems::keyStick0())
     {
       f();
       return true;
@@ -306,7 +302,7 @@ bool Shortcut::shortcut(const uint8_t *bitMap, uint8_t x, uint8_t y, void (*f)(v
   if ((xCursor >= x && xCursor <= (x + 32)) && (yCursor >= y && yCursor <= (y + 32)))
   {
     u8g2.drawFrame(x, y, 32, 32);
-    if (Systems::keyControlStick0())
+    if (Systems::keyStick0())
     {
       f();
       return true;
