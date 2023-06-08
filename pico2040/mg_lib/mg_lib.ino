@@ -129,5 +129,5 @@ void loop()
 
 void loop1()
 {
-
+   sys.setOnClick.A();
 }

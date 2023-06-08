@@ -49,16 +49,16 @@ private:
     /* Raw data from Sticks. */
     int RAW_DATA_Y0{}, RAW_DATA_Y1{}, RAW_DATA_X0{}, RAW_DATA_X1{};
     /* Contains the coordinates of the Sticks along the axes. */
-    int calculateStickPosition0Y(); 
+    int calculateStickPosition0Y(); //calculateJoystickCoordinates
     int calculateStickPosition1Y();
     int calculateStickPosition0X();
     int calculateStickPosition1X();
 public:
     /* Variables for storing coordinates from the axes of the Sticks. */
-    int stickPosX0, stickPosY0, stickPosX1, stickPosY1;
+    int stickPosX0, stickPosY0, stickPosX1, stickPosY1; // xPosStick0, posStckXs0, 
     /* Generates 1 or 0 if the button is pressed or not. */
-    bool keyStick0();
-    bool keyStick1();
+    bool keyA();
+    bool keyB();
     /* Updating Stick coordinates. */
     void updateSticksPosition();
     /* Turn on the backlight of the LCD screen. 1 enabled, 0 disabled. */
