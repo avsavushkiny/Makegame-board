@@ -7,33 +7,22 @@
     author: Savushkin Alexander
     git:    @avsavushkiny
     e-mail: avsavushkiny@live.ru
-    date:   06.06.2023
+    date:   11.06.2023
 */
 
 #include <U8g2lib.h>
 
-/* We let the compiler know that the u8g2 object is defined in another file */
-extern U8G2_ST7565_ERC12864_F_4W_SW_SPI u8g2;
-extern const uint8_t gears_bits[];
-
 #ifndef MAKEGAME_H
 #define MAKEGAME_H
 
-class Systems
+/* We let the compiler know that the u8g2 object is defined in another file */
+extern U8G2_ST7565_ERC12864_F_4W_SW_SPI u8g2;
+extern const uint8_t gears_bits[];
+extern int HEIGHT_LCD, WIDTH_LCD;
+
+class Joystick
 {
 protected:
-    /* Port data. */
-    const int8_t PIN_STICK_0X = 26; // adc 0
-    const int8_t PIN_STICK_0Y = 27; // adc 1
-    const int8_t PIN_STICK_1Y = 28; // adc 2
-    const int8_t PIN_STICK_1X = 29; // adc 3
-    const int8_t PIN_BUTTON_STICK_0 = 6;  // gp 6
-    const int8_t PIN_BUTTON_STICK_1 = 7;  // gp 7
-    const int8_t PIN_BACKLIGHT_LCD = 8;   // gp 8
-    /* Liquid crystal display resolution. */
-    int HEIGHT_LCD{64}, WIDTH_LCD{128};
-    /* Analog-to-digital converter resolution (Chip PICO 2040). */
-    const int8_t RESOLUTION_ADC{12};
 private:
     /* The sticks are in the middle position. */
     int DEF_RES_Y0{2100}, DEF_RES_Y1{2100}, DEF_RES_X0{2100}, DEF_RES_X1{2100};
@@ -48,33 +37,38 @@ private:
     int OBJ_Y0{}, OBJ_Y1{}, OBJ_X0{}, OBJ_X1{};
     /* Raw data from Sticks. */
     int RAW_DATA_Y0{}, RAW_DATA_Y1{}, RAW_DATA_X0{}, RAW_DATA_X1{};
-    /* Contains the coordinates of the Sticks along the axes. */
-    int calculateStickPosition0Y(); //calculateJoystickCoordinates
-    int calculateStickPosition1Y();
-    int calculateStickPosition0X();
-    int calculateStickPosition1X();
 public:
+    /* Contains the coordinates of the Sticks along the axes. */
+    int calculatePosX0();
+    int calculatePosY0();
+    int calculatePosX1();
+    int calculatePosY1();
+
     /* Variables for storing coordinates from the axes of the Sticks. */
-    int stickPosX0, stickPosY0, stickPosX1, stickPosY1; // xPosStick0, posStckXs0, 
+    int posX0{}, posY0{}, posX1{}, posY1{};
+    
     /* Generates 1 or 0 if the button is pressed or not. */
-    bool keyA();
-    bool keyB();
+    bool pressKeyA();
+    bool pressKeyB();
+
     /* Updating Stick coordinates. */
-    void updateSticksPosition();
-    /* Turn on the backlight of the LCD screen. 1 enabled, 0 disabled. */
-    void backlightControl(bool state);
+    void updatePositionXY();
+
     /* Counts objects by +1, normally 0 */
-    int8_t countingObjectStickPosition0Y();
-    int8_t countingObjectStickPosition1Y();
-    int8_t countingObjectStickPosition0X();
-    int8_t countingObjectStickPosition1X();
+    int8_t IndexY0();
+    int8_t IndexY1();
+    int8_t IndexX0();
+    int8_t IndexX1();
 };
 
-class Graphics : Systems
+class Graphics
 {
 protected:
 private:
 public:
+    /* Turn on the backlight of the LCD screen. 1 enabled, 0 disabled. */
+    void controlBacklight(bool state);
+
     /* Initial display setting. Sets Contrast to 0, analog DC at 12, sets port 8 to 1 */
     void initializationSystem();
     /* We send the void-function to the display buffer for output. 
@@ -113,7 +107,7 @@ public:
     void terminal();
 };
 
-class Interface : Systems
+class Interface
 {
 private:
 public:
@@ -124,7 +118,7 @@ public:
     void message(String text, int duration);
 };
 
-class Button : Systems
+class Button : Joystick
 {
 private:
     int xCursor, yCursor;
@@ -134,7 +128,7 @@ public:
     bool button(String text, uint8_t x, uint8_t y, void (*f)(void), int xCursor, int yCursor);
 };
 
-class Shortcut : Systems
+class Shortcut : Joystick
 {
 private:
 public:
@@ -144,7 +138,7 @@ public:
     bool shortcut(const uint8_t *bitMap, uint8_t x, uint8_t y, void (*f)(void), int xCursor, int yCursor);
 };
 
-class Cursor : Systems
+class Cursor
 {
 private:
 public:

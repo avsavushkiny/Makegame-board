@@ -94,6 +94,34 @@ const uint8_t gears_bits[] = {
 /* graphics chip setup */
 U8G2_ST7565_ERC12864_F_4W_SW_SPI u8g2(U8G2_R0, 18, 19, 17, 16, 20);
 
+/* Liquid crystal display resolution. */
+int HEIGHT_LCD{64}, WIDTH_LCD{128};
+/* Analog-to-digital converter resolution (Chip PICO 2040). */
+const int8_t RESOLUTION_ADC{12};
+/* Port data. */
+const int8_t PIN_STICK_0X = 26; // adc 0
+const int8_t PIN_STICK_0Y = 27; // adc 1
+const int8_t PIN_STICK_1Y = 28; // adc 2
+const int8_t PIN_STICK_1X = 29; // adc 3
+const int8_t PIN_BUTTON_STICK_0 = 6;  // gp 6
+const int8_t PIN_BUTTON_STICK_1 = 7;  // gp 7
+const int8_t PIN_BACKLIGHT_LCD = 8;   // gp 8
+
+/* backlight */
+void Graphics::controlBacklight(bool state)
+{
+    pinMode(PIN_BACKLIGHT_LCD, OUTPUT);
+
+    if (state == true)
+    {
+        digitalWrite(PIN_BACKLIGHT_LCD, 1); // on
+    }
+    else
+    {
+        digitalWrite(PIN_BACKLIGHT_LCD, 0); // off
+    }
+}
+
 /* graphics */
 /* graphics output objects */
 void Graphics::initializationSystem()
@@ -269,7 +297,7 @@ bool Button::button(String text, uint8_t x, uint8_t y, void (*f)(void), int xCur
     u8g2.setDrawColor(1);
     u8g2.drawRBox(x, y - 8, (sizeText * 5) + 5, 10, 2);
 
-    if (Systems::keyStick0())
+    if (Joystick::pressKeyA() == true)
     {
       f();
       return true;
@@ -302,7 +330,7 @@ bool Shortcut::shortcut(const uint8_t *bitMap, uint8_t x, uint8_t y, void (*f)(v
   if ((xCursor >= x && xCursor <= (x + 32)) && (yCursor >= y && yCursor <= (y + 32)))
   {
     u8g2.drawFrame(x, y, 32, 32);
-    if (Systems::keyStick0())
+    if (Joystick::pressKeyA() == true)
     {
       f();
       return true;
@@ -368,4 +396,202 @@ void Terminal::terminal()
       }
     }
   }
+}
+
+/* Joystic */
+/* system button control */
+bool Joystick::pressKeyA()
+{
+    if (digitalRead(PIN_BUTTON_STICK_0) == false)
+    {
+        return true;
+    }
+    else
+        return false;
+}
+
+bool Joystick::pressKeyB()
+{
+    if (digitalRead(PIN_BUTTON_STICK_1) == false)
+    {
+        return true;
+    }
+    else
+        return false;
+}
+
+/* calculate Stick position */
+int Joystick::calculatePosY0() // 0y
+{
+    RAW_DATA_Y0 = analogRead(PIN_STICK_0Y);
+
+    if ((RAW_DATA_Y0 < (DEF_RES_Y0 - 200)) && (RAW_DATA_Y0 > (DEF_RES_Y0 - 1100)))
+    {
+        return COOR_Y0 = COOR_Y0 - 1;
+    }
+    else if (RAW_DATA_Y0 < (DEF_RES_Y0 - 1100))
+    {
+        return COOR_Y0 = COOR_Y0 - 2;
+    }
+    else if ((RAW_DATA_Y0 > (DEF_RES_Y0 + 200)) && (RAW_DATA_Y0 < (DEF_RES_Y0 + 1100)))
+    {
+        return COOR_Y0 = COOR_Y0 + 1;
+    }
+    else if (RAW_DATA_Y0 > (DEF_RES_Y0 + 1100))
+    {
+        return COOR_Y0 = COOR_Y0 + 2;
+    }
+    else
+        return COOR_Y0;
+}
+
+int Joystick::calculatePosY1() // 1y
+{
+    RAW_DATA_Y1 = analogRead(PIN_STICK_1Y);
+
+    if ((RAW_DATA_Y1 < (DEF_RES_Y1 - 200)) && (RAW_DATA_Y1 > (DEF_RES_Y1 - 1100)))
+    {
+        return COOR_Y1 = COOR_Y1 - 1;
+    }
+    else if (RAW_DATA_Y1 < (DEF_RES_Y1 - 1100))
+    {
+        return COOR_Y1 = COOR_Y1 - 2;
+    }
+    else if ((RAW_DATA_Y1 > (DEF_RES_Y1 + 200)) && (RAW_DATA_Y1 < (DEF_RES_Y1 + 1100)))
+    {
+        return COOR_Y1 = COOR_Y1 + 1;
+    }
+    else if (RAW_DATA_Y1 > (DEF_RES_Y1 + 1100))
+    {
+        return COOR_Y1 = COOR_Y1 + 2;
+    }
+    else
+        return COOR_Y1;
+}
+
+int Joystick::calculatePosX0() // 0x
+{
+    RAW_DATA_X0 = analogRead(PIN_STICK_0X);
+
+    if ((RAW_DATA_X0 < (DEF_RES_X0 - 200)) && (RAW_DATA_X0 > (DEF_RES_X0 - 1100)))
+    {
+        return COOR_X0 = COOR_X0 + 1;
+    }
+    else if (RAW_DATA_X0 < (DEF_RES_X0 - 1100))
+    {
+        return COOR_X0 = COOR_X0 + 2;
+    }
+    else if ((RAW_DATA_X0 > (DEF_RES_X0 + 200)) && (RAW_DATA_X0 < (DEF_RES_X0 + 1100)))
+    {
+        return COOR_X0 = COOR_X0 - 1;
+    }
+    else if (RAW_DATA_X0 > (DEF_RES_X0 + 1100))
+    {
+        return COOR_X0 = COOR_X0 - 2;
+    }
+    else
+        return COOR_X0;
+}
+
+int Joystick::calculatePosX1() // 1x
+{
+    RAW_DATA_X1 = analogRead(PIN_STICK_1X);
+
+    if ((RAW_DATA_X1 < (DEF_RES_X1 - 200)) && (RAW_DATA_X1 > (DEF_RES_X1 - 1100)))
+    {
+        return COOR_X1 = COOR_X1 + 1;
+    }
+    else if (RAW_DATA_X1 < (DEF_RES_X1 - 1100))
+    {
+        return COOR_X1 = COOR_X1 + 2;
+    }
+    else if ((RAW_DATA_X1 > (DEF_RES_X1 + 200)) && (RAW_DATA_X1 < (DEF_RES_X1 + 1100)))
+    {
+        return COOR_X1 = COOR_X1 - 1;
+    }
+    else if (RAW_DATA_X1 > (DEF_RES_X1 + 1100))
+    {
+        return COOR_X1 = COOR_X1 - 2;
+    }
+    else
+        return COOR_X1;
+}
+
+/* Updating Stick coordinates */
+void Joystick::updatePositionXY()
+{
+    posX0 = calculatePosX0();
+    posX1 = calculatePosX1();
+    posY0 = calculatePosY0();
+    posY1 = calculatePosY1();
+}
+
+/* oblect - obj0y, obj1y */
+int8_t Joystick::IndexY0() // obj 0y
+{
+    RAW_DATA_Y0 = analogRead(PIN_STICK_0Y);
+
+    if ((RAW_DATA_Y0 < (DEF_RES_Y0 - 200)) && (RAW_DATA_Y0 > (DEF_RES_Y0 - 1100)))
+    {
+        return OBJ_Y0 = OBJ_Y0 - 1;
+    }
+    else if (RAW_DATA_Y0 < (DEF_RES_Y0 - 1100))
+    {
+        return OBJ_Y0 = OBJ_Y0 - 1; // 2
+    }
+    else if ((RAW_DATA_Y0 > (DEF_RES_Y0 + 200)) && (RAW_DATA_Y0 < (DEF_RES_Y0 + 1100)))
+    {
+        return OBJ_Y0 = OBJ_Y0 + 1;
+    }
+    else if (RAW_DATA_Y0 > (DEF_RES_Y0 + 1100))
+    {
+        return OBJ_Y0 = OBJ_Y0 + 1; // 2
+    }
+    else
+        return OBJ_Y0 = 0;
+}
+
+int8_t Joystick::IndexY1() // obj 1y
+{
+    RAW_DATA_Y1 = analogRead(PIN_STICK_1Y);
+
+    if ((RAW_DATA_Y1 < (DEF_RES_Y1 - 200)) && (RAW_DATA_Y1 > (DEF_RES_Y1 - 1100)))
+    {
+        return OBJ_Y1 = OBJ_Y1 - 1;
+    }
+    else if (RAW_DATA_Y1 < (DEF_RES_Y1 - 1100))
+    {
+        return OBJ_Y1 = OBJ_Y1 - 1; // 2
+    }
+    else if ((RAW_DATA_Y1 > (DEF_RES_Y1 + 200)) && (RAW_DATA_Y1 < (DEF_RES_Y1 + 1100)))
+    {
+        return OBJ_Y1 = OBJ_Y1 + 1;
+    }
+    else if (RAW_DATA_Y1 > (DEF_RES_Y1 + 1100))
+    {
+        return OBJ_Y1 = OBJ_Y1 + 1; // 2
+    }
+    else
+        return OBJ_Y1 = 0;
+}
+
+int8_t Joystick::IndexX0() // obj 0x
+{
+    return 0;
+}
+
+int8_t Joystick::IndexX1() // obj 1x
+{
+    return 0;
+}
+
+/* timer */
+void Timer::timer(void (*f)(void), int interval)
+{
+    unsigned long currTime = millis();
+    if (currTime - prevTime >= interval)
+    {
+        prevTime = currTime;
+        f();
+    }
 }
