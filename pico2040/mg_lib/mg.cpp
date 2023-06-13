@@ -340,64 +340,6 @@ bool Shortcut::shortcut(const uint8_t *bitMap, uint8_t x, uint8_t y, void (*f)(v
   return false;
 }
 
-/* terminal */
-/* prototype */
-void clearCommandTerminal();
-
-/* command type */
-struct Command
-{
-  char const *text;
-  void (*f)();
-  bool active;
-};
-
-/* enumeration of objects - commands */
-Command commands[]{
-    {"clrcom", clearCommandTerminal, false}
-};
-
-/* delete all commands */
-void clearCommandTerminal()
-{
-  for (Command &command : commands)
-  {
-    command.active = false;
-  }
-}
-
-/* command stack */
-void _calcTerminal()
-{
-  for (Command &command : commands)
-  {
-    if (command.active)
-    {
-      command.f();
-    }
-  }
-}
-
-/* pushing data onto the stack */
-void Terminal::terminal()
-{
-  _gfx.render(_calcTerminal, 0);
-
-  if (Serial.available() != 0)
-  {
-    char text[10]{};
-    Serial.readBytesUntil('\n', text, sizeof(text));
-
-    for (Command &command : commands)
-    {
-      if (not strncmp(command.text, text, 10))
-      {
-        command.active = true;
-      }
-    }
-  }
-}
-
 /* Joystic */
 /* system button control */
 bool Joystick::pressKeyA()
@@ -421,7 +363,7 @@ bool Joystick::pressKeyB()
 }
 
 /* calculate Stick position */
-int Joystick::calculatePosY0() // 0y
+int Joystick::calculatePositionY0() // 0y
 {
     RAW_DATA_Y0 = analogRead(PIN_STICK_0Y);
 
@@ -445,7 +387,7 @@ int Joystick::calculatePosY0() // 0y
         return COOR_Y0;
 }
 
-int Joystick::calculatePosY1() // 1y
+int Joystick::calculatePositionY1() // 1y
 {
     RAW_DATA_Y1 = analogRead(PIN_STICK_1Y);
 
@@ -469,7 +411,7 @@ int Joystick::calculatePosY1() // 1y
         return COOR_Y1;
 }
 
-int Joystick::calculatePosX0() // 0x
+int Joystick::calculatePositionX0() // 0x
 {
     RAW_DATA_X0 = analogRead(PIN_STICK_0X);
 
@@ -493,7 +435,7 @@ int Joystick::calculatePosX0() // 0x
         return COOR_X0;
 }
 
-int Joystick::calculatePosX1() // 1x
+int Joystick::calculatePositionX1() // 1x
 {
     RAW_DATA_X1 = analogRead(PIN_STICK_1X);
 
@@ -520,14 +462,14 @@ int Joystick::calculatePosX1() // 1x
 /* Updating Stick coordinates */
 void Joystick::updatePositionXY()
 {
-    posX0 = calculatePosX0();
-    posX1 = calculatePosX1();
-    posY0 = calculatePosY0();
-    posY1 = calculatePosY1();
+    posX0 = calculatePositionX0();
+    posX1 = calculatePositionX1();
+    posY0 = calculatePositionY0();
+    posY1 = calculatePositionY1();
 }
 
-/* oblect - obj0y, obj1y */
-int8_t Joystick::IndexY0() // obj 0y
+/* Calculate position index */
+int8_t Joystick::calculateIndexY0() // obj 0y
 {
     RAW_DATA_Y0 = analogRead(PIN_STICK_0Y);
 
@@ -551,7 +493,7 @@ int8_t Joystick::IndexY0() // obj 0y
         return OBJ_Y0 = 0;
 }
 
-int8_t Joystick::IndexY1() // obj 1y
+int8_t Joystick::calculateIndexY1() // obj 1y
 {
     RAW_DATA_Y1 = analogRead(PIN_STICK_1Y);
 
@@ -575,12 +517,12 @@ int8_t Joystick::IndexY1() // obj 1y
         return OBJ_Y1 = 0;
 }
 
-int8_t Joystick::IndexX0() // obj 0x
+int8_t Joystick::calculateIndexX0() // obj 0x
 {
     return 0;
 }
 
-int8_t Joystick::IndexX1() // obj 1x
+int8_t Joystick::calculateIndexX1() // obj 1x
 {
     return 0;
 }
@@ -594,4 +536,63 @@ void Timer::timer(void (*f)(void), int interval)
         prevTime = currTime;
         f();
     }
+}
+
+/* terminal */
+/* prototype */
+void clearCommandTerminal();
+
+/* command type */
+struct Command
+{
+    char const *text;
+    void (*f)();
+    bool active;
+};
+
+/* enumeration of objects - commands */
+Command commands[]
+{
+    {"clrcom", clearCommandTerminal, false},
+};
+
+/* delete all commands */
+void clearCommandTerminal()
+{
+  for (Command &command : commands)
+  {
+    command.active = false;
+  }
+}
+
+/* command stack */
+void calcTerminal()
+{
+  for (Command &command : commands)
+  {
+    if (command.active)
+    {
+      command.f();
+    }
+  }
+}
+
+/* pushing data onto the stack */
+void Terminal::terminal()
+{
+  calcTerminal();
+
+  if (Serial.available() != 0)
+  {
+    char text[10]{};
+    Serial.readBytesUntil('\n', text, sizeof(text));
+
+    for (Command &command : commands)
+    {
+      if (not strncmp(command.text, text, 10))
+      {
+        command.active = true;
+      }
+    }
+  }
 }

@@ -39,10 +39,10 @@ private:
     int RAW_DATA_Y0{}, RAW_DATA_Y1{}, RAW_DATA_X0{}, RAW_DATA_X1{};
 public:
     /* Contains the coordinates of the Sticks along the axes. */
-    int calculatePosX0();
-    int calculatePosY0();
-    int calculatePosX1();
-    int calculatePosY1();
+    int calculatePositionX0();
+    int calculatePositionY0();
+    int calculatePositionX1();
+    int calculatePositionY1();
 
     /* Variables for storing coordinates from the axes of the Sticks. */
     int posX0{}, posY0{}, posX1{}, posY1{};
@@ -55,10 +55,10 @@ public:
     void updatePositionXY();
 
     /* Counts objects by +1, normally 0 */
-    int8_t IndexY0();
-    int8_t IndexY1();
-    int8_t IndexX0();
-    int8_t IndexX1();
+    int8_t calculateIndexY0();
+    int8_t calculateIndexY1();
+    int8_t calculateIndexX0();
+    int8_t calculateIndexX1();
 };
 
 class Graphics
