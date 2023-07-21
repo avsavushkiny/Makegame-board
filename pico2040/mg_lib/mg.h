@@ -27,7 +27,7 @@ private:
     /* The sticks are in the middle position. */
     int DEF_RES_Y0{2100}, DEF_RES_Y1{2100}, DEF_RES_X0{2100}, DEF_RES_X1{2100};
     /* Correction on the y0-axis. */
-    const int8_t CORR_Y0{100}, CORR_Y1{100};
+    const int8_t CORR_Y0{100}, CORR_Y1{100}, CORR_X0{100}, CORR_X1{100};
     /* Initial setting of coordinates. */
     int COOR_Y0 = HEIGHT_LCD / 2; 
     int COOR_Y1 = HEIGHT_LCD / 2;

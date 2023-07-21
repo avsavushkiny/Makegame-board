@@ -519,12 +519,50 @@ int8_t Joystick::calculateIndexY1() // obj 1y
 
 int8_t Joystick::calculateIndexX0() // obj 0x
 {
-    return 0;
+    RAW_DATA_X0 = analogRead(PIN_STICK_0X);
+
+    if ((RAW_DATA_X0 < (DEF_RES_X0 - 200)) && (RAW_DATA_X0 > (DEF_RES_X0 - 1100)))
+    {
+        return OBJ_X0 = OBJ_X0 - 1;
+    }
+    else if (RAW_DATA_X0 < (DEF_RES_X0 - 1100))
+    {
+        return OBJ_X0 = OBJ_X0 - 1; // 2
+    }
+    else if ((RAW_DATA_X0 > (DEF_RES_X0 + 200)) && (RAW_DATA_X0 < (DEF_RES_X0 + 1100)))
+    {
+        return OBJ_X0 = OBJ_X0 + 1;
+    }
+    else if (RAW_DATA_X0 > (DEF_RES_X0 + 1100))
+    {
+        return OBJ_X0 = OBJ_X0 + 1; // 2
+    }
+    else
+        return OBJ_X0 = 0;
 }
 
 int8_t Joystick::calculateIndexX1() // obj 1x
 {
-    return 0;
+    RAW_DATA_X1 = analogRead(PIN_STICK_1X);
+
+    if ((RAW_DATA_X1 < (DEF_RES_X1 - 200)) && (RAW_DATA_X1 > (DEF_RES_X1 - 1100)))
+    {
+        return OBJ_X1 = OBJ_X1 - 1;
+    }
+    else if (RAW_DATA_X1 < (DEF_RES_X1 - 1100))
+    {
+        return OBJ_X1 = OBJ_X1 - 1; // 2
+    }
+    else if ((RAW_DATA_X1 > (DEF_RES_X1 + 200)) && (RAW_DATA_X1 < (DEF_RES_X1 + 1100)))
+    {
+        return OBJ_X1 = OBJ_X1 + 1;
+    }
+    else if (RAW_DATA_X1 > (DEF_RES_X1 + 1100))
+    {
+        return OBJ_X1 = OBJ_X1 + 1; // 2
+    }
+    else
+        return OBJ_X1 = 0;
 }
 
 /* timer */
